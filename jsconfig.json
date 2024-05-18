@@ -1,0 +1,11 @@
+{
+  "include": ["**/*"],
+  "exclude": ["node_modules", "**/node_modules", "dist", "build", ".next"],
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] },
+    "allowJs": true,
+    "target": "es6",
+    "module": "esnext",
+    "moduleResolution": "node"
+  }
+}
