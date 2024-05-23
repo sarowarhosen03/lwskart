@@ -13,18 +13,24 @@
     "@formatjs/intl-localematcher": "^0.5.4",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@prisma/client": "^5.14.0",
+    "bcryptjs": "^2.4.3",
     "flowbite": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
     "negotiator": "^0.6.3",
     "next": "14.2.3",
     "next-auth": "^5.0.0-beta.18",
+    "nodemailer": "^6.9.13",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.4"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "prisma": "^5.14.0",
     "tailwindcss": "^3.4.1"
   }

@@ -1,6 +1,6 @@
+import LoginButton from "@/components/ui/LoginButton";
 import Image from "next/image";
 import Link from "next/link";
-
 export default function NavBar() {
     return (
         <nav className="bg-gray-800">
@@ -50,7 +50,7 @@ export default function NavBar() {
                         <Link href="#" className="text-gray-200 hover:text-white transition">About us</Link>
                         <Link href="#" className="text-gray-200 hover:text-white transition">Contact us</Link>
                     </div>
-                    <Link href="pages/login.html" className="text-gray-200 hover:text-white transition">Login</Link>
+                    <LoginButton />
                 </div>
             </div>
         </nav>

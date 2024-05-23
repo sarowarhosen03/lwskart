@@ -14,18 +14,39 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?         @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?
+
+  cart          Cart?           @relation(fields: [cartId], references: [id])
+  orders        Order[]
+  whisList      Whishlist?      @relation(fields: [whishlistId], references: [id])
   accounts      Account[]
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  address     Address[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  cartId      String?   @db.ObjectId
+  whishlistId String?   @db.ObjectId
+}
+
+model Address {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String  @db.ObjectId
+  name       String
+  phone      String
+  address    String
+  city       String
+  postalCode String
+  country    String
+  default    Boolean @default(false)
+  User       User    @relation(fields: [userId], references: [id])
 }
 
 model Account {
@@ -63,7 +84,7 @@ model Session {
 
 model VerificationToken {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String
+  identifier String   @unique
   token      String
   expires    DateTime
 
@@ -80,11 +101,126 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
-  credentialID         String  // Make sure this field is defined
+  credentialID         String // Make sure this field is defined
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, credentialID])
 }
 
+model Whishlist {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  wishItem WishItem[]
+  User     User[]
+}
 
+model WishItem {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  product Product? @relation(fields: [productId], references: [id])
+
+  Whishlist   Whishlist? @relation(fields: [whishlistId], references: [id])
+  whishlistId String?    @db.ObjectId
+  productId   String?    @db.ObjectId
+}
+
+model Order {
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  invoice    Invoice?     @relation(fields: [invoiceId], references: [id])
+  createdAt  DateTime     @default(now())
+  User       User?        @relation(fields: [userId], references: [id])
+  userId     String?      @db.ObjectId
+  invoiceId  String?      @db.ObjectId
+  orderItems OrderItems[]
+}
+
+model OrderItems {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  Product   Product? @relation(fields: [productId], references: [id])
+  quantity  Int?
+  size      Int?
+  price     Int?
+  Order     Order?   @relation(fields: [orderId], references: [id])
+  orderId   String?  @db.ObjectId
+  productId String?  @db.ObjectId
+}
+
+model Invoice {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  amount        Int
+  createdAt     DateTime  @default(now())
+  Order         Order[]
+  paymentMethod PayMethod
+  trxid         String
+}
+
+model Cart {
+  id    String      @id @default(auto()) @map("_id") @db.ObjectId
+  items CartItems[]
+  User  User[]
+}
+
+model CartItems {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  product   Product? @relation(fields: [productId], references: [id])
+  itemCount Int      @default(1)
+  Cart      Cart?    @relation(fields: [cartId], references: [id])
+  cartId    String?  @db.ObjectId
+  productId String?  @db.ObjectId
+}
+
+model Product {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  image          String[]
+  price          Float
+  discount_price Float       @default(0)
+  reviewsNumber  Int         @default(0)
+  ratings        Float
+  reviews        Review[]
+  availability   Boolean
+  brand          Brand?      @relation(fields: [brandId], references: [id])
+  category       Category?   @relation(fields: [categoryId], references: [id])
+  details        Json
+  description    String
+  sizes          String[]
+  colors         String[]
+  sku            Int
+  soldCounts     Int
+  categoryId     String?     @db.ObjectId
+  brandId        String?     @db.ObjectId
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  CartItems      CartItems[]
+  WishItem       WishItem[]
+
+  OrderItems OrderItems[]
+}
+
+model Category {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  Product Product[]
+}
+
+model Brand {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  Product   Product[]
+  createdAt DateTime  @default(now())
+}
+
+model Review {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  review    String
+  rating    Int     @default(1)
+  // other fields...
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @db.ObjectId
+}
+
+enum PayMethod {
+  BKASH
+  NAGAD
+  ROCKET
+  CARD
+}
