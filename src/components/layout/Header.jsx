@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import PrimaryNavopions from "./PrimaryNavopions";
-
+import logoImage from '../../../public/assets/images/logo.svg'
+import {log} from "next/dist/server/typescript/utils";
 export default function Header() {
     return (
         <header className="py-4 shadow-sm bg-white">
             <div className="container flex items-center justify-between">
                 <Link href="/">
-                    <Image priority src="/assets/images/logo.svg" alt="Logo" className="w-32" width={32} height={32} />
+                    <Image priority src={logoImage} alt="Logo" className="w-32 "  />
                 </Link>
 
                 <div className="w-full max-w-xl relative flex">

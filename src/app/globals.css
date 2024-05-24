@@ -20,6 +20,18 @@
   }
 }
 
+@layer utilities {
+
+  .grid-item {
+    @apply flex flex-col;
+  }
+
+  .grid-item>* {
+    @apply flex-1;
+
+  }
+}
+
 @layer components {
   .size-selector input:checked+label {
     @apply bg-primary text-white;

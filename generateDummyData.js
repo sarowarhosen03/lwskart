@@ -1,45 +1,31 @@
-const fs = require("fs");
-const path = require("path");
-const http = require("http");
 const { PrismaClient } = require("@prisma/client");
+const path = require("path");
+const fs = require("fs");
 const { default: axios } = require("axios");
-
+const { log } = require("next/dist/server/typescript/utils");
 (async () => {
-    const products = JSON.parse(
-        fs.readFileSync("./rnext/products.json", "utf-8"),
-    );
-    const [product] = products;
 
-    const categoryis = products.reduce((prev, curr) => {
-        if (prev.includes(curr.category)) {
-            return prev;
-        }
-        return [...prev, curr.category];
-    }, []);
-
-    const brands = products.reduce((prev, curr) => {
-        if (prev.includes(curr.brand)) {
-            return prev;
-        }
-        return [...prev, curr.brand];
-    }, []);
     const prisma = new PrismaClient();
-    const returndBrands = await prisma.brand.findMany();
-    const returnCatergory = await prisma.category.findMany();
-    await prisma.product.createMany({
-        data: products.map((item, index) => {
+    const products = await prisma.product.findMany({
+        orderBy: {
+            name: "desc",
+        }
+    })
+    let i = 0;
+    products.forEach(async (product, index) => {
+        const images = product.image.map((img, index) => {
+            return product.name.split(" ").join("-") + "-" + product.sku + "-" + index + ".jpg"
+        })
+        await prisma.product.update({
+            where: {
+                id: product.id
+            },
+            data: {
+                image: images
+            }
+        })
 
-            const category = returnCatergory.find((it) => it.name === item.category);
-            const brand = returndBrands.find((it) => it.name === item.brand);
-            delete item.category
-            delete item.brand;
-            return {
-                ...item,
-                categoryId: category.id,
-                brandId: brand.id,
-            };
-        }),
-    });
+    })
 
     // await products.forEach((item) => {
 
@@ -69,7 +55,8 @@ const { default: axios } = require("axios");
 })();
 
 async function downloadFile(url, id) {
-    const outputFilePath = path.resolve("public/assets/images/", id + ".jpg");
+
+    const outputFilePath = path.resolve("public/assets/images/p/", id + ".jpg");
     // console.log(outputFilePath);
     try {
         const response = await axios({
@@ -92,4 +79,16 @@ async function downloadFile(url, id) {
     } catch (error) {
         console.error(`Error downloading the file: ${error.message}`);
     }
+}
+
+function getRandomDate(startDate, endDate) {
+    // Get the timestamps for the start and end dates
+    const startTimestamp = startDate.getTime();
+    const endTimestamp = endDate.getTime();
+
+    // Generate a random timestamp between the start and end dates
+    const randomTimestamp = Math.floor(Math.random() * (endTimestamp - startTimestamp + 1)) + startTimestamp;
+
+    // Convert the random timestamp to a date
+    return new Date(randomTimestamp);
 }

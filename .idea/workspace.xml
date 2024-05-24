@@ -5,22 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e78ac6c0-cbb5-4b86-9328-68dfa2074086" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/insertIntoDb.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/category/bed.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/category/chair.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/category/table.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/icons/expand.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/assets/images/icons/more.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/home/CategoryItem.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/home/MoreCatergoris.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/ui/Alert.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generateDummyData.js" beforeDir="false" afterPath="$PROJECT_DIR$/generateDummyData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/[productId]/RelatedProducts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/[productId]/RelatedProducts.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/images/category/category-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/images/category/bedroom.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/images/category/category-2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/images/category/mattress.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/images/category/category-3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/images/category/outdoor.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/images/category/category-4.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/images/category/sofa.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/images/category/category-5.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/images/category/living room.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/images/category/category-6.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/images/category/kitchen.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[lang]/[productId]/ProductDetails.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[lang]/[productId]/RelatedProducts.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[lang]/[productId]/page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[lang]/page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/default.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/layout.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Banner.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Banner.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Categories.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Categories.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/Features.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/Features.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/home/NewArrival.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/NewArrival.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Footer.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/NavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/NavBar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/prodoucts/ProductItem.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/prodoucts/ProductList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/prodoucts/ProductList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/contex/index.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,22 +65,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/shuvo/Vscode/lwskart/rnext",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "/home/shuvo/.nvm/versions/node/v20.13.1/bin/node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.nodejs",
-    "ts.external.directory.path": "/home/shuvo/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/shuvo/Vscode/lwskart/src/app/[lang]&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;/home/shuvo/.nvm/versions/node/v20.13.1/bin/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/shuvo/Vscode/lwskart/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/shuvo/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -72,8 +93,17 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/[lang]" />
       <recent name="$PROJECT_DIR$/rnext" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/app/[lang]" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="NodeJSConfigurationType" nameIsGenerated="true" working-dir="$PROJECT_DIR$/src">
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -95,6 +125,9 @@
       <workItem from="1716207125592" duration="1470000" />
       <workItem from="1716414555062" duration="782000" />
       <workItem from="1716454161233" duration="4343000" />
+      <workItem from="1716492069982" duration="8106000" />
+      <workItem from="1716558335905" duration="32000" />
+      <workItem from="1716582606092" duration="515000" />
     </task>
     <servers />
   </component>

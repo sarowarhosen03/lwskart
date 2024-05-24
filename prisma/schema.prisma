@@ -34,6 +34,7 @@ model User {
   updatedAt   DateTime  @updatedAt
   cartId      String?   @db.ObjectId
   whishlistId String?   @db.ObjectId
+  Review      Review[]
 }
 
 model Address {
@@ -184,7 +185,7 @@ model Product {
   description    String
   sizes          String[]
   colors         String[]
-  sku            Int
+  sku            Int         @unique
   soldCounts     Int
   categoryId     String?     @db.ObjectId
   brandId        String?     @db.ObjectId
@@ -197,9 +198,10 @@ model Product {
 }
 
 model Category {
-  id      String    @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  Product Product[]
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  product   Product[]
+  thumbnail String
 }
 
 model Brand {
@@ -210,12 +212,16 @@ model Brand {
 }
 
 model Review {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   review    String
-  rating    Int     @default(1)
+  user      User?    @relation(fields: [userId], references: [id])
+  rating    Int      @default(1)
   // other fields...
-  product   Product @relation(fields: [productId], references: [id])
-  productId String  @db.ObjectId
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String   @db.ObjectId
+  userId    String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum PayMethod {
