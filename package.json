@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "push": "git push -u lws master && git push -u vercel master  "
+    "push": "git push -u lws master&& git push -u main"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.1.0",
