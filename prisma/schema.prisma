@@ -14,27 +14,23 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String?   @unique
+  email         String          @unique
   emailVerified DateTime?
   image         String?
   password      String?
-
   cart          Cart?           @relation(fields: [cartId], references: [id])
   orders        Order[]
-  whisList      Whishlist?      @relation(fields: [whishlistId], references: [id])
+  wishItem      WishItem[]
   accounts      Account[]
   sessions      Session[]
-  // Optional for WebAuthn support
   Authenticator Authenticator[]
-
-  address     Address[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  cartId      String?   @db.ObjectId
-  whishlistId String?   @db.ObjectId
-  Review      Review[]
+  address       Address[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  cartId        String?         @db.ObjectId
+  Review        Review[]
 }
 
 model Address {
@@ -51,23 +47,21 @@ model Address {
 }
 
 model Account {
-  id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String  @db.ObjectId
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String   @db.ObjectId
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.String
-  access_token      String? @db.String
+  refresh_token     String?  @db.String
+  access_token      String?  @db.String
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.String
+  id_token          String?  @db.String
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -78,16 +72,16 @@ model Session {
   userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model VerificationToken {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String   @unique
+  id         String            @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String            @unique
   token      String
   expires    DateTime
+  type       VERIFICATION_TYPE @default(EMAIL_VERIFY)
 
   @@unique([identifier, token])
 }
@@ -109,19 +103,13 @@ model Authenticator {
   @@unique([userId, credentialID])
 }
 
-model Whishlist {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  wishItem WishItem[]
-  User     User[]
-}
-
 model WishItem {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  product Product? @relation(fields: [productId], references: [id])
-
-  Whishlist   Whishlist? @relation(fields: [whishlistId], references: [id])
-  whishlistId String?    @db.ObjectId
-  productId   String?    @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  product     Product? @relation(fields: [productId], references: [id])
+  whishlistId String?  @db.ObjectId
+  productId   String?  @db.ObjectId
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      String?  @db.ObjectId
 }
 
 model Order {
@@ -179,6 +167,7 @@ model Product {
   ratings        Float
   reviews        Review[]
   availability   Boolean
+  stock          Int         @default(0)
   brand          Brand?      @relation(fields: [brandId], references: [id])
   category       Category?   @relation(fields: [categoryId], references: [id])
   details        Json
@@ -188,11 +177,12 @@ model Product {
   sku            Int         @unique
   soldCounts     Int
   categoryId     String?     @db.ObjectId
+  tags           String[]
   brandId        String?     @db.ObjectId
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
   CartItems      CartItems[]
-  WishItem       WishItem[]
+  wishItem       WishItem[]
 
   OrderItems OrderItems[]
 }
@@ -229,4 +219,9 @@ enum PayMethod {
   NAGAD
   ROCKET
   CARD
+}
+
+enum VERIFICATION_TYPE {
+  EMAIL_VERIFY
+  PASSWORD_RESET
 }

@@ -4,28 +4,36 @@ const fs = require("fs");
 const { default: axios } = require("axios");
 const { log } = require("next/dist/server/typescript/utils");
 (async () => {
-
     const prisma = new PrismaClient();
     const products = await prisma.product.findMany({
-        orderBy: {
-            name: "desc",
-        }
-    })
+        include: {
+            category: true,
+        },
+    });
     let i = 0;
-    products.forEach(async (product, index) => {
-        const images = product.image.map((img, index) => {
-            return product.name.split(" ").join("-") + "-" + product.sku + "-" + index + ".jpg"
-        })
+    const newP = products.map((product) => {
+        return {
+            ...product,
+            ntags: generateTags(product.name, product.category.name),
+        };
+    });
+    newP.forEach(async (item) => {
+        if (item.tags.length > 0) {
+            console.log(item.tags);
+            return;
+        }
+        console.log("here");
+        console.log(item.category);
         await prisma.product.update({
             where: {
-                id: product.id
+                id: item.id,
             },
-            data: {
-                image: images
-            }
-        })
 
-    })
+            data: {
+                tags: item.ntags,
+            },
+        });
+    });
 
     // await products.forEach((item) => {
 
@@ -54,8 +62,194 @@ const { log } = require("next/dist/server/typescript/utils");
     // console.log(newProducts)
 })();
 
-async function downloadFile(url, id) {
+// Function to generate tags
+function generateTags(title, category) {
+    // Define a list of common stopwords
+    const stopwords = [
+        "the",
+        "and",
+        "is",
+        "in",
+        "to",
+        "for",
+        "with",
+        "a",
+        "of",
+        "on",
+        "at",
+        "by",
+        "an",
+        "size",
+        "bed",
+        "frame",
+        "modern",
+        "upholstered",
+        "twin",
+        "canopy",
+        "storage",
+        "adjustable",
+        "wooden",
+        "daybed",
+        "trundle",
+        "loft",
+        "elegant",
+        "dining",
+        "table",
+        "coffee",
+        "rustic",
+        "farmhouse",
+        "industrial",
+        "desk",
+        "round",
+        "glass",
+        "top",
+        "console",
+        "foldable",
+        "picnic",
+        "marble",
+        "end",
+        "laptop",
+        "vintage",
+        "accent",
+        "classic",
+        "chair",
+        "leather",
+        "office",
+        "ergonomic",
+        "gaming",
+        "comfort",
+        "recliner",
+        "outdoor",
+        "patio",
+        "swivel",
+        "bar",
+        "stool",
+        "velvet",
+        "lounge",
+        "minimalist",
+        "rocking",
+        "fabric",
+        "sofa",
+        "contemporary",
+        "linen",
+        "retro",
+        "style",
+        "luxe",
+        "modular",
+        "scandinavian",
+        "mid-century",
+        "plush",
+        "chic",
+        "bohemian",
+        "sectional",
+        "luxurious",
+        "cozy",
+        "stylish",
+        "transitional",
+        "french",
+        "country",
+        "set",
+        "rattan",
+        "hammock",
+        "stand",
+        "fire",
+        "pit",
+        "adirondack",
+        "bench",
+        "umbrella",
+        "storage",
+        "plant",
+        "folding",
+        "nightstand",
+        "drawer",
+        "dresser",
+        "mirror",
+        "king",
+        "mattress",
+        "wardrobe",
+        "closet",
+        "bedside",
+        "lamp",
+        "rug",
+        "vanity",
+        "wall",
+        "art",
+        "throw",
+        "blanket",
+        "desk",
+        "mirror",
+        "accent",
+        "bench",
+        "floor",
+        "stainless",
+        "steel",
+        "cookware",
+        "non-stick",
+        "bakeware",
+        "blender",
+        "coffee",
+        "maker",
+        "toaster",
+        "oven",
+        "food",
+        "processor",
+        "knife",
+        "scale",
+        "electric",
+        "kettle",
+        "tv",
+        "stand",
+        "bookshelf",
+        "pillows",
+        "area",
+        "clock",
+        "fan",
+        "pouf",
+        "curtains",
+        "shelf",
+        "memory",
+        "foam",
+        "hybrid",
+        "innerspring",
+        "latex",
+        "pillow",
+        "top",
+        "gel",
+        "orthopedic",
+        "firm",
+        "euro",
+        "waterproof",
+        "protector",
+        "fitted",
+        "sheet",
+        "topper",
+        "foundation",
+        "bag",
+        "encasement",
+        "cleaner",
+        "spray",
+    ];
 
+    // Helper function to clean and split text into words
+    function cleanAndSplit(text) {
+        return text
+            .toLowerCase() // Convert to lowercase
+            .replace(/[^a-z\s]/g, "") // Remove non-alphabetic characters
+            .split(/\s+/) // Split by whitespace
+            .filter((word) => !stopwords.includes(word) && word.length > 1); // Filter stopwords and single letters
+    }
+
+    // Generate tags from title and category
+    const titleTags = cleanAndSplit(title);
+    const categoryTags = cleanAndSplit(category);
+
+    // Combine tags and remove duplicates
+    const tags = Array.from(new Set([...titleTags, ...categoryTags]));
+
+    return tags;
+}
+
+async function downloadFile(url, id) {
     const outputFilePath = path.resolve("public/assets/images/p/", id + ".jpg");
     // console.log(outputFilePath);
     try {
@@ -87,7 +281,9 @@ function getRandomDate(startDate, endDate) {
     const endTimestamp = endDate.getTime();
 
     // Generate a random timestamp between the start and end dates
-    const randomTimestamp = Math.floor(Math.random() * (endTimestamp - startTimestamp + 1)) + startTimestamp;
+    const randomTimestamp =
+        Math.floor(Math.random() * (endTimestamp - startTimestamp + 1)) +
+        startTimestamp;
 
     // Convert the random timestamp to a date
     return new Date(randomTimestamp);

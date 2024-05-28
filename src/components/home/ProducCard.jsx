@@ -1,5 +1,7 @@
+import { getSlug } from "@/utils/slugify";
 import Image from "next/image";
 import Link from "next/link";
+import WishToggle from "../product/WishToggle";
 import RatingStart from "../ui/RatingStart";
 
 export default function ProducCard({
@@ -10,14 +12,15 @@ export default function ProducCard({
     ratings,
     reviewsNumber,
     sku,
+    wishItem
 }) {
     return (
         <div className=" group row-span-3 grid grid-rows-subgrid  overflow-hidden rounded bg-white shadow ">
             <div className="relative">
                 <Image
                     priority
-                    height={100}
-                    width={100}
+                    height={358}
+                    width={265}
                     src={`/assets/images/products/${image[0]}`}
                     alt="product 1"
                     className="w-full"
@@ -27,20 +30,14 @@ export default function ProducCard({
                 bg-black bg-opacity-40 opacity-0 transition group-hover:opacity-100"
                 >
                     <Link
-                        href={`/product/${name}-${sku}`}
+                        href={`/product/${getSlug({ name, sku })}`}
                         draggable={false}
                         className="flex h-8 w-9 items-center justify-center rounded-full bg-primary text-lg text-white transition hover:bg-gray-800"
                         title="view product"
                     >
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </Link>
-                    <a
-                        href="#"
-                        className="flex h-8 w-9 items-center justify-center rounded-full bg-primary text-lg text-white transition hover:bg-gray-800"
-                        title="add to wishlist"
-                    >
-                        <i className="fa-solid fa-heart"></i>
-                    </a>
+                    <WishToggle wishList={wishItem} />
                 </div>
             </div>
             <div className="px-4 pb-3 pt-4">

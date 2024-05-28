@@ -1,30 +1,38 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
-import pirsmaInstance from "@/db/db";
-import bcrypt from "bcryptjs";
+import prismaInstance from "@/db/db";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
+import loginControler from "@/lib/controler/loginControler";
+import jwt from "jsonwebtoken";
+import { ACCESS_EXPIRE_TIME, ACCESS_TOKEN_EXPIRE } from "@/utils/constrains";
+
 export const {
   handlers: { GET, POST },
   auth,
-  signIn,
-  signOut,
 } = NextAuth({
-  adapter: PrismaAdapter(pirsmaInstance),
+  adapter: PrismaAdapter(prismaInstance),
   trustHost: true,
   trustHostedDomain: true,
   session: {
     strategy: "jwt",
   },
   pages: {
-    signIn: "/signin",
+    // signIn: "/login",
   },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          access_type: "offline",
+          prompt: "consent",
+          response_type: "code",
+        },
+      },
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
@@ -49,71 +57,131 @@ export const {
           placeholder: "Remember me",
         },
       },
-      authorize: async ({ email, password, remember }) => {
-        try {
-          //check if any requird fields missing
-          if (!(email || password)) {
-            throw new Error(
-              JSON.stringify({ message: "Please provide all required fileds" }),
-            );
-          }
-
-          const finduser = await pirsmaInstance.user.findUnique({
-            where: {
-              email: email,
-            },
-          });
-
-          if (!finduser) {
-            throw new Error(
-              JSON.stringify({
-                message:
-                  "No such user found with this email please register first",
-              }),
-            );
-          }
-          if (!finduser.emailVerified) {
-            throw new Error(
-              JSON.stringify({
-                message: "Please verify your email first to continue ",
-                emailVerification: true,
-              }),
-            );
-          }
-          const isAuthenticated = await bcrypt.compare(
-            password,
-            finduser.password,
-          );
-
-          if (!isAuthenticated) {
-            throw new Error(JSON.stringify({ message: "Incorrect password" }));
-          }
-
-          return {
-            ...finduser,
-            password: undefined,
-            remember: remember,
-          };
-        } catch (error) {
-          throw error;
-        }
-      },
+      authorize: loginControler,
     }),
   ],
   callbacks: {
-    // async jwt({ token, user }) {
-    //     // If user just signed in or "Remember Me" is enabled, extend the token expiration
-    //     // return token;
-    //     if (user?.remember === "true") {
-    //         token.exp = Date.now() + 30 * 24 * 60 * 60 * 1000
-    //     }
-    //     return { ...token, ...user }
-    // },
-    // async session(session, userOrToken) {
-    //     if (session?.user?.expiration) {
-    //         session.user.expiration = userOrToken?.expiration; // Pass the expiration to the session
-    //     }
-    //     return session;
-    // },
+    async jwt(...arg) {
+      const [{ token, user, account }] = arg;
+      //handel credentials provider
+      if (user && user.user?.provider === "credentials")
+        return { ...token, ...user };
+      else if (token?.user?.provider === "credentials") {
+        if (new Date().getTime() < token.backendTokens.expiresIn) return token;
+        return await refreshToken(token);
+      }
+      console.log("...........", arg, "..............");
+
+      //handel google provider
+      if (account && account.provider === "google") {
+        // console.log(account.refresh_token);
+        // Save the access token and refresh token in the JWT on the initial login, as well as the user details
+        return {
+          access_token: account.access_token,
+          expires_at: account.expires_at,
+          refresh_token: account.refresh_token,
+          user: token,
+        };
+      } else if (Date.now() < token.expires_at * 1000) {
+        // If the access token has not expired yet, return it
+
+        const response = await fetch("https://oauth2.googleapis.com/token", {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams({
+            client_id: process.env.GOOGLE_CLIENT_ID,
+            client_secret: process.env.GOOGLE_CLIENT_SECRET,
+            grant_type: "refresh_token",
+            refresh_token: token.refresh_token,
+          }),
+          method: "POST",
+        });
+
+        const tokens = await response.json();
+        console.log(tokens);
+
+        // console.log(tokens);
+
+        return token;
+      } else {
+        if (!token.refresh_token) throw new Error("Missing refresh token");
+
+        // If the access token has expired, try to refresh it
+        try {
+          // https://accounts.google.com/.well-known/openid-configuration
+          // We need the `token_endpoint`.
+          const response = await fetch("https://oauth2.googleapis.com/token", {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              client_id: process.env.AUTH_GOOGLE_ID,
+              client_secret: process.env.AUTH_GOOGLE_SECRET,
+              grant_type: "refresh_token",
+              refresh_token: token.refresh_token,
+            }),
+            method: "POST",
+          });
+
+          const tokens = await response.json();
+
+          if (!response.ok) throw tokens;
+
+          return {
+            ...token, // Keep the previous token properties
+            access_token: tokens.access_token,
+            expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
+            // Fall back to old refresh token, but note that
+            // many providers may only allow using a refresh token once.
+            refresh_token: tokens.refresh_token ?? token.refresh_token,
+          };
+        } catch (error) {
+          // The error property will be used client-side to handle the refresh token error
+          return { ...token, error: "RefreshAccessTokenError" };
+        }
+      }
+    },
+    async session({ token, session }) {
+      // if (token?.user?.provider === "credentials") {
+      //   session.user = token.user;
+      // }
+      session.user = token.user;
+      session.access_token = token.access_token;
+
+      return session;
+    },
+    async signIn({ user }) {
+      return user?.error !== "accessDenied";
+    },
   },
 });
+
+async function refreshToken(tokens) {
+  try {
+    const refreshTokenData = jwt.verify(
+      tokens?.backendTokens?.refreshToken,
+      process.env.AUTH_REFRESH_SECRET,
+    );
+    const payload = {
+      email: refreshTokenData.email,
+      userId: refreshTokenData.userId,
+    };
+
+    const accessToken = await jwt.sign(
+      payload,
+      process?.env?.AUTH_ACCESS_SECRET,
+      {
+        expiresIn: ACCESS_TOKEN_EXPIRE,
+      },
+    );
+    return {
+      ...tokens,
+      backendTokens: {
+        ...tokens.backendTokens,
+        accessToken,
+        expiresIn: new Date().setTime(
+          new Date().getTime() + ACCESS_EXPIRE_TIME,
+        ),
+      },
+    };
+  } catch (e) {
+    throw new Error("Invalid refresh token");
+  }
+}

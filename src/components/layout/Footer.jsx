@@ -10,7 +10,7 @@ export default function Footer() {
             <Image
               src="/assets/images/logo.svg"
               alt="logo"
-              className="w-30 h-auto"
+              className="w-auto h-auto"
               height={518}
               width={168}
             />

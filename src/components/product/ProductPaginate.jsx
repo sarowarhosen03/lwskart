@@ -4,7 +4,7 @@ import useProducts from "@/hooks/useProducts";
 import { useRef } from "react";
 import ProducCard from "../home/ProducCard";
 import Alert from "../ui/Alert";
-import ProductItemScaffolding from "../ui/loader/ProductItemScaffolding";
+import ProductScaffolding from "../ui/loader/ProductScaffolding";
 
 export default function ProductPaginate() {
     const loaderRef = useRef()
@@ -17,7 +17,7 @@ export default function ProductPaginate() {
 
 
             {
-                isLoading && Array(6).fill(null).map((_i, index) => <ProductItemScaffolding key={index} />)
+                isLoading && <ProductScaffolding />
             }
             <div
                 ref={loaderRef}

@@ -7,8 +7,8 @@ export default function ImageGalary({ image }) {
     return (
         <div>
             <Image
-                height={100}
-                width={100}
+                height={740}
+                width={540}
                 src={`/assets/images/products/${selecTedImage}`}
                 alt="product thumbnail"
                 className="w-full"

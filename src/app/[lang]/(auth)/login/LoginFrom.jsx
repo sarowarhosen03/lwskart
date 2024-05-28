@@ -1,38 +1,53 @@
 "use client";
-import { loginAction } from "@/lib/actions/authActions";
-import { useSession } from 'next-auth/react';
+import Alert from "@/components/ui/Alert";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-export default function LoginFromWraper({ infoData }) {
+import useShowHidePassword from "@/hooks/useShowHidePassword";
+import { useEffect } from "react";
+
+export default function LoginFrom({ infoData }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     clearErrors,
-    formState: { isSubmitting },
     setError,
+    setValue,
   } = useForm();
+  const [showPasswordIcon, showPassword] = useShowHidePassword();
+
   const router = useRouter();
-  const searchPerams = useSearchParams();
-  const callback = searchPerams.get("callback");
-  const data = useSession()
-  console.log(data);
+  const { status } = useSession();
+  useEffect(() => {
+    const referer = document.referrer;
+    if (status === "authenticated") {
+      router.push(referer ? referer : "/");
+    }
+  }, [status, router]);
+
   async function handleLogin(data) {
     try {
-      const res = await loginAction(data);
-      if (!res?.error) {
-        return router.push(callback ? callback : "/");
+      const res = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
+      if (res.error === "AccessDenied") {
+        return setError("formStatus", {
+          type: "error",
+          message:
+            "please verify your email first , we resend the verification link to your email",
+        });
+      } else if (res.error) {
+        setError("formStatus", {
+          type: "error",
+          message: "please check your email and password are correct",
+        });
       }
-
-      if (res?.payload?.message?.includes("Incorrect password")) {
-        return setError('password', {
-          message: res.payload.message
-        })
-      }
-      throw new Error(res?.payload.message)
-
     } catch (error) {
+      // console.log(error);
       setError("formStatus", {
         type: "error",
         message: error.message,
@@ -60,10 +75,14 @@ export default function LoginFromWraper({ infoData }) {
                 value: /\S+@\S+\.\S+/,
                 message: "Entered value does not match email format",
               },
+              onBlur: (e) => {
+                return setValue("email", e.target.value.toLowerCase().trim());
+              },
             })}
             type="email"
             name="email"
             id="email"
+            autoComplete="username"
             className=" peer block w-full rounded border border-gray-300 px-4 py-3 text-sm text-gray-600 placeholder-gray-400 invalid:border-pink-500 invalid:text-pink-600 focus:border-primary  focus:ring-0  focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
             placeholder="youremail.com@domain.com"
           />
@@ -75,17 +94,20 @@ export default function LoginFromWraper({ infoData }) {
           <label htmlFor="password" className="mb-2 block text-gray-600">
             {infoData.password}
           </label>
-          <input
-            {...register("password", {
-              required: "Password is required",
-
-            })}
-            type="password"
-            name="password"
-            id="password"
-            className=" block w-full rounded border border-gray-300 px-4 py-3 text-sm text-gray-600 placeholder-gray-400 focus:border-primary focus:ring-0"
-            placeholder="*******"
-          />
+          <div className="flex">
+            <input
+              autoComplete={"new-password"}
+              {...register("password", {
+                required: "Password is required",
+              })}
+              name="password"
+              id="password"
+              className="block w-full rounded border border-gray-300 px-4 py-3 text-sm text-gray-600 placeholder-gray-400 focus:border-primary focus:ring-0"
+              type={showPassword ? "text" : "password"}
+              placeholder={showPassword ? "password" : "*******"}
+            />
+            {showPasswordIcon}
+          </div>
           <p className="mt-2   text-sm text-pink-600">
             {errors?.password?.message}
           </p>
@@ -112,13 +134,10 @@ export default function LoginFromWraper({ infoData }) {
         </Link>
       </div>
       {errors?.formStatus && (
-        <div className="mt-4 text-center ">
-          <p
-            className={`rounded-sm ${errors.formStatus.type == "error" ? "bg-red-500" : "bg-green-500"} py-3 text-sm font-bold capitalize text-white transition-all  duration-75`}
-          >
-            {errors?.formStatus.message}
-          </p>
-        </div>
+        <Alert
+          variant={errors.formStatus.type === "error" ? "danger" : "success"}
+          message={errors.formStatus.message}
+        />
       )}
 
       <div className="mt-4">
