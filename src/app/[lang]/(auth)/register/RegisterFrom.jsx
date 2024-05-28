@@ -1,9 +1,9 @@
 "use client";
-import { register as userRegister } from "@/lib/actions/authActions";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import Alert from "@/components/ui/Alert";
+import useAuthntiCated from "@/hooks/useAuthntiCated";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
+import { register as userRegister } from "@/lib/actions/authActions";
+import { useForm } from "react-hook-form";
 
 export default function RegisterFrom() {
   const {
@@ -16,7 +16,7 @@ export default function RegisterFrom() {
     setValue,
     handleSubmit,
   } = useForm();
-  const router = useRouter();
+  useAuthntiCated()
   const [showPasswordIcon, showPassword] = useShowHidePassword();
   const handelRegister = async (fromData) => {
     try {

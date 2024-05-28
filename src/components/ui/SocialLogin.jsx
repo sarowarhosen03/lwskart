@@ -1,18 +1,15 @@
 "use client";
-import Image from "next/image";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 export default function SocialLogin({ isLoginPage = false }) {
-  const supportedSocials = [
-    {
-      name: "facebook",
-      color: "blue",
-    },
-    {
-      name: "google",
-      color: "red",
-    },
-  ];
+  const searchPersms = useSearchParams()
+  const errorFromOuth = searchPersms.get('error')
+  if (errorFromOuth === 'OAuthAccountNotLinked') {
+
+
+  }
+
   return (
     <>
       <div className="relative mt-6 flex justify-center">
@@ -23,14 +20,17 @@ export default function SocialLogin({ isLoginPage = false }) {
       </div>
       <div className="mt-4 flex w-full items-center justify-center gap-6">
         <Image
-          onClick={() => signIn("google", { redirectTo: "" })}
+          onClick={() => signIn("google")}
           src={"/assets/images/icons/google.svg"}
           height={34}
           width={34}
           alt="Google"
           className={"h-auto w-auto cursor-pointer"}
         />
-        <i className={"fa-brands fa-facebook fa-2x text-[#0866ff]"}></i>
+        <i
+          onClick={() => signIn("facebook")}
+          className={"fa-brands fa-facebook fa-2x text-[#0866ff]"}
+        ></i>
       </div>
     </>
   );

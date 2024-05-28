@@ -1,13 +1,13 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import prismaInstance from "@/db/db";
+import loginControler from "@/lib/controler/loginControler";
+import { ACCESS_EXPIRE_TIME, ACCESS_TOKEN_EXPIRE } from "@/utils/constrains";
+import jwt from "jsonwebtoken";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
-import loginControler from "@/lib/controler/loginControler";
-import jwt from "jsonwebtoken";
-import { ACCESS_EXPIRE_TIME, ACCESS_TOKEN_EXPIRE } from "@/utils/constrains";
 
 export const {
   handlers: { GET, POST },
@@ -20,7 +20,7 @@ export const {
     strategy: "jwt",
   },
   pages: {
-    // signIn: "/login",
+    signIn: "/login",
   },
   providers: [
     GoogleProvider({
@@ -29,7 +29,7 @@ export const {
       authorization: {
         params: {
           access_type: "offline",
-          prompt: "consent",
+          prompt: "select_account",
           response_type: "code",
         },
       },
@@ -65,46 +65,44 @@ export const {
       const [{ token, user, account }] = arg;
       //handel credentials provider
       if (user && user.user?.provider === "credentials")
+        //first time loggedin
         return { ...token, ...user };
       else if (token?.user?.provider === "credentials") {
-        if (new Date().getTime() < token.backendTokens.expiresIn) return token;
-        return await refreshToken(token);
+        try {
+          const validet = jwt.verify(
+            token.backendTokens.accessToken,
+            process.env.AUTH_ACCESS_SECRET,
+          );
+
+          if (new Date().getTime() < token.backendTokens.expiresIn && validet) {
+            return token;
+          } else {
+            return await refreshToken(token);
+          }
+        } catch (error) {
+          if (error?.message.includes("jwt expired")) {
+            return await jwt.refreshToken(token);
+          }
+          throw new Error("Invalid token");
+        }
       }
-      console.log("...........", arg, "..............");
 
       //handel google provider
       if (account && account.provider === "google") {
         // console.log(account.refresh_token);
         // Save the access token and refresh token in the JWT on the initial login, as well as the user details
+
         return {
           access_token: account.access_token,
           expires_at: account.expires_at,
           refresh_token: account.refresh_token,
-          user: token,
+          user: { ...token, provider: account.provider, id: user.id },
         };
       } else if (Date.now() < token.expires_at * 1000) {
         // If the access token has not expired yet, return it
-
-        const response = await fetch("https://oauth2.googleapis.com/token", {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: new URLSearchParams({
-            client_id: process.env.GOOGLE_CLIENT_ID,
-            client_secret: process.env.GOOGLE_CLIENT_SECRET,
-            grant_type: "refresh_token",
-            refresh_token: token.refresh_token,
-          }),
-          method: "POST",
-        });
-
-        const tokens = await response.json();
-        console.log(tokens);
-
-        // console.log(tokens);
-
         return token;
       } else {
         if (!token.refresh_token) throw new Error("Missing refresh token");
-
         // If the access token has expired, try to refresh it
         try {
           // https://accounts.google.com/.well-known/openid-configuration
@@ -112,8 +110,8 @@ export const {
           const response = await fetch("https://oauth2.googleapis.com/token", {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({
-              client_id: process.env.AUTH_GOOGLE_ID,
-              client_secret: process.env.AUTH_GOOGLE_SECRET,
+              client_id: process.env.GOOGLE_CLIENT_ID,
+              client_secret: process.env.GOOGLE_CLIENT_SECRET,
               grant_type: "refresh_token",
               refresh_token: token.refresh_token,
             }),
@@ -122,7 +120,9 @@ export const {
 
           const tokens = await response.json();
 
-          if (!response.ok) throw tokens;
+          if (!response.ok) {
+            throw tokens;
+          }
 
           return {
             ...token, // Keep the previous token properties
@@ -139,11 +139,14 @@ export const {
       }
     },
     async session({ token, session }) {
-      // if (token?.user?.provider === "credentials") {
-      //   session.user = token.user;
-      // }
-      session.user = token.user;
-      session.access_token = token.access_token;
+      if (token?.user?.provider === "credentials") {
+        session.user = token.user;
+        session.access_token = token.backendTokens.accessToken;
+        return session;
+      } else if (token?.user?.provider === "google") {
+        session.user = token.user;
+        session.access_token = token.access_token;
+      }
 
       return session;
     },

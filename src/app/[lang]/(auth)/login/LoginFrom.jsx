@@ -1,11 +1,11 @@
 "use client";
 import Alert from "@/components/ui/Alert";
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import useAuthntiCated from "@/hooks/useAuthntiCated";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
-import { useEffect } from "react";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 export default function LoginFrom({ infoData }) {
   const {
@@ -16,17 +16,12 @@ export default function LoginFrom({ infoData }) {
     setError,
     setValue,
   } = useForm();
+ 
   const [showPasswordIcon, showPassword] = useShowHidePassword();
-
-  const router = useRouter();
-  const { status } = useSession();
-  useEffect(() => {
-    const referer = document.referrer;
-    if (status === "authenticated") {
-      router.push(referer ? referer : "/");
-    }
-  }, [status, router]);
-
+  useAuthntiCated()
+ 
+ 
+  
   async function handleLogin(data) {
     try {
       const res = await signIn("credentials", {

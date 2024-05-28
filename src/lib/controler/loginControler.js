@@ -16,7 +16,7 @@ export default async function loginControler({ email, password, remember }) {
         email: true,
         password: true,
         emailVerified: true,
-        picture: true,
+        image: true,
       },
     });
     if (foundUser && !foundUser.emailVerified) {

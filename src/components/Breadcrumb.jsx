@@ -25,7 +25,14 @@ export default function Breadcrumb() {
                 <i className="fa-solid fa-chevron-right"></i>
             </span>
             {
-                paths.map((path, i) => <Link href={`/${path.path}`} key={i} className="text-gray-600 font-medium hover:text-primary">{path.text}</Link>)
+                paths.map((path, i) => {
+                    if (i - 1 === paths.length) {
+                        return (<p key={i} className="text-gray-600 font-medium ">{path.text}</p>)
+
+                    }
+                    return (<Link href={`/${path.path}`} key={i} className="text-gray-600 font-medium hover:text-primary">{path.text}</Link>)
+
+                })
             }
         </div>
     )
