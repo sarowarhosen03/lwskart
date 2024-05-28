@@ -1,10 +1,14 @@
 import prisma from "@/db/db";
+import sendVerificationEmail from "@/lib/sendVerificationEmail";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { ACCESS_EXPIRE_TIME, ACCESS_TOKEN_EXPIRE } from "@/utils/constrains";
-import sendVerificationEmail from "@/lib/sendVerificationEmail";
 
-const refreshExpireTime = (remember) => (remember ? 30 : 1);
+const expireTimes = {
+  accessToken_jwt: "10s",
+  expires_in: 10 * 1000, //1hour in ms,
+  refreshExpireTime: (remember) => (remember ? "1d" : "90d"),
+};
+
 export default async function loginControler({ email, password, remember }) {
   try {
     const foundUser = await prisma.user.findUnique({
@@ -25,20 +29,14 @@ export default async function loginControler({ email, password, remember }) {
     }
     if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
       const { password, emailVerified, ...result } = foundUser;
+
       const payload = { email: result.email, userId: result.id };
       return {
         user: { ...result, provider: "credentials" },
-        backendTokens: {
-          accessToken: jwt.sign(payload, process.env.AUTH_ACCESS_SECRET, {
-            expiresIn: ACCESS_TOKEN_EXPIRE,
-          }),
-          refreshToken: jwt.sign(payload, process.env.AUTH_REFRESH_SECRET, {
-            expiresIn: refreshExpireTime(remember) + "d",
-          }),
-          expiresIn: new Date().setTime(
-            new Date().getTime() + ACCESS_EXPIRE_TIME,
-          ),
-        },
+        access_token: generatAccessToken(payload),
+        refresh_token: generateRefreshToken(payload, remember),
+        expires_at: Date.now() + expireTimes.expires_in,
+
       };
     }
 
@@ -46,4 +44,38 @@ export default async function loginControler({ email, password, remember }) {
   } catch (error) {
     throw new Error(error?.message || "Something went wrong");
   }
+}
+
+export async function refreshToken(tokens) {
+  try {
+    const refreshTokenData = jwt.verify(
+      tokens?.refresh_token,
+      process.env.AUTH_REFRESH_SECRET,
+    );
+    const payload = {
+      email: refreshTokenData.email,
+      userId: refreshTokenData.userId,
+    };
+
+    const access_token = generatAccessToken(payload);
+
+    return {
+      ...tokens,
+      access_token,
+      expires_at: Date.now() + expireTimes.expires_in
+    };
+  } catch (e) {
+    throw new Error("Invalid refresh token");
+  }
+}
+
+function generatAccessToken(payload) {
+  return jwt.sign(payload, process.env.AUTH_ACCESS_SECRET, {
+    expiresIn: expireTimes.accessToken_jwt,
+  });
+}
+function generateRefreshToken(payload, remember) {
+  return jwt.sign(payload, process.env.AUTH_REFRESH_SECRET, {
+    expiresIn: expireTimes.refreshExpireTime(remember),
+  });
 }

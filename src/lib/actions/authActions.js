@@ -1,9 +1,9 @@
 "use server";
 import prisma from "@/db/db";
+import { VERIFY_EMAIL } from "@/utils/constrains";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import sendVerificationEmail from "../sendVerificationEmail";
-import { VERIFY_EMAIL } from "@/utils/constrains";
 
 const HASH_SALT = 6;
 
@@ -83,21 +83,16 @@ export async function verifyEmail({ token, email }) {
       }
 
       await prisma.$transaction([
+
         prisma.verificationToken.deleteMany({
-          where: { identifier: tokenData.email, type: VERIFY_EMAIL },
+          where: { identifier: user.email, type: VERIFY_EMAIL },
         }),
-        prisma.user.updateMany({
-          where: { email, type: VERIFY_EMAIL },
+        prisma.user.update({
+          where: { email: user.email },
           data: { emailVerified: new Date() },
           select: { id: true },
         }),
-        prisma.Account.create({
-          data: {
-            userId: user.id,
-            provider: "credentials",
-            type: VERIFY_EMAIL,
-          },
-        }),
+
       ]);
 
       return {
