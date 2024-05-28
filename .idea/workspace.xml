@@ -5,40 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e78ac6c0-cbb5-4b86-9328-68dfa2074086" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/images/icons/google.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/product/WishToggle.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/ui/SocialLogin.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/hooks/useShowHidePassword.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lib/controler/loginControler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generateDummyData.js" beforeDir="false" afterPath="$PROJECT_DIR$/generateDummyData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/LoginFromWraper.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/LoginFrom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/RegisterFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/RegisterFrom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(home)/@products/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/@products/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ImageGalary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ImageGalary.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ProductDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ProductDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/RelatedProducts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/RelatedProducts.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/home/ProducCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/home/ProducCard.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Footer.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Footer.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/prodoucts/ProductList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/ProductList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/prodoucts/ProductPaginate.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/product/ProductPaginate.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/LoginButton.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/LoginButton.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/loader/ProductItemScaffolding.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/instrumentation.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/actions/authActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/dbQueries/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/dbQueries/products.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/sendVerificationEmail.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/sendVerificationEmail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/constrains.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/constrains.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/SocialLogin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/SocialLogin.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,6 +125,7 @@
       <workItem from="1716836216001" duration="11089000" />
       <workItem from="1716851571101" duration="11013000" />
       <workItem from="1716881976112" duration="592000" />
+      <workItem from="1716883497101" duration="1536000" />
     </task>
     <servers />
   </component>

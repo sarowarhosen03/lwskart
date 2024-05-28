@@ -23,7 +23,7 @@ export default function SocialLogin({ isLoginPage = false }) {
       </div>
       <div className="mt-4 flex w-full items-center justify-center gap-6">
         <Image
-          onClick={() => signIn("google", { redirectTo: "/" })}
+          onClick={() => signIn("google", { redirectTo: "" })}
           src={"/assets/images/icons/google.svg"}
           height={34}
           width={34}
