@@ -78,7 +78,8 @@ model Session {
 
 model VerificationToken {
   id         String            @id @default(auto()) @map("_id") @db.ObjectId
-  identifier String            @unique
+  identifier String
+  userId     String
   token      String
   expires    DateTime
   type       VERIFICATION_TYPE @default(EMAIL_VERIFY)

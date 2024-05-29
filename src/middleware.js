@@ -1,31 +1,77 @@
-import {
-    nextMiddleware,
-    setMiddleware,
-} from "../src/lib/midilwareHelper";
-import internationalization from "./lib/controler/internationalization";
+import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
+import { pathToRegexp } from "path-to-regexp";
+import internationalization, {
+    pathNameIsMissingLocale,
+} from "./lib/controler/internationalization";
 
-setMiddleware('/*', internationalization)
-// setMiddleware('/login', async (req) => {
-//     const season = await auth();
-//     if (season?.user) {
-//         redirect("/")
-//     }
-
-// })
-
-
-
-export function middleware(request) {
-    return nextMiddleware(request);
-
+export default function middleware(req) {
+    if (!req.nextUrl.pathname?.startsWith("/api")) {
+        //add internationalization
+        const pathNameIsMissing = pathNameIsMissingLocale(req);
+        if (pathNameIsMissing) {
+            return internationalization(req);
+        }
+        //handel public and private routes
+        return handleRouteMiddleware(req);
+    }
+    return handleRouteMiddleware(req);
 }
+
+// Define matchRoute function
+function matchRoute(pathname, routes) {
+    for (let route of routes) {
+        if (route.test(pathname)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to match the pathname against the routes
+
+
+// Define public routes with dynamic segments
+const publicOnlyRoutes = [
+    pathToRegexp('/:locals/verify'),
+    pathToRegexp('/:locals/login'),
+    pathToRegexp('/:locals/register')
+];
+const privatRoute = [
+    pathToRegexp('/:locals/account'),
+    pathToRegexp('/api/user'),
+];
+
+// Middleware function to handle routes
+async function handleRouteMiddleware(req) {
+    const pathname = req.nextUrl.pathname; // Extract pathname from the request
+    const isPublicOnly = matchRoute(pathname, publicOnlyRoutes);
+
+    if (isPublicOnly) {
+        const session = await getToken({ req, secret: process.env.AUTH_SECRET });
+        if (session) {
+            return NextResponse.redirect(
+                new URL('/', req.url)
+            );
+
+        }
+    }
+    const isPrivatRoute = matchRoute(pathname, privatRoute);
+    if (isPrivatRoute) {
+        const session = await getToken({ req, secret: process.env.AUTH_SECRET });
+        if (!session) {
+            return NextResponse.redirect(
+                new URL('/', req.url)
+            );
+        }
+    }
+
+    return NextResponse.next();
+}
+
+
+
 
 export const config = {
-    matcher: [
-        // Skip all internal paths (_next, assets, api)
-        '/((?!api|assets|.*\\..*|_next).*)',
-        // Optional: only run on root (/) URL
-        // '/'
-    ],
-}
-
+    matcher: ["/((?!api/auth|assets|.*\\..*|_next).*)"],
+};

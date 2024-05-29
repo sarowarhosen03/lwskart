@@ -4,8 +4,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const expireTimes = {
-  accessToken_jwt: "10s",
-  expires_in: 10 * 1000, //1hour in ms,
+  accessToken_jwt: "1h",
+  expires_in: 60 * 60 * 1000, //1hour in ms,
   refreshExpireTime: (remember) => (remember ? "1d" : "90d"),
 };
 
@@ -24,7 +24,11 @@ export default async function loginControler({ email, password, remember }) {
       },
     });
     if (foundUser && !foundUser.emailVerified) {
-      await sendVerificationEmail({ email });
+      await sendVerificationEmail({
+        email: foundUser.email,
+        userId: foundUser.id,
+      });
+
       return { error: "accessDenied" };
     }
     if (foundUser && (await bcrypt.compare(password, foundUser.password))) {

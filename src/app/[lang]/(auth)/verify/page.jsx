@@ -1,17 +1,20 @@
 "use client";
-
+import Alert from "@/components/ui/Alert";
 import { verifyEmail } from "@/lib/actions/authActions";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function VerifyPage() {
+
   const router = useRouter();
   const urlsearchPerms = useSearchParams();
+
   const [isPending, setIsPending] = useState(false);
   const [response, setRespons] = useState();
   const token = urlsearchPerms.get("token");
   const email = urlsearchPerms.get("email");
+
   const handelVerify = async () => {
     try {
       setIsPending(true);
@@ -41,7 +44,7 @@ export default function VerifyPage() {
   }
 
   return (
-    <div className="flex min-h-56 flex-col items-center justify-center space-y-5 capitalize">
+    <div className=" flex min-h-56 flex-col items-center justify-center space-y-5  capitalize">
       <Image
         priority
         src={`/assets/images/icons/${iconName}`}
@@ -50,8 +53,8 @@ export default function VerifyPage() {
         alt="status icon"
         className="size-15"
       />
-      {response?.message ? <p className="text-xl">{response?.message}</p> : <p>Click the button below to verify your email adress</p>}
-
+      {!!response?.message && (<div className=" mx-6"><Alert variant={response?.error ? "danger" : "success"} message={response?.message.trim()} /></div>)}
+      {!!!response?.message && (<p>Click the button below to verify your email adress</p>)}
 
 
       {

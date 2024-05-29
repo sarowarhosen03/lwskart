@@ -1,34 +1,25 @@
 import prisma from "@/db/db";
-import { emailVerificationExpire, VERIFY_EMAIL } from "@/utils/constrains";
+import { emailVerificationExpire } from "@/utils/constrains";
+import { VERIFICATION_TYPE } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "./sendEmail";
 
-export default async function sendVerificationEmail({ email }) {
+export default async function sendVerificationEmail({ email, userId }) {
   try {
     const expireTime = emailVerificationExpire();
     const token = jwt.sign(
-      {
-        type: VERIFY_EMAIL,
-        email: email,
-      },
+      { type: VERIFICATION_TYPE.EMAIL_VERIFY, email, userId },
       process.env.AUTH_SECRET,
-      {
-        expiresIn: Math.floor(new Date(expireTime).getTime() / 1000),
-      },
+      { expiresIn: Math.floor(new Date(expireTime).getTime() / 1000), },
     );
 
-    await prisma.VerificationToken.upsert({
-      where: {
-        identifier: email,
-      },
-      update: {
-        token: token,
-        expires: emailVerificationExpire(),
-      },
-      create: {
+    await prisma.VerificationToken.create({
+      data: {
         identifier: email,
         token,
         expires: expireTime,
+        type: VERIFICATION_TYPE.EMAIL_VERIFY,
+        userId,
       },
     });
     return sendEmail({

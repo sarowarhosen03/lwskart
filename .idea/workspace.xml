@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e78ac6c0-cbb5-4b86-9328-68dfa2074086" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hooks/useOrigin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/LoginFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/LoginFrom.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/RegisterFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/RegisterFrom.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ui/SocialLogin.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/SocialLogin.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/controler/loginControler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/controler/loginControler.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,6 +128,7 @@
       <workItem from="1716851571101" duration="11013000" />
       <workItem from="1716881976112" duration="592000" />
       <workItem from="1716883497101" duration="8770000" />
+      <workItem from="1716926408798" duration="643000" />
     </task>
     <servers />
   </component>

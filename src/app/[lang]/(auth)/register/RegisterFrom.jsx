@@ -4,6 +4,7 @@ import useAuthntiCated from "@/hooks/useAuthntiCated";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
 import { register as userRegister } from "@/lib/actions/authActions";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 export default function RegisterFrom() {
   const {
@@ -16,7 +17,8 @@ export default function RegisterFrom() {
     setValue,
     handleSubmit,
   } = useForm();
-  useAuthntiCated()
+  useAuthntiCated();
+  const router = useRouter();
   const [showPasswordIcon, showPassword] = useShowHidePassword();
   const handelRegister = async (fromData) => {
     try {
@@ -27,6 +29,9 @@ export default function RegisterFrom() {
           message:
             "user registered successfully please check your email inbox to verify it",
         });
+        setTimeout(() => {
+          router.push("/login");
+        }, 5000);
       } else {
         setError("formStatus", {
           type: "error",

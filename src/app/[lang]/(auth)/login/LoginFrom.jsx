@@ -16,12 +16,15 @@ export default function LoginFrom({ infoData }) {
     setError,
     setValue,
   } = useForm();
- 
+
   const [showPasswordIcon, showPassword] = useShowHidePassword();
-  useAuthntiCated()
- 
- 
-  
+  useAuthntiCated();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  if (email) {
+    setValue("email", email);
+  }
+
   async function handleLogin(data) {
     try {
       const res = await signIn("credentials", {

@@ -23,9 +23,7 @@ function getLocale(request) {
 
     return match(languages, locales.map(loc => loc.code), defaultLocale); // en or bn
 }
-
-
-export default function internationalization(request) {
+export function pathNameIsMissingLocale(request) {
     // get the pathname from request url
     const pathname = request.nextUrl.pathname;
 
@@ -34,21 +32,23 @@ export default function internationalization(request) {
             !pathname.startsWith(`/${locale.code}`) &&
             !pathname.startsWith(`/${locale.code}/`)
     );
+    return pathNameIsMissingLocale;
 
-    if (pathNameIsMissingLocale) {
-        // detect user's preference & redirect with a locale with a path eg: /en/about
-        const locale = getLocale(request);
-        // Create a URL object
-        const url = new URL(request.url);
-        const pathname = url.pathname;
-        const search = url.search;
-        const newPathname = `/${locale}${pathname}`;
-        // Construct the new URL
-        const newUrl = `${newPathname}${search}`;
-        return NextResponse.redirect(
-            new URL(newUrl, request.url)
-        );
-    }
+}
 
-    return NextResponse.next();
+export default function internationalization(request) {
+
+    // detect user's preference & redirect with a locale with a path eg: /en/about
+    const locale = getLocale(request);
+    // Create a URL object
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+    const search = url.search;
+    const newPathname = `/${locale}${pathname}`;
+    // Construct the new URL
+    const newUrl = `${newPathname}${search}`;
+    return NextResponse.redirect(
+        new URL(newUrl, request.url)
+    );
+
 }

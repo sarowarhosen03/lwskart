@@ -1,19 +1,12 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-
+import { authConFig } from "@/auth/auth.config";
 import prismaInstance from "@/db/db";
-import loginControler, { refreshToken } from "@/lib/controler/loginControler";
-import {
-  refreshDiscordToken,
-  refreshGoogleToken,
-} from "@/lib/refreswhTokens";
+import { refreshToken } from "@/lib/controler/loginControler";
+import { refreshDiscordToken, refreshGoogleToken } from "@/lib/refreswhTokens";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import DiscorProvider from "next-auth/providers/discord";
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
+
 const sameProviders = ["google", "discord"];
 const isSameProvder = (provider) => sameProviders.includes(provider);
-
 export const {
   handlers: { GET, POST },
   auth,
@@ -27,64 +20,16 @@ export const {
   pages: {
     signIn: "/login",
   },
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          access_type: "offline",
-          prompt: "select_account",
-          response_type: "code",
-        },
-      },
-    }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    }),
-    DiscorProvider({
-      clientId: process.env.DISCORD_CLIENT_ID,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "none",
-        },
-      },
-    }),
-
-    CredentialsProvider({
-      credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "Enter your email",
-        },
-        password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Enter your password",
-        },
-        remember: {
-          label: "Remember me",
-          type: "checkbox",
-          placeholder: "Remember me",
-        },
-      },
-      authorize: loginControler,
-    }),
-  ],
+  ...authConFig,
   callbacks: {
     async jwt(...arg) {
       const [{ token, user, account }] = arg;
 
       if (user && user?.user?.provider === "credentials") {
         return { ...token, ...user };
-      }
-      else if (token?.user?.provider === "credentials") {
-        if (Date.now() < token.expires_at) return token
-        return refreshToken(token)
-
+      } else if (token?.user?.provider === "credentials") {
+        if (Date.now() < token.expires_at) return token;
+        return refreshToken(token);
       }
 
       //handel google,discore provider
@@ -133,7 +78,7 @@ export const {
         token?.user?.provider === "credentials" ||
         isSameProvder(token?.user?.provider)
       ) {
-        session.toke = token.access_token
+        session.toke = token.access_token;
         session.user = token.user;
         // session.access_token = token.backendTokens.accessToken;
         return session;

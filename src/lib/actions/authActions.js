@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/db/db";
-import { VERIFY_EMAIL } from "@/utils/constrains";
+import { VERIFICATION_TYPE } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import sendVerificationEmail from "../sendVerificationEmail";
@@ -16,12 +16,16 @@ export async function register(data) {
 
   try {
     const hashedPassword = await bcrypt.hash(data.password, HASH_SALT);
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         name: data.name,
         email: data.email,
         password: hashedPassword,
       },
+    });
+    await sendVerificationEmail({
+      email: newUser.email,
+      userId: newUser.id,
     });
     return {
       error: false,
@@ -31,16 +35,21 @@ export async function register(data) {
     };
   } catch (error) {
     if (error?.message.includes("User_email_key")) {
+      //alread user exists
       const user = await prisma.user.findUnique({
         where: {
           email: data.email,
         },
+        select: {
+          emailVerified: true,
+          id: true,
+        },
       });
 
-      if (user && user.email === data.email) {
+      if (user) {
         return {
           error: true,
-          message: "User already exists please login ",
+          message: "User already exists please try to  login ",
           redirect: "/login",
         };
       }
@@ -56,12 +65,39 @@ export async function register(data) {
 export async function verifyEmail({ token, email }) {
   try {
     let tokenData;
+    const user = await prisma.user.findFirst({
+      where: { email: email }
+    }
+    );
+    if (user.emailVerified) {
+      return {
+        error: false,
+        message: "User already verified"
+      }
+    }
+    if (!user) {
+      throw new Error("invalid token");
+    }
     try {
       tokenData = jwt.verify(token, process.env.AUTH_SECRET);
     } catch (error) {
       if (error?.message.includes("jwt expired")) {
         //token expired
-        await sendVerificationEmail({ email });
+        const tokenInfo = await prisma.VerificationToken.finFirst({
+          where: {
+            token,
+            identifier: email,
+            type: VERIFICATION_TYPE.EMAIL_VERIFY,
+          },
+          select: {
+            userId: true,
+          },
+        });
+        if (!tokenInfo) {
+          throw new Error("invalid token");
+        }
+
+        await sendVerificationEmail({ email, userId: tokenInfo.userId });
         throw new Error(
           "Token expired wen send a new email to you please check your email inbox to verify your email then login",
         );
@@ -69,30 +105,26 @@ export async function verifyEmail({ token, email }) {
         throw new Error("invalid token");
       }
     }
-
     if (tokenData && tokenData.email === email) {
-      const user = await prisma.VerificationToken.findUnique({
-        where: {
-          identifier: email,
-          type: VERIFY_EMAIL,
-        },
-      });
-
-      if (!user) {
-        throw new Error("invalid token");
-      }
-
       await prisma.$transaction([
-
-        prisma.verificationToken.deleteMany({
-          where: { identifier: user.email, type: VERIFY_EMAIL },
+        prisma.verificationToken.delete({
+          where: {
+            identifier_token: {
+              identifier: email,
+              token: token
+            }
+          },
         }),
         prisma.user.update({
-          where: { email: user.email },
-          data: { emailVerified: new Date() },
+          where: {
+            email: tokenData.email,
+            id: tokenData.userId
+          },
+          data: {
+            emailVerified: new Date()
+          },
           select: { id: true },
         }),
-
       ]);
 
       return {
@@ -101,12 +133,10 @@ export async function verifyEmail({ token, email }) {
         redirect: "/login",
       };
     }
-
-    throw new Error("invalid token");
   } catch (error) {
     return {
       error: true,
-      message: error?.message || "Something went wrong",
+      message: "Something went wrong",
     };
   }
 }
