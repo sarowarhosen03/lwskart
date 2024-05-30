@@ -2,17 +2,19 @@ import { getSlug } from "@/utils/slugify";
 import Image from "next/image";
 import Link from "next/link";
 import WishToggle from "../product/WishToggle";
+import AddToCartBtn from "../ui/AddToCartBtn";
 import RatingStart from "../ui/RatingStart";
 
 export default function ProducCard({
-    name,
+    id, name,
     image,
     price,
     discount_price,
     ratings,
     reviewsNumber,
     sku,
-    wishItem
+    wishItem,
+    availability,
 }) {
     return (
         <div className=" group row-span-3 grid grid-rows-subgrid  overflow-hidden rounded bg-white shadow ">
@@ -37,7 +39,7 @@ export default function ProducCard({
                     >
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </Link>
-                    <WishToggle wishList={wishItem} />
+                    <WishToggle wishList={wishItem} productId={id} />
                 </div>
             </div>
             <div className="px-4 pb-3 pt-4">
@@ -59,12 +61,9 @@ export default function ProducCard({
                     <div className="ml-3 text-xs text-gray-500">({reviewsNumber})</div>
                 </div>
             </div>
-            <a
-                href="#"
-                className="block w-full rounded-b border border-primary bg-primary py-1 text-center text-white transition hover:bg-transparent hover:text-primary"
-            >
-                Add to cart
-            </a>
+
+            <AddToCartBtn productId={id} availability={availability} />
+
         </div>
     );
 }

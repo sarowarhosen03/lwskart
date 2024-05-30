@@ -5,7 +5,7 @@ import PrimaryNavopions from "./PrimaryNavopions";
 
 export default function Header() {
   return (
-    <header className="bg-white py-4 shadow-sm">
+    <header className="bg-white py-4 shadow-sm  sticky top-0  z-50">
       <div className="container flex items-center justify-between">
         <Link href="/">
           <Image priority src={logoImage} alt="Logo" className="h-auto w-32 " />

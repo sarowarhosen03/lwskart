@@ -20,7 +20,7 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
-  cart          Cart?           @relation(fields: [cartId], references: [id])
+  CartItems     CartItems[]
   orders        Order[]
   wishItem      WishItem[]
   accounts      Account[]
@@ -29,7 +29,6 @@ model User {
   address       Address[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  cartId        String?         @db.ObjectId
   Review        Review[]
 }
 
@@ -105,12 +104,13 @@ model Authenticator {
 }
 
 model WishItem {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  product     Product? @relation(fields: [productId], references: [id])
-  whishlistId String?  @db.ObjectId
-  productId   String?  @db.ObjectId
-  User        User?    @relation(fields: [userId], references: [id])
-  userId      String?  @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.ObjectId
+
+  @@unique([productId, userId])
 }
 
 model Order {
@@ -143,19 +143,23 @@ model Invoice {
   trxid         String
 }
 
-model Cart {
-  id    String      @id @default(auto()) @map("_id") @db.ObjectId
-  items CartItems[]
-  User  User[]
+model CartItems {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  product   Product?       @relation(fields: [productId], references: [id])
+  itemCount Int            @default(0)
+  productId String?        @db.ObjectId
+  User      User?          @relation(fields: [userId], references: [id])
+  userId    String?        @db.ObjectId
+  status    CartItemStatus @default(available)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @default(now())
+
+  @@unique([productId, userId])
 }
 
-model CartItems {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  product   Product? @relation(fields: [productId], references: [id])
-  itemCount Int      @default(1)
-  Cart      Cart?    @relation(fields: [cartId], references: [id])
-  cartId    String?  @db.ObjectId
-  productId String?  @db.ObjectId
+enum CartItemStatus {
+  available
+  outOfStock
 }
 
 model Product {

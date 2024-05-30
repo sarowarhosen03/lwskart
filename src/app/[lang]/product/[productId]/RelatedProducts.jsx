@@ -1,10 +1,10 @@
 import ProducCard from "@/components/home/ProducCard";
 import Alert from "@/components/ui/Alert";
-import { getRalatedproducts } from "@/lib/dbQueries/products";
+import { getRelatedProducts } from "@/lib/dbQueries/products";
 import Link from "next/link";
 
 export default async function RelatedProducts({ payload }) {
-    const { products, total } = await getRalatedproducts(payload);
+    const { products, total } = await getRelatedProducts(payload);
     return (
         <>
             {products.map((product) => (

@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
 import { cache } from "react";
 
@@ -55,7 +56,7 @@ export const getProductByNameAndSku = cache((productString) => {
   });
 });
 
-export const getRalatedproducts = cache(
+export const getRelatedProducts = cache(
   async ({ productId, categoryId, tags, price }) => {
     const priceRange = {
       min: price * 0.1,
@@ -128,3 +129,86 @@ export const getRalatedproducts = cache(
     };
   },
 );
+
+export const addToCart = async (productId, quantity = 1) => {
+  try {
+    const session = await auth();
+    if (session) {
+      const id = session.user.id;
+      //select product
+      const product = await prisma.product.findUnique({
+        where: {
+          id: productId,
+        },
+      });
+      if (product) {
+        const availableToPurchase = Math.min(product.stock, quantity);
+        const newStock = product.stock - availableToPurchase;
+        const availability = newStock > 0;
+        if (availableToPurchase > 0) {
+          const CartItems = await prisma.CartItems.findFirst({
+            where: {
+              productId: productId,
+              userId: id,
+            },
+          });
+
+          const productUpdateData = {
+            availability,
+            stock: newStock
+          }
+
+          await prisma.$transaction([
+
+            prisma.cartItems.upsert({
+              where: {
+                productId_userId: {
+                  productId: productId,
+                  userId: id
+                }
+              },
+              update: {
+                itemCount: (CartItems?.itemCount || 0) + availableToPurchase,
+              },
+              create: {
+                product: {
+                  connect: { id: productId }
+                },
+                User: {
+                  connect: { id: id }
+                },
+                itemCount: availableToPurchase
+              },
+            }),
+
+            prisma.product.update({
+              where: {
+                id: productId,
+              },
+              data: productUpdateData
+            })
+          ]);
+          return {
+            success: true,
+            data: {
+              productId: productId,
+              quantity: availableToPurchase,
+              availability
+            }
+          };
+        } else {
+          return {
+            error: "Out of stock",
+          };
+        }
+      }
+
+    }
+  } catch (error) {
+
+    return {
+      error: true,
+      message: "Something went wrong",
+    }
+  }
+};

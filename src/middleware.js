@@ -39,14 +39,13 @@ const publicOnlyRoutes = [
 ];
 const privatRoute = [
     pathToRegexp('/:locals/account'),
-    pathToRegexp('/api/user'),
+    pathToRegexp('/api/user/:rest*')
 ];
 
 // Middleware function to handle routes
 async function handleRouteMiddleware(req) {
     const pathname = req.nextUrl.pathname; // Extract pathname from the request
     const isPublicOnly = matchRoute(pathname, publicOnlyRoutes);
-
     if (isPublicOnly) {
         const session = await getToken({ req, secret: process.env.AUTH_SECRET });
         if (session) {
