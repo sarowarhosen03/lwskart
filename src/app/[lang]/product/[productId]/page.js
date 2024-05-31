@@ -5,30 +5,32 @@ import { Suspense } from "react";
 import ProductDetails from "./ProductDetails";
 import RelatedProducts from "./RelatedProducts";
 
-export default async function prodctDetailsPage({ params: { productId, lang } }) {
-    const productInfo = await getProductByNameAndSku(productId);
-    return (
-        <>
-            <Breadcrumb />
-            <ProductDetails productInfo={productInfo} lang={lang} />
+export default async function prodctDetailsPage({
+  params: { productId, lang },
+}) {
+  const productInfo = await getProductByNameAndSku(productId);
+  return (
+    <>
+      <Breadcrumb />
+      <ProductDetails productInfo={productInfo} lang={lang} />
 
-            <div className="container pb-16">
-                <h2 className="text-2xl font-medium text-gray-800 uppercase mb-6">Related products</h2>
-                <div className="grid grid-cols-4 gap-6">
-
-                    <Suspense fallback={<ProductScaffolding count={10} />}
-                    >
-
-                        <RelatedProducts payload={{
-                            categoryId: productInfo.categoryId,
-                            productId: productInfo.id,
-                            tags: productInfo.tags,
-                            price: productInfo.price,
-
-                        }} />
-                    </Suspense>
-                </div>
-            </div>
-        </>
-    )
+      <div className="container pb-16">
+        <h2 className="mb-6 text-2xl font-medium uppercase text-gray-800">
+          Related products
+        </h2>
+        <div className="grid grid-cols-4 gap-6">
+          <Suspense fallback={<ProductScaffolding count={10} />}>
+            <RelatedProducts
+              payload={{
+                categoryId: productInfo.categoryId,
+                productId: productInfo.id,
+                tags: productInfo.tags,
+                price: productInfo.price,
+              }}
+            />
+          </Suspense>
+        </div>
+      </div>
+    </>
+  );
 }

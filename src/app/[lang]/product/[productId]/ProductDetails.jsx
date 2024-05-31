@@ -6,6 +6,7 @@ import ShareProduct from "./ShareProduct";
 
 export default async function ProductDetails({ productInfo, lang }) {
   const {
+    id,
     image,
     name,
     ratings,
@@ -14,12 +15,11 @@ export default async function ProductDetails({ productInfo, lang }) {
     brand,
     description,
     sku,
-    soldCounts,
-    stock,
     category,
     price,
     discount_price,
     details,
+    wishItem
   } = productInfo;
 
   const url = `${process.env.SITE_URL}/${lang}/product/${getSlug({ name, sku })}`;
@@ -60,25 +60,15 @@ export default async function ProductDetails({ productInfo, lang }) {
             </p>
           </div>
           <div className="mb-1 mt-4 flex items-baseline space-x-2 font-roboto">
-            {availability ? (
-              <>
-                {" "}
-                <p className="text-xl font-semibold text-primary">
-                  ${discount_price}
-                </p>
-                <p className="text-base text-gray-400 line-through">${price}</p>
-              </>
-            ) : (
-              <p
-                className="text-xl font-semibold text-primary"
-                title="To Be Announceed"
-              >
-                TBA
-              </p>
-            )}
+
+            <p className="text-xl font-semibold text-primary">
+              ${discount_price}
+            </p>
+            <p className="text-base text-gray-400 line-through">${price}</p>
+
           </div>
           <p className="mt-4 text-gray-600">{description}</p>
-          <ProductAction availability={availability} />
+          <ProductAction availability={availability} productId={id} wishItem={wishItem} />
           <ShareProduct url={url} name={name} />
         </div>
       </div>

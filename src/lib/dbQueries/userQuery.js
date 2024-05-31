@@ -68,6 +68,7 @@ export const toggleWishItem = async (productId) => {
         },
       });
     }
+    // revalidatePath('/')
     return {
       status: "ok "
     }

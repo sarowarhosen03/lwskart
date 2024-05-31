@@ -1,12 +1,13 @@
 import { authConFig } from "@/auth/auth.config";
-import prismaInstance from "@/db/db";
+import prisma, { default as prismaInstance } from "@/db/db";
 import { refreshToken } from "@/lib/controler/loginControler";
+import { downloadFile } from "@/lib/downloadImage";
 import { refreshDiscordToken, refreshGoogleToken } from "@/lib/refreswhTokens";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 
 const sameProviders = ["google", "discord"];
-const isSameProvder = (provider) => sameProviders.includes(provider);
+const isSameProvider = (provider) => sameProviders.includes(provider);
 export const {
   handlers: { GET, POST },
   auth,
@@ -23,7 +24,26 @@ export const {
   ...authConFig,
   callbacks: {
     async jwt(...arg) {
-      const [{ token, user, account }] = arg;
+      const [{ token, user, account, trigger }] = arg;
+      if (trigger === "signUp") {
+        if (user?.image && user.image.startsWith("https://")) {
+          try {
+            const filename = await downloadFile(user.image, user.id);
+            await prisma.user.update({
+              where: {
+                id: user.id,
+              },
+              data: {
+                image: filename,
+              },
+            });
+
+            token.image = filename;
+          } catch (error) {
+
+          }
+        }
+      }
 
       if (user && user?.user?.provider === "credentials") {
         return { ...token, ...user };
@@ -33,7 +53,7 @@ export const {
       }
 
       //handel google,discore provider
-      if (account && isSameProvder(account.provider)) {
+      if (account && isSameProvider(account.provider)) {
         // Save the access token and refresh token in the JWT on the initial login, as well as the user details
         return {
           access_token: account.access_token,
@@ -43,7 +63,7 @@ export const {
         };
       }
 
-      if (isSameProvder(token?.provider)) {
+      if (isSameProvider(token?.provider)) {
         if (Date.now() < token.expires_at * 1000) {
           // If the access token has not expired yet, return it
           return token;
@@ -76,11 +96,12 @@ export const {
     async session({ token, session }) {
       if (
         token?.user?.provider === "credentials" ||
-        isSameProvder(token?.user?.provider)
+        isSameProvider(token?.user?.provider)
       ) {
-        session.toke = token.access_token;
         session.user = token.user;
-        // session.access_token = token.backendTokens.accessToken;
+        if (!session.user.image) {
+          session.user.image = session.user.picture;
+        }
         return session;
       }
 

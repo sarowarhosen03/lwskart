@@ -1,4 +1,8 @@
-export default function ProductAction({ availability }) {
+"use client"
+
+import WishToggleButton from "@/components/ui/WishToggleButton";
+
+export default function ProductAction({ availability, productId, wishItem }) {
   return (
     <>
       {availability && (
@@ -32,12 +36,8 @@ export default function ProductAction({ availability }) {
         ) : (
           <p className="text-xl font-bold">Out Of Stock </p>
         )}
-        <a
-          href="#"
-          className="flex items-center gap-2 rounded border border-gray-300 px-8 py-2 font-medium uppercase text-gray-600 transition hover:text-primary"
-        >
-          <i className="fa-solid fa-heart"></i> Wishlist
-        </a>
+
+        <WishToggleButton productId={productId} wishItem={wishItem} />
       </div>
     </>
   );

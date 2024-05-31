@@ -1,16 +1,27 @@
 "use client";
 import { useAppContext } from "@/context";
+import getColorCodeByLatter from "@/utils/getColorCodeByLatter";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function PrimaryNavopions() {
-    const { status } = useSession();
+    const { status, data: session } = useSession();
     const isAuthorized = status === "authenticated";
     const visibility = isAuthorized ? "visible" : "invisible";
-    const { state: { wishCount, cartCount } } = useAppContext();
+    const {
+        state: { wishCount, cartCount },
+    } = useAppContext();
     const { lang } = useParams();
 
+    let profileImageUrl = session?.user?.image;
+    if (profileImageUrl && profileImageUrl.startsWith("https://")) {
+        profileImageUrl = `/assets/profile/${profileImageUrl}`;
+    }
+    profileImageUrl = `/user/${profileImageUrl}`
+
+    let firstLatter = session?.user?.name?.charAt(0)?.toUpperCase();
     return (
         <>
             <Link
@@ -39,12 +50,30 @@ export default function PrimaryNavopions() {
             </Link>
             <Link
                 className={`relative text-center text-gray-700 transition hover:text-primary  ${visibility}`}
-                href="#"
+                href="/user/account"
             >
                 <div className="text-2xl">
-                    <i className="fa-regular fa-user"></i>
+                    {(profileImageUrl && session) ? (
+                        <Image
+                            src={profileImageUrl}
+                            height={34}
+                            width={34}
+                            className="rounded-full"
+                            alt="profile image"
+                            priority
+                        />
+                    ) : (
+                        <div
+                            style={{
+                                backgroundColor: getColorCodeByLatter(firstLatter),
+                            }}
+                            className="mx-auto  size-[34px] rounded-full  text-center  text-white"
+                        >
+                            {firstLatter}
+                        </div>
+                    )}
                 </div>
-                <div className="text-xs leading-3">Account</div>
+                <div className="text-xs leading-3">{session?.user?.name}</div>
             </Link>
         </>
     );
