@@ -13,6 +13,17 @@ export const getWishAndCartCount = async (userId) => {
       status: CartItemStatus.available,
     },
   });
+
+  const cartItemList = await prisma.cartItems.findMany({
+    where: {
+      userId: userId,
+      status: CartItemStatus.available,
+    },
+    select: {
+      productId: true,
+    },
+  });
+
   const wishList = await prisma.wishItem.findMany({
     where: {
       userId: userId,
@@ -25,6 +36,7 @@ export const getWishAndCartCount = async (userId) => {
   return {
     cartItemCount: cartItemCount._sum.itemCount,
     wishList: wishList.map((item) => item.productId),
+    cartItemList: cartItemList.map((item) => item.productId),
   };
 };
 

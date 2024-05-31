@@ -2,6 +2,7 @@
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
 import { revalidateTag, unstable_cache } from "next/cache";
+import { cache } from "react";
 
 export const getProducts = unstable_cache(
   async function (options) {
@@ -42,24 +43,19 @@ export async function getNewArrivalProducts() {
     },
   });
 }
-export const getProductByNameAndSku = unstable_cache(
-  (productString) => {
-    const [name, sku] = decodeURI(productString).split("-");
-    return prisma.product.findFirst({
-      where: {
-        name: name,
-        sku: Number(sku),
-      },
-      include: {
-        brand: true,
-        category: true,
-      },
-    });
-  },
-  {
-    tags: ["products"],
-  },
-);
+export const getProductByNameAndSku = cache(async (productString) => {
+  const [name, sku] = decodeURI(productString).split("-");
+  return prisma.product.findFirst({
+    where: {
+      name: name,
+      sku: Number(sku),
+    },
+    include: {
+      brand: true,
+      category: true,
+    },
+  });
+});
 
 export const getRelatedProducts = unstable_cache(
   async ({ productId, categoryId, tags, price }) => {
@@ -194,7 +190,6 @@ export const addToCart = async (productId, quantity = 1) => {
             },
           };
         } else {
-
           return {
             error: "Out of stock",
           };

@@ -1,30 +1,36 @@
 export const appInitialState = {
-  cartCount: 0,
+
   wishList: [],
+  cartList: [],
 };
 
 export const {
   ADD_TO_CART,
-  TOGGLE_WISH,
-  REMOVE_FROM_CART,
   TOGGLE_WISH_LIST,
   LOAD_WISH_LIST,
+  LOAD_CART_LIST,
 } = {
   ADD_TO_CART: "ADD_TO_CART",
-  REMOVE_FROM_CART: "REMOVE_FROM_CART",
   TOGGLE_WISH_LIST: "TOGGLE_WISH_LIST",
   LOAD_WISH_LIST: "LOAD_WISH_LIST",
+  LOAD_CART_LIST: "LOAD_CART_LIST",
 };
 
 export default function appReducer(state, action) {
   switch (action.type) {
     case ADD_TO_CART:
-      return {
-        ...state,
-        cartCount: state.cartCount + action.payload,
-      };
+      {
+        const productId = action.payload;
+        const product = state.cartList.find((cart) => cart === productId);
+        if (!product) {
+          return {
+            ...state,
+            cartList: [...state.cartList, productId],
+          };
+        }
+        return state;
+      }
 
-    case REMOVE_FROM_CART:
       return {
         ...state,
         cartCount: state.cartCount - action.payload,
@@ -51,6 +57,12 @@ export default function appReducer(state, action) {
         };
       }
     }
+    case LOAD_CART_LIST:
+      return {
+        ...state,
+        cartList: action.payload,
+      };
+
     default:
       return state;
   }

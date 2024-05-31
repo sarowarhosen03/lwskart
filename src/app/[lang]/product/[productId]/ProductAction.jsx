@@ -8,20 +8,19 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 
 export default function ProductAction({ availability, productId, stock }) {
-  const [added, setAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [availableStock, setAvailableStock] = useState(stock);
-  const { hasMore, handelAddToCart, isPending } = useAddToCart(
+  const { handelAddToCart, isPending, isOnCart } = useAddToCart(
     productId,
     availability,
+    quantity
   );
   const { status } = useSession();
 
   const handleAddToCart = useCallback(async () => {
-    setAdded(true);
-    console.log(quantity);
     await handelAddToCart(quantity);
     setAvailableStock((prev) => prev - quantity);
+    setQuantity(1)
   }, [quantity, handelAddToCart]);
 
   return (
@@ -35,9 +34,9 @@ export default function ProductAction({ availability, productId, stock }) {
       )}
 
       <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-        {availability ? (
+        {(availability || isOnCart) ? (
           <button
-            disabled={isPending || availableStock <= 0}
+            disabled={isPending || availableStock == 0 || !availability}
             onClick={handleAddToCart}
             className="flex min-w-fit items-center gap-2 rounded border border-primary bg-primary px-8 py-2 font-medium uppercase text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-300 disabled:text-white"
           >
@@ -52,7 +51,7 @@ export default function ProductAction({ availability, productId, stock }) {
 
         <WishToggleButton productId={productId} />
       </div>
-      {status === "authenticated" && added && (
+      {(status === "authenticated" && isOnCart) && (
         <Link
           href={`/checkout`}
           className="block bg-orange-400 px-4 py-3 text-center font-bold text-white"

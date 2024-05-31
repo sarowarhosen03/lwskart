@@ -1,7 +1,7 @@
 "use client";
 import { getWishAndCartCount } from "@/lib/dbQueries/userQuery";
 import appReducer, {
-    ADD_TO_CART,
+    LOAD_CART_LIST,
     LOAD_WISH_LIST,
     appInitialState
 } from "@/reducers/appReducer";
@@ -19,16 +19,16 @@ export default function AppContextProvider({ children }) {
 
         (async () => {
             if (status === "authenticated") {
-                const { cartItemCount, wishList } = await getWishAndCartCount(session.user.id);
+                const { cartItemCount, wishList, cartItemList } = await getWishAndCartCount(session.user.id);
                 if (!ignore) {
-
-                    dispatch({
-                        type: ADD_TO_CART,
-                        payload: cartItemCount
-                    });
                     dispatch({
                         type: LOAD_WISH_LIST,
                         payload: wishList
+                    });
+
+                    dispatch({
+                        type: LOAD_CART_LIST,
+                        payload: cartItemList
                     });
                 }
             }

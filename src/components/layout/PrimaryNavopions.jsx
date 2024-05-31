@@ -11,7 +11,7 @@ export default function PrimaryNavopions() {
     const isAuthorized = status === "authenticated";
     const visibility = isAuthorized ? "visible" : "invisible";
     const {
-        state: { wishList, cartCount },
+        state: { wishList, cartList },
     } = useAppContext();
     const { lang } = useParams();
 
@@ -22,6 +22,7 @@ export default function PrimaryNavopions() {
     profileImageUrl = `/user/${profileImageUrl}`
 
     let firstLatter = session?.user?.name?.charAt(0)?.toUpperCase();
+
     return (
         <>
             <Link
@@ -45,7 +46,7 @@ export default function PrimaryNavopions() {
                 </div>
                 <div className="text-xs leading-3">Cart</div>
                 <div className="absolute -right-3 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                    {cartCount}
+                    {cartList.length}
                 </div>
             </Link>
             <Link
