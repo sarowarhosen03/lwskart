@@ -47,7 +47,15 @@ async function handleRouteMiddleware(req) {
     const pathname = req.nextUrl.pathname; // Extract pathname from the request
     const isPublicOnly = matchRoute(pathname, publicOnlyRoutes);
     if (isPublicOnly) {
-        const session = await getToken({ req, secret: process.env.AUTH_SECRET });
+
+        const options = { req, secret: process.env.AUTH_SECRET }
+        if (process.env.NODE_ENV === 'production') {
+            options.secureCookie = true
+        }
+
+        const session = await getToken(options);
+
+
         if (session) {
             return NextResponse.redirect(
                 new URL('/', req.url)
@@ -57,7 +65,14 @@ async function handleRouteMiddleware(req) {
     }
     const isPrivateRoute = matchRoute(pathname, privateRoute);
     if (isPrivateRoute) {
-        const session = await getToken({ req, secret: process.env.AUTH_SECRET, cookieName: "next-auth.session-token" });
+        const options = { req, secret: process.env.AUTH_SECRET }
+        if (process.env.NODE_ENV === 'production') {
+            options.secureCookie = true
+        }
+        const session = await getToken(options);
+
+
+
         if (!session) {
             return NextResponse.redirect(
                 new URL('/', req.url)
