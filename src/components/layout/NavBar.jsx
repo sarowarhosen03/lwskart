@@ -1,58 +1,79 @@
 import LoginButton from "@/components/ui/LoginButton";
+import getCategories from "@/lib/dbQueries/categoryQuery";
 import Image from "next/image";
 import Link from "next/link";
-export default function NavBar() {
+export default async function NavBar() {
+    const categories = await getCategories({ page: 1, limit: 10 });
     return (
         <nav className="bg-gray-800">
             <div className="container flex">
-                <div className="px-8 py-4 bg-primary md:flex items-center cursor-pointer relative group hidden">
+                <div className="group relative hidden cursor-pointer items-center bg-primary px-8 py-4 md:flex">
                     <span className="text-white">
                         <i className="fa-solid fa-bars"></i>
                     </span>
-                    <span className="capitalize ml-2 text-white hidden">All Categories</span>
+                    <span className="ml-2 hidden capitalize text-white">
+                        All Categories
+                    </span>
 
                     {/* <!-- dropdown --> */}
-                    <div className="absolute left-0 top-full bg-white shadow-md py-3 divide-y divide-gray-300 divide-dashed opacity-0 group-hover:opacity-100 transition duration-300 invisible group-hover:visible w-[600px]"
+                    <div
+                        className="invisible absolute left-0 top-full w-[600px] divide-y divide-dashed divide-gray-300 bg-white py-3 opacity-0 shadow-md transition duration-300 group-hover:visible group-hover:opacity-100"
                         style={{
-                            width: "300px"
-                        }}>
-                        <Link href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                            <Image src="/assets/images/icons/sofa.svg" alt="sofa" className="w-5 h-5 object-contain" height={5} width={5} />
-                            <span className="ml-6 text-gray-600 text-sm" >Sofa</span>
-                        </Link>
-                        <Link href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                            <Image src="/assets/images/icons/terrace.svg" alt="terrace" className="w-5 h-5 object-contain" height={5} width={5} />
-                            <span className="ml-6 text-gray-600 text-sm">Living Room</span>
-                        </Link>
-                        <Link href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                            <Image src="/assets/images/icons/bed.svg" alt="bed" className="w-5 h-5 object-contain" height={5} width={5} />
-                            <span className="ml-6 text-gray-600 text-sm">Bedroom</span>
-                        </Link>
-                        <Link href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                            <Image src="/assets/images/icons/office.svg" alt="Outdoor" className="w-5 h-5 object-contain" height={5} width={5} />
-                            <span className="ml-6 text-gray-600 text-sm">Outdoor</span>
-                        </Link>
-                        <Link href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                            <Image src="/assets/images/icons/outdoor-cafe.svg" alt="outdoor" className="w-5 h-5 object-contain" height={5} width={5} />
-                            <span className="ml-6 text-gray-600 text-sm">Outdoor</span>
-                        </Link>
-                        <Link href="#" className="flex items-center px-6 py-3 hover:bg-gray-100 transition">
-                            <Image src="/assets/images/icons/bed-2.svg" alt="Mattress" className="w-5 h-5 object-contain" height={5} width={5} />
-                            <span className="ml-6 text-gray-600 text-sm">Mattress</span>
-                        </Link>
+                            width: "300px",
+                        }}
+                    >
+                        {categories?.map((category) => (
+                            <Link
+                                key={category.id}
+                                scroll={false}
+                                href={`/shop/?category=${category}`}
+                                className="flex items-center px-6 py-3 transition hover:bg-gray-100"
+                            >
+                                <Image
+                                    src={`/assets/images/category/${category.thumbnail}`}
+                                    alt={category.name}
+                                    className="h-5 w-5 object-contain"
+                                    height={5}
+                                    width={5}
+                                />
+                                <span className="ml-6 text-sm text-gray-600">
+                                    {category.name}
+                                </span>
+                            </Link>
+                        ))}
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between flex-grow md:pl-12 py-5">
+                <div className="flex flex-grow items-center justify-between py-5 md:pl-12">
                     <div className="flex items-center space-x-6 capitalize">
-                        <Link href="index.html" className="text-gray-200 hover:text-white transition">Home</Link>
-                        <Link href="pages/shop.html" className="text-gray-200 hover:text-white transition">Shop</Link>
-                        <Link href="#" className="text-gray-200 hover:text-white transition">About us</Link>
-                        <Link href="#" className="text-gray-200 hover:text-white transition">Contact us</Link>
+                        <Link
+                            href="index.html"
+                            className="text-gray-200 transition hover:text-white"
+                        >
+                            Home
+                        </Link>
+                        <Link
+                            href="pages/shop.html"
+                            className="text-gray-200 transition hover:text-white"
+                        >
+                            Shop
+                        </Link>
+                        <Link
+                            href="#"
+                            className="text-gray-200 transition hover:text-white"
+                        >
+                            About us
+                        </Link>
+                        <Link
+                            href="#"
+                            className="text-gray-200 transition hover:text-white"
+                        >
+                            Contact us
+                        </Link>
                     </div>
                     <LoginButton />
                 </div>
             </div>
         </nav>
-    )
+    );
 }

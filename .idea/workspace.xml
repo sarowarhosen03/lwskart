@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="e78ac6c0-cbb5-4b86-9328-68dfa2074086" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/LoginFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/LoginFrom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/RegisterFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/RegisterFrom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/generateDummyData.js" beforeDir="false" afterPath="$PROJECT_DIR$/generateDummyData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[lang]/user/profile/[id]/page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/api/user/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/user/route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/auth/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Breadcrumb.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Breadcrumb.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/NavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/NavBar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/layout/PrimaryNavopions.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/dbQueries/categoryQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/dbQueries/categoryQuery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib/dbQueries/userQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/dbQueries/userQuery.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +137,7 @@
       <workItem from="1716881976112" duration="592000" />
       <workItem from="1716883497101" duration="8770000" />
       <workItem from="1716926408798" duration="643000" />
+      <workItem from="1717180971989" duration="81000" />
     </task>
     <servers />
   </component>

@@ -24,7 +24,10 @@ export const {
   ...authConFig,
   callbacks: {
     async jwt(...arg) {
-      const [{ token, user, account, trigger }] = arg;
+      const [{ token, user, account, trigger, session }] = arg;
+      if (trigger === 'update') {
+        return { ...token, user: { ...token.user, ...session } }
+      }
       if (trigger === "signUp") {
         if (user?.image && user.image.startsWith("https://")) {
           try {

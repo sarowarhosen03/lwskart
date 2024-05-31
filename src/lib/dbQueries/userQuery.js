@@ -90,3 +90,21 @@ export const toggleWishItem = async (productId) => {
     redirect("/login");
   }
 };
+export const updateProfile = async (body, id) => {
+  const { name, phone, shippingAddress, billingAddress, image } = body;
+  await prisma.user.update({
+    where: {
+      id: id,
+    },
+    data: {
+      name: name,
+
+      phone: phone,
+      image: image,
+      address: { shippingAddress, billingAddress },
+    },
+  });
+  return {
+    status: "ok ",
+  };
+};

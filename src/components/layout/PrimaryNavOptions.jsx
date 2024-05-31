@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-export default function PrimaryNavopions() {
+export default function PrimaryNavOptions() {
     const { status, data: session } = useSession();
     const isAuthorized = status === "authenticated";
     const visibility = isAuthorized ? "visible" : "invisible";
@@ -51,7 +51,7 @@ export default function PrimaryNavopions() {
             </Link>
             <Link
                 className={`relative text-center text-gray-700 transition hover:text-primary  ${visibility}`}
-                href="/user/account"
+                href={`/user/profile`}
             >
                 <div className="text-2xl">
                     {(profileImageUrl && session) ? (

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logoImage from "../../../public/assets/images/logo.svg";
-import PrimaryNavopions from "./PrimaryNavopions";
+import PrimaryNavOptions from "./PrimaryNavOptions";
 
 export default function Header() {
   return (
@@ -27,8 +27,8 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <PrimaryNavopions />
+        <div className="flex gap-2 items-center space-x-4">
+          <PrimaryNavOptions />
         </div>
       </div>
     </header>

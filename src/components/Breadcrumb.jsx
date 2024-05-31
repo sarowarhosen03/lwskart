@@ -4,7 +4,8 @@ import { usePathname } from "next/navigation";
 
 export default function Breadcrumb() {
     const pathName = usePathname()
-    const pathItems = pathName.split("/").splice(2);
+    const pathItems = pathName.split("/");
+    pathItems.pop()
     let cumulativePath = "";
 
     const paths = pathItems.map((pathItem, i) => {

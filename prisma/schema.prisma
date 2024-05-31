@@ -19,6 +19,7 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
+  phone         String?
   password      String?
   CartItems     CartItems[]
   orders        Order[]
@@ -26,23 +27,15 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Authenticator Authenticator[]
-  address       Address[]
+  address       Json?           @default("{}")
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   Review        Review[]
 }
 
-model Address {
-  id         String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String  @db.ObjectId
-  name       String
-  phone      String
-  address    String
-  city       String
-  postalCode String
-  country    String
-  default    Boolean @default(false)
-  User       User    @relation(fields: [userId], references: [id])
+enum AddressType {
+  billingAddres
+  shippingAddress
 }
 
 model Account {
