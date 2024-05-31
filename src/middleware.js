@@ -57,7 +57,7 @@ async function handleRouteMiddleware(req) {
     }
     const isPrivateRoute = matchRoute(pathname, privateRoute);
     if (isPrivateRoute) {
-        const session = await getToken({ req, secret: process.env.AUTH_SECRET, secureCookie: true });
+        const session = await getToken({ req, secret: process.env.AUTH_SECRET, cookieName: "next-auth.session-token" });
         if (!session) {
             return NextResponse.redirect(
                 new URL('/', req.url)
