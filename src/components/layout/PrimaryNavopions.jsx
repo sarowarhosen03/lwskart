@@ -11,7 +11,7 @@ export default function PrimaryNavopions() {
     const isAuthorized = status === "authenticated";
     const visibility = isAuthorized ? "visible" : "invisible";
     const {
-        state: { wishCount, cartCount },
+        state: { wishList, cartCount },
     } = useAppContext();
     const { lang } = useParams();
 
@@ -33,7 +33,7 @@ export default function PrimaryNavopions() {
                 </div>
                 <div className="text-xs leading-3">Wishlist</div>
                 <div className="absolute -top-1 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
-                    {wishCount}
+                    {wishList.length}
                 </div>
             </Link>
             <Link

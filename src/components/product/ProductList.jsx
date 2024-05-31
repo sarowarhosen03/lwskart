@@ -1,5 +1,5 @@
 import { getProducts } from "@/lib/dbQueries/products";
-import ProducCard from "../home/ProducCard";
+import ProductCard from "../home/ProductCard";
 import ProductPaginate from "./ProductPaginate";
 
 export default async function ProductList() {
@@ -11,7 +11,7 @@ export default async function ProductList() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6  ">
 
 
-                {products?.map(product => <ProducCard key={product.id} {...product} />)
+                {products?.map(product => <ProductCard key={product.id} {...product} />)
 
                 }
                 <ProductPaginate />

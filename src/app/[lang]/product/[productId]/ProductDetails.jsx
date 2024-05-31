@@ -68,7 +68,7 @@ export default async function ProductDetails({ productInfo, lang }) {
 
           </div>
           <p className="mt-4 text-gray-600">{description}</p>
-          <ProductAction availability={availability} productId={id} wishItem={wishItem} />
+          <ProductAction availability={availability} productId={id}  />
           <ShareProduct url={url} name={name} />
         </div>
       </div>

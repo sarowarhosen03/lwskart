@@ -2,7 +2,7 @@
 import { getWishAndCartCount } from "@/lib/dbQueries/userQuery";
 import appReducer, {
     ADD_TO_CART,
-    TOGGLE_WISH,
+    LOAD_WISH_LIST,
     appInitialState
 } from "@/reducers/appReducer";
 import { useSession } from "next-auth/react";
@@ -13,33 +13,39 @@ const AppContext = createContext({});
 export default function AppContextProvider({ children }) {
     const [state, dispatch] = useReducer(appReducer, appInitialState);
     const { status, data: session } = useSession();
+
     useEffect(() => {
-        let ignore = true;
+        let ignore = false;
 
         (async () => {
             if (status === "authenticated") {
                 const WishAndCartCount = await getWishAndCartCount(session.user.id);
-                if (ignore) {
-                    dispatch({
-                        type: TOGGLE_WISH,
-                        payload: WishAndCartCount.wishCount,
-                    });
+                if (!ignore) {
+
                     dispatch({
                         type: ADD_TO_CART,
                         payload: WishAndCartCount.cartItemCount,
+                    });
+                    dispatch({
+                        type: LOAD_WISH_LIST,
+                        payload: WishAndCartCount.wishList,
                     });
                 }
             }
         })();
 
-        return () => (ignore = false);
+        return () => {
+            ignore = true;
+        };
     }, [status, session]);
+
     return (
         <AppContext.Provider value={{ state, dispatch }}>
             {children}
         </AppContext.Provider>
     );
 }
+
 export const useAppContext = () => {
     return useContext(AppContext);
 };

@@ -5,7 +5,7 @@ import WishToggle from "../product/WishToggle";
 import AddToCartBtn from "../ui/AddToCartBtn";
 import RatingStart from "../ui/RatingStart";
 
-export default function ProducCard({
+export default function ProductCard({
     id, name,
     image,
     price,
@@ -13,7 +13,6 @@ export default function ProducCard({
     ratings,
     reviewsNumber,
     sku,
-    wishItem,
     availability,
 }) {
     return (
@@ -39,7 +38,7 @@ export default function ProducCard({
                     >
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </Link>
-                    <WishToggle wishList={wishItem} productId={id} />
+                    <WishToggle productId={id} />
                 </div>
             </div>
             <div className="px-4 pb-3 pt-4">

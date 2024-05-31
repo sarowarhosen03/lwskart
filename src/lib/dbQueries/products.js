@@ -47,11 +47,6 @@ export const getProductByNameAndSku = cache((productString) => {
     include: {
       brand: true,
       category: true,
-      wishItem: {
-        select: {
-          userId: true,
-        },
-      },
     },
   });
 });
@@ -100,25 +95,13 @@ export const getRelatedProducts = cache(
 
       relatedProducts = await prisma.product.findMany({
         where: relatedProductCriteriaEither,
-        include: {
-          wishItem: {
-            select: {
-              userId: true,
-            },
-          },
-        },
+
         take: 10,
       });
     } else {
       relatedProducts = await prisma.product.findMany({
         where: relatedProductCriteriaBoth,
-        include: {
-          wishItem: {
-            select: {
-              userId: true,
-            },
-          },
-        },
+
         take: 10,
       });
     }
@@ -155,29 +138,28 @@ export const addToCart = async (productId, quantity = 1) => {
 
           const productUpdateData = {
             availability,
-            stock: newStock
-          }
+            stock: newStock,
+          };
 
           await prisma.$transaction([
-
             prisma.cartItems.upsert({
               where: {
                 productId_userId: {
                   productId: productId,
-                  userId: id
-                }
+                  userId: id,
+                },
               },
               update: {
                 itemCount: (CartItems?.itemCount || 0) + availableToPurchase,
               },
               create: {
                 product: {
-                  connect: { id: productId }
+                  connect: { id: productId },
                 },
                 User: {
-                  connect: { id: id }
+                  connect: { id: id },
                 },
-                itemCount: availableToPurchase
+                itemCount: availableToPurchase,
               },
             }),
 
@@ -185,16 +167,16 @@ export const addToCart = async (productId, quantity = 1) => {
               where: {
                 id: productId,
               },
-              data: productUpdateData
-            })
+              data: productUpdateData,
+            }),
           ]);
           return {
             success: true,
             data: {
               productId: productId,
               quantity: availableToPurchase,
-              availability
-            }
+              availability,
+            },
           };
         } else {
           return {
@@ -202,13 +184,11 @@ export const addToCart = async (productId, quantity = 1) => {
           };
         }
       }
-
     }
   } catch (error) {
-
     return {
       error: true,
       message: "Something went wrong",
-    }
+    };
   }
 };

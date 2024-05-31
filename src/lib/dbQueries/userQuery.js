@@ -4,12 +4,6 @@ import prisma from "@/db/db";
 import { CartItemStatus } from "@prisma/client";
 import { redirect } from "next/navigation";
 export const getWishAndCartCount = async (userId) => {
-  const wishCount = await prisma.wishItem.count({
-    where: {
-      userId: userId,
-    },
-  });
-
   const cartItemCount = await prisma.cartItems.aggregate({
     _sum: {
       itemCount: true,
@@ -19,16 +13,24 @@ export const getWishAndCartCount = async (userId) => {
       status: CartItemStatus.available,
     },
   });
+  const wishList = await prisma.wishItem.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      productId: true,
+    },
+  });
 
-  return { wishCount, cartItemCount: cartItemCount._sum.itemCount };
+  return {
+    cartItemCount: cartItemCount._sum.itemCount,
+    wishList: wishList.map((item) => item.productId),
+  };
 };
 
-
 export const getWishList = async (userId) => {
-  return await prisma.wishItem.findMany({
-
-  })
-}
+  return await prisma.wishItem.findMany({});
+};
 export const toggleWishItem = async (productId) => {
   const session = await auth();
 
@@ -70,8 +72,8 @@ export const toggleWishItem = async (productId) => {
     }
     // revalidatePath('/')
     return {
-      status: "ok "
-    }
+      status: "ok ",
+    };
   } else {
     redirect("/login");
   }

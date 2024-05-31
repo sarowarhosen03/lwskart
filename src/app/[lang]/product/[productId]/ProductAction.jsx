@@ -2,7 +2,7 @@
 
 import WishToggleButton from "@/components/ui/WishToggleButton";
 
-export default function ProductAction({ availability, productId, wishItem }) {
+export default function ProductAction({ availability, productId }) {
   return (
     <>
       {availability && (
@@ -37,7 +37,7 @@ export default function ProductAction({ availability, productId, wishItem }) {
           <p className="text-xl font-bold">Out Of Stock </p>
         )}
 
-        <WishToggleButton productId={productId} wishItem={wishItem} />
+        <WishToggleButton productId={productId} />
       </div>
     </>
   );

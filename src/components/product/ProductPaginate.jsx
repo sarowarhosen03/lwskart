@@ -2,7 +2,7 @@
 
 import useProducts from "@/hooks/useProducts";
 import { useRef } from "react";
-import ProducCard from "../home/ProducCard";
+import ProducCard from "../home/ProductCard";
 import Alert from "../ui/Alert";
 import ProductScaffolding from "../ui/loader/ProductScaffolding";
 

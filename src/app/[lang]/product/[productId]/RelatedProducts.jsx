@@ -1,4 +1,4 @@
-import ProducCard from "@/components/home/ProducCard";
+import ProductCard from "@/components/home/ProductCard";
 import Alert from "@/components/ui/Alert";
 import { getRelatedProducts } from "@/lib/dbQueries/products";
 import Link from "next/link";
@@ -8,7 +8,7 @@ export default async function RelatedProducts({ payload }) {
     return (
         <>
             {products.map((product) => (
-                <ProducCard key={product.id} {...product} />
+                <ProductCard key={product.id} {...product} />
             ))}
             {!products.length && (
                 <Alert variant="info" message="No Related Product Found Here" />

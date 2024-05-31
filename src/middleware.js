@@ -37,7 +37,7 @@ const publicOnlyRoutes = [
     pathToRegexp('/:locals/login'),
     pathToRegexp('/:locals/register')
 ];
-const privatRoute = [
+const privateRoute = [
     pathToRegexp('/:locals/account'),
     pathToRegexp('/api/user/:rest*')
 ];
@@ -55,9 +55,9 @@ async function handleRouteMiddleware(req) {
 
         }
     }
-    const isPrivatRoute = matchRoute(pathname, privatRoute);
-    if (isPrivatRoute) {
-        const session = await getToken({ req, secret: process.env.AUTH_SECRET });
+    const isPrivateRoute = matchRoute(pathname, privateRoute);
+    if (isPrivateRoute) {
+        const session = await getToken({ req, secret: process.env.AUTH_SECRET, secureCookie: true });
         if (!session) {
             return NextResponse.redirect(
                 new URL('/', req.url)
