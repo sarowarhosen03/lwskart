@@ -1,44 +1,66 @@
-"use client"
+"use client";
 
+import QuantityCounter from "@/components/ui/QuantityCounter";
 import WishToggleButton from "@/components/ui/WishToggleButton";
+import useAddToCart from "@/hooks/useAddToCart";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { useCallback, useState } from "react";
 
-export default function ProductAction({ availability, productId }) {
+export default function ProductAction({ availability, productId, stock }) {
+  const [added, setAdded] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [availableStock, setAvailableStock] = useState(stock);
+  const { hasMore, handelAddToCart, isPending } = useAddToCart(
+    productId,
+    availability,
+  );
+  const { status } = useSession();
+
+  const handleAddToCart = useCallback(async () => {
+    setAdded(true);
+    console.log(quantity);
+    await handelAddToCart(quantity);
+    setAvailableStock((prev) => prev - quantity);
+  }, [quantity, handelAddToCart]);
+
   return (
     <>
       {availability && (
-        <div className="mt-4">
-          <h3 className="mb-1 text-sm uppercase text-gray-800">Quantity</h3>
-          <div className="flex w-max divide-x divide-gray-300 border border-gray-300 text-gray-600">
-            <div className="flex h-8 w-8 cursor-pointer select-none items-center justify-center text-xl">
-              -
-            </div>
-            <div className="flex h-8 w-8 items-center justify-center text-base">
-              4
-            </div>
-            <div className="flex h-8 w-8 cursor-pointer select-none items-center justify-center text-xl">
-              +
-            </div>
-          </div>
-        </div>
+        <QuantityCounter
+          quantity={quantity}
+          setQuantity={setQuantity}
+          stock={availableStock}
+        />
       )}
 
       <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
         {availability ? (
-          <a
-            href="#"
-            className="flex min-w-fit items-center gap-2 rounded border border-primary bg-primary px-8 py-2 font-medium uppercase text-white transition hover:bg-transparent hover:text-primary"
+          <button
+            disabled={isPending || availableStock <= 0}
+            onClick={handleAddToCart}
+            className="flex min-w-fit items-center gap-2 rounded border border-primary bg-primary px-8 py-2 font-medium uppercase text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-300 disabled:text-white"
           >
-            <div className="flex ">
+            <div className="flex items-center justify-center gap-2">
               <i className="fa-solid fa-bag-shopping min-w-fit"></i>
               <p className="min-w-fit text-nowrap">Add to cart</p>
             </div>
-          </a>
+          </button>
         ) : (
-          <p className="text-xl font-bold">Out Of Stock </p>
+          <p className="text-xl font-bold">Out Of Stock</p>
         )}
 
         <WishToggleButton productId={productId} />
       </div>
+      {status === "authenticated" && added && (
+        <Link
+          href={`/checkout`}
+          className="block bg-orange-400 px-4 py-3 text-center font-bold text-white"
+        >
+          {" "}
+          Processed To Checkout
+        </Link>
+      )}
     </>
   );
 }

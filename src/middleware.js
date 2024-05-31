@@ -70,12 +70,9 @@ async function handleRouteMiddleware(req) {
             options.secureCookie = true
         }
         const session = await getToken(options);
-
-
-
         if (!session) {
             return NextResponse.redirect(
-                new URL('/', req.url)
+                new URL('/login', req.url)
             );
         }
     }

@@ -19,7 +19,7 @@ export default async function ProductDetails({ productInfo, lang }) {
     price,
     discount_price,
     details,
-    wishItem
+    stock
   } = productInfo;
 
   const url = `${process.env.SITE_URL}/${lang}/product/${getSlug({ name, sku })}`;
@@ -67,8 +67,8 @@ export default async function ProductDetails({ productInfo, lang }) {
             <p className="text-base text-gray-400 line-through">${price}</p>
 
           </div>
-          <p className="mt-4 text-gray-600">{description}</p>
-          <ProductAction availability={availability} productId={id}  />
+          <p className="mt-4 text-gray-600 font-bold">{description}</p>
+          <ProductAction stock={stock} availability={availability} productId={id} />
           <ShareProduct url={url} name={name} />
         </div>
       </div>

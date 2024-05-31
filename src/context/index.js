@@ -19,16 +19,16 @@ export default function AppContextProvider({ children }) {
 
         (async () => {
             if (status === "authenticated") {
-                const WishAndCartCount = await getWishAndCartCount(session.user.id);
+                const { cartItemCount, wishList } = await getWishAndCartCount(session.user.id);
                 if (!ignore) {
 
                     dispatch({
                         type: ADD_TO_CART,
-                        payload: WishAndCartCount.cartItemCount,
+                        payload: cartItemCount
                     });
                     dispatch({
                         type: LOAD_WISH_LIST,
-                        payload: WishAndCartCount.wishList,
+                        payload: wishList
                     });
                 }
             }

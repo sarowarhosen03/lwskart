@@ -1,25 +1,30 @@
 "use server";
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
-import { cache } from "react";
+import { revalidateTag, unstable_cache } from "next/cache";
 
-export async function getProducts(options) {
-  const { page = 1, limit = 15 } = options || {};
-  return prisma.Product.findMany({
-    skip: 4 + (page - 1) * limit,
-    take: limit,
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      wishItem: {
-        select: {
-          userId: true,
+export const getProducts = unstable_cache(
+  async function (options) {
+    const { page = 1, limit = 15 } = options || {};
+    return prisma.Product.findMany({
+      skip: 4 + (page - 1) * limit,
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        wishItem: {
+          select: {
+            userId: true,
+          },
         },
       },
-    },
-  });
-}
+    });
+  },
+  {
+    tags: ["products"],
+  },
+);
 
 export async function getNewArrivalProducts() {
   return prisma.Product.findMany({
@@ -37,21 +42,26 @@ export async function getNewArrivalProducts() {
     },
   });
 }
-export const getProductByNameAndSku = cache((productString) => {
-  const [name, sku] = decodeURI(productString).split("-");
-  return prisma.product.findFirst({
-    where: {
-      name: name,
-      sku: Number(sku),
-    },
-    include: {
-      brand: true,
-      category: true,
-    },
-  });
-});
+export const getProductByNameAndSku = unstable_cache(
+  (productString) => {
+    const [name, sku] = decodeURI(productString).split("-");
+    return prisma.product.findFirst({
+      where: {
+        name: name,
+        sku: Number(sku),
+      },
+      include: {
+        brand: true,
+        category: true,
+      },
+    });
+  },
+  {
+    tags: ["products"],
+  },
+);
 
-export const getRelatedProducts = cache(
+export const getRelatedProducts = unstable_cache(
   async ({ productId, categoryId, tags, price }) => {
     const priceRange = {
       min: price * 0.1,
@@ -110,6 +120,9 @@ export const getRelatedProducts = cache(
       products: relatedProducts,
       total: totalCount,
     };
+  },
+  {
+    tags: ["products"],
   },
 );
 
@@ -170,6 +183,8 @@ export const addToCart = async (productId, quantity = 1) => {
               data: productUpdateData,
             }),
           ]);
+          revalidateTag(["products"]);
+
           return {
             success: true,
             data: {
@@ -179,6 +194,7 @@ export const addToCart = async (productId, quantity = 1) => {
             },
           };
         } else {
+
           return {
             error: "Out of stock",
           };

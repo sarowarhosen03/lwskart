@@ -37,7 +37,7 @@ export default async function RootLayout({ children }) {
                         <Footer />
                     </AppContextProvider>
                 </SessionProvider>
-                <ToastContainer position="bottom-center" />
+                <ToastContainer position="bottom-center" limit={2} />
             </body>
         </html>
     );
