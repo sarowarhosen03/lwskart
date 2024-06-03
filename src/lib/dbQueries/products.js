@@ -1,8 +1,9 @@
 "use server";
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
+import Log from "@/utils/Log";
+import { CartItemStatus } from "@prisma/client";
 import { revalidateTag, unstable_cache } from "next/cache";
-import { cache } from "react";
 
 export const getProducts = unstable_cache(
   async function (options) {
@@ -27,7 +28,7 @@ export const getProducts = unstable_cache(
   },
 );
 
-export async function getNewArrivalProducts() {
+export const getNewArrivalProducts = unstable_cache(async () => {
   return prisma.Product.findMany({
     take: 4,
     orderBy: {
@@ -42,8 +43,8 @@ export async function getNewArrivalProducts() {
       },
     },
   });
-}
-export const getProductByNameAndSku = cache(async (productString) => {
+}, ["products"]);
+export const getProductByNameAndSku = async (productString) => {
   const [name, sku] = decodeURI(productString).split("-");
   return prisma.product.findFirst({
     where: {
@@ -55,7 +56,7 @@ export const getProductByNameAndSku = cache(async (productString) => {
       category: true,
     },
   });
-});
+};
 
 export const getRelatedProducts = unstable_cache(
   async ({ productId, categoryId, tags, price }) => {
@@ -137,66 +138,104 @@ export const addToCart = async (productId, quantity = 1) => {
         const availableToPurchase = Math.min(product.stock, quantity);
         const newStock = product.stock - availableToPurchase;
         const availability = newStock > 0;
-        if (availableToPurchase > 0) {
-          const CartItems = await prisma.CartItems.findFirst({
+
+        const productUpdateData = {
+          availability,
+          stock: newStock,
+        };
+
+        const [cartRes, productRes] = await prisma.$transaction([
+          prisma.cartItems.upsert({
             where: {
-              productId: productId,
-              userId: id,
+              productId_userId: {
+                productId: productId,
+                userId: id,
+              },
             },
-          });
+            update: {
+              itemCount: { increment: availableToPurchase },
+              status: CartItemStatus.available,
+            },
+            create: {
+              product: {
+                connect: { id: productId },
+              },
+              User: {
+                connect: { id: id },
+              },
+              itemCount: availableToPurchase,
+            },
+          }),
 
-          const productUpdateData = {
+          prisma.product.update({
+            where: {
+              id: productId,
+            },
+            data: productUpdateData,
+          }),
+        ]);
+        revalidateTag("products");
+        return {
+          success: true,
+          data: {
+            productId: productId,
+            quantity: availableToPurchase,
             availability,
-            stock: newStock,
-          };
-
-          await prisma.$transaction([
-            prisma.cartItems.upsert({
-              where: {
-                productId_userId: {
-                  productId: productId,
-                  userId: id,
-                },
-              },
-              update: {
-                itemCount: (CartItems?.itemCount || 0) + availableToPurchase,
-              },
-              create: {
-                product: {
-                  connect: { id: productId },
-                },
-                User: {
-                  connect: { id: id },
-                },
-                itemCount: availableToPurchase,
-              },
-            }),
-
-            prisma.product.update({
-              where: {
-                id: productId,
-              },
-              data: productUpdateData,
-            }),
-          ]);
-          revalidateTag(["products"]);
-
-          return {
-            success: true,
-            data: {
-              productId: productId,
-              quantity: availableToPurchase,
-              availability,
+          },
+          payload: {
+            ...cartRes,
+            product: {
+              ...productRes,
             },
-          };
-        } else {
-          return {
-            error: "Out of stock",
-          };
-        }
+          },
+        };
       }
     }
   } catch (error) {
+    Log(error);
+    return {
+      error: true,
+      message: "Something went wrong",
+    };
+  }
+};
+export const deleteCartItem = async (cartId) => {
+  try {
+    const session = await auth();
+    if (session) {
+      const cartItem = await prisma.cartItems.findUnique({
+        where: {
+          id: cartId,
+        },
+      });
+
+      await prisma.$transaction([
+        prisma.cartItems.delete({
+          where: {
+            id: cartId,
+          },
+        }),
+        prisma.product.update({
+          where: {
+            id: cartItem.productId,
+          },
+          data: {
+            stock: {
+              increment: cartItem.itemCount,
+            },
+            availability: true,
+          },
+        }),
+      ]);
+
+      revalidateTag(["products"]);
+      return {
+        success: true,
+        payload: cartItem.id,
+      };
+    }
+  } catch (error) {
+    Log(error);
     return {
       error: true,
       message: "Something went wrong",

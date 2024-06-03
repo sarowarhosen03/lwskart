@@ -1,7 +1,7 @@
-import RegisterFrom from "./RegisterFrom.jsx";
-import Link from "next/link";
 import SocialLogin from "@/components/ui/SocialLogin";
-import React from "react";
+import Link from "next/link";
+import { Suspense } from "react";
+import RegisterFrom from "./RegisterFrom.jsx";
 
 export default function registerPage() {
   return (
@@ -11,9 +11,11 @@ export default function registerPage() {
           Create an account
         </h2>
         <p className="mb-6 text-sm text-gray-600">Register for new cosutumer</p>
-        <RegisterFrom />
-        <SocialLogin />
 
+        <Suspense>
+          <RegisterFrom />
+          <SocialLogin />
+        </Suspense>
         <p className="mt-4 text-center text-gray-600">
           Already have account?{" "}
           <Link href="/login" className="text-primary">

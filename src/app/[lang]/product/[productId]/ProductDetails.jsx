@@ -19,7 +19,7 @@ export default async function ProductDetails({ productInfo, lang }) {
     price,
     discount_price,
     details,
-    stock
+    stock,
   } = productInfo;
 
   const url = `${process.env.SITE_URL}/${lang}/product/${getSlug({ name, sku })}`;
@@ -54,21 +54,29 @@ export default async function ProductDetails({ productInfo, lang }) {
               <span className="font-semibold text-gray-800">Category: </span>
               <span className="text-gray-600">{category.name}</span>
             </p>
+            {availability && (
+              <p className="space-x-2">
+                <span className="font-semibold text-gray-800">Stock: </span>
+                <span className="text-gray-600">{stock}</span>
+              </p>
+            )}
             <p className="space-x-2">
               <span className="font-semibold text-gray-800">SKU: </span>
               <span className="text-gray-600">{sku}</span>
             </p>
           </div>
           <div className="mb-1 mt-4 flex items-baseline space-x-2 font-roboto">
-
             <p className="text-xl font-semibold text-primary">
               ${discount_price}
             </p>
             <p className="text-base text-gray-400 line-through">${price}</p>
-
           </div>
-          <p className="mt-4 text-gray-600 font-bold">{description}</p>
-          <ProductAction stock={stock} availability={availability} productId={id} />
+          <p className="mt-4 font-bold text-gray-600">{description}</p>
+          <ProductAction
+            stock={stock}
+            availability={availability}
+            productId={id}
+          />
           <ShareProduct url={url} name={name} />
         </div>
       </div>
