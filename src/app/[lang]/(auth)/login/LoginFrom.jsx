@@ -1,5 +1,7 @@
 "use client";
+
 import Alert from "@/components/ui/Alert";
+import InputField from "@/components/ui/InputField";
 import useAuthntiCated from "@/hooks/useAuthntiCated";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
 import { signIn } from "next-auth/react";
@@ -7,7 +9,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export default function LoginFrom({ infoData }) {
+export default function LoginForm({ infoData }) {
   const {
     register,
     handleSubmit,
@@ -45,7 +47,6 @@ export default function LoginFrom({ infoData }) {
         });
       }
     } catch (error) {
-      // console.log(error);
       setError("formStatus", {
         type: "error",
         message: error.message,
@@ -62,56 +63,36 @@ export default function LoginFrom({ infoData }) {
       autoComplete="off"
     >
       <div className="space-y-2">
-        <div>
-          <label htmlFor="email" className="mb-2 block text-gray-600">
-            {infoData.email}
-          </label>
-          <input
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /\S+@\S+\.\S+/,
-                message: "Entered value does not match email format",
-              },
-              onBlur: (e) => {
-                return setValue("email", e.target.value.toLowerCase().trim());
-              },
-            })}
-            type="email"
-            name="email"
-            id="email"
-            autoComplete="username"
-            className=" peer block w-full rounded border border-gray-300 px-4 py-3 text-sm text-gray-600 placeholder-gray-400 invalid:border-pink-500 invalid:text-pink-600 focus:border-primary  focus:ring-0  focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-            placeholder="youremail.com@domain.com"
-          />
-          <p className="mt-2  text-sm text-pink-600">
-            {errors?.email?.message}
-          </p>
-        </div>
-        <div>
-          <label htmlFor="password" className="mb-2 block text-gray-600">
-            {infoData.password}
-          </label>
-          <div className="flex">
-            <input
-              autoComplete={"new-password"}
-              {...register("password", {
-                required: "Password is required",
-              })}
-              name="password"
-              id="password"
-              className="block w-full rounded border border-gray-300 px-4 py-3 text-sm text-gray-600 placeholder-gray-400 focus:border-primary focus:ring-0"
-              type={showPassword ? "text" : "password"}
-              placeholder={showPassword ? "password" : "*******"}
-            />
-            {showPasswordIcon}
-          </div>
-          <p className="mt-2   text-sm text-pink-600">
-            {errors?.password?.message}
-          </p>
-        </div>
+        <InputField
+          label={infoData.email}
+          name="email"
+          type="email"
+          register={register}
+          validation={{
+            required: "Email is required",
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: "Entered value does not match email format",
+            },
+            onBlur: (e) =>
+              setValue("email", e.target.value.toLowerCase().trim()),
+          }}
+          error={errors.email}
+          placeholder="youremail.com@domain.com"
+        />
+        <InputField
+          label={infoData.password}
+          name="password"
+          type={showPassword ? "text" : "password"}
+          register={register}
+          validation={{ required: "Password is required" }}
+          error={errors.password}
+          placeholder={showPassword ? "password" : "*******"}
+          autoComplete="new-password"
+          showPasswordIcon={showPasswordIcon}
+        />
       </div>
-      <div className="mt-6 flex  items-center justify-between">
+      <div className="mt-6 flex items-center justify-between">
         <div className="flex items-center">
           <input
             {...register("remember", {})}
@@ -137,12 +118,11 @@ export default function LoginFrom({ infoData }) {
           message={errors.formStatus.message}
         />
       )}
-
       <div className="mt-4">
         <button
           disabled={isSubmitting}
           type="submit"
-          className=" block w-full rounded  border border-primary bg-primary py-2 text-center font-roboto font-medium uppercase text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-300"
+          className="block w-full rounded border border-primary bg-primary py-2 text-center font-roboto font-medium uppercase text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-300"
         >
           Login
         </button>

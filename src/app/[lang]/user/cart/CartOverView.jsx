@@ -4,7 +4,12 @@ import CartSkeleton from "@/components/product/CartSkeleton";
 import Alert from "@/components/ui/Alert";
 import { useAppContext } from "@/context";
 import { addToCart, deleteCartItem } from "@/lib/dbQueries/products";
-import { ADD_CART, DELETE_CART, UPDATE_CART } from "@/reducers/appReducer";
+import {
+  ADD_CART,
+  DELETE_CART,
+  SELECTE_CART,
+  UPDATE_CART,
+} from "@/reducers/appReducer";
 import { CartItemStatus } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -78,15 +83,12 @@ const CartOverView = ({ lang }) => {
 
   const handleContinuePurchase = () => {
     if (selectedItems.length > 0) {
-      console.log(
-        "Proceeding with items:",
-        selectedItems.map((productId) => ({
-          productId,
-          quantity: quantities[productId],
-        })),
-      );
+      dispatch({
+        type: SELECTE_CART,
+        payload: selectedItems,
+      });
     } else {
-      alert("Please select at least one item to continue.");
+      toast.error("Please select at least one item to continue purchase");
     }
   };
 

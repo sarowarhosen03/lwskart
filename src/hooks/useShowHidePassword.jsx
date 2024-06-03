@@ -3,17 +3,18 @@ import { useState } from "react";
 export default function useShowHidePassword(status = false) {
   const [showPassword, setShowPassword] = useState(status);
 
-  function handelShowPassword() {
+  function handleShowPassword() {
     setShowPassword((prev) => !prev);
   }
 
-  return [
+  const ShowHideIcon = (
     <i
-      key={"password view toggle"}
+      key={"password-view-toggle"}
       title={showPassword ? "Hide password" : "Show password"}
-      onClick={handelShowPassword}
-      className={`fa-solid relative right-8 top-4 text-primary ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
-    ></i>,
-    showPassword,
-  ];
+      onClick={handleShowPassword}
+      className={`fa-solid cursor-pointer text-primary ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+    ></i>
+  );
+
+  return [ShowHideIcon, showPassword];
 }
