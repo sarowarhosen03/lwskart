@@ -21,6 +21,7 @@ model User {
   image         String?
   phone         String?
   password      String?
+  company       String         @default("")
   CartItems     CartItems[]
   orders        Order[]
   wishItem      WishItem[]
@@ -33,10 +34,6 @@ model User {
   Review        Review[]
 }
 
-enum AddressType {
-  billingAddres
-  shippingAddress
-}
 
 model Account {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -107,34 +104,37 @@ model WishItem {
 }
 
 model Order {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  invoice    Invoice?     @relation(fields: [invoiceId], references: [id])
-  createdAt  DateTime     @default(now())
-  User       User?        @relation(fields: [userId], references: [id])
-  userId     String?      @db.ObjectId
-  invoiceId  String?      @db.ObjectId
-  orderItems OrderItems[]
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  customer        User?        @relation(fields: [customerId], references: [id])
+  customerId      String?      @db.ObjectId
+  shippingAddress Json
+  orderStatus     OrderStatus  @default(PROCESSING)
+  updatedAt       DateTime     @updatedAt
+  orderItems      OrderItem[]
+  createdAt       DateTime     @default(now())
+  invoice         Json
+  
+
+}
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+  FAILED
+}
+model OrderItem {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  productId String?   @db.ObjectId
+  order     Order?    @relation(fields: [orderId], references: [id])
+  orderId   String?   @db.ObjectId
+  quantity  Int
+  price     Float
 }
 
-model OrderItems {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  Product   Product? @relation(fields: [productId], references: [id])
-  quantity  Int?
-  size      Int?
-  price     Int?
-  Order     Order?   @relation(fields: [orderId], references: [id])
-  orderId   String?  @db.ObjectId
-  productId String?  @db.ObjectId
-}
-
-model Invoice {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  amount        Int
-  createdAt     DateTime  @default(now())
-  Order         Order[]
-  paymentMethod PayMethod
-  trxid         String
-}
 
 model CartItems {
   id        String         @id @default(auto()) @map("_id") @db.ObjectId
@@ -182,7 +182,6 @@ model Product {
   CartItems      CartItems[]
   wishItem       WishItem[]
 
-  OrderItems OrderItems[]
 }
 
 model Category {
@@ -213,6 +212,7 @@ model Review {
 }
 
 enum PayMethod {
+CASH
   BKASH
   NAGAD
   ROCKET

@@ -67,6 +67,7 @@ export default function LoginForm({ infoData }) {
           label={infoData.email}
           name="email"
           type="email"
+          autoComplete="username"
           register={register}
           validation={{
             required: "Email is required",

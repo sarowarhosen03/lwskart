@@ -17,7 +17,7 @@ export async function sendEmail(params) {
     const result = await transport.sendMail({
         to: `<${to}>`,
         from: `Email Verification  <${from}>`,
-        subject: `Lwskart New  accound verification ${host}`,
+        subject: `Lwskart New  account verification ${host}`,
         text: text({ url, host }),
         html: html({ url }),
     })

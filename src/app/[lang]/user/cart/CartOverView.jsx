@@ -4,14 +4,9 @@ import CartSkeleton from "@/components/product/CartSkeleton";
 import Alert from "@/components/ui/Alert";
 import { useAppContext } from "@/context";
 import { addToCart, deleteCartItem } from "@/lib/dbQueries/products";
-import {
-  ADD_CART,
-  DELETE_CART,
-  SELECTE_CART,
-  UPDATE_CART,
-} from "@/reducers/appReducer";
+import { ADD_CART, DELETE_CART, UPDATE_CART } from "@/reducers/appReducer";
 import { CartItemStatus } from "@prisma/client";
-import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import CartItem from "./CartItems";
@@ -25,7 +20,7 @@ const CartOverView = ({ lang }) => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [deletingItems, setDeletingItems] = useState([]);
-  const { status } = useSession();
+  const { push } = useRouter();
 
   useEffect(() => {
     if (cartList.length > 0) {
@@ -36,7 +31,7 @@ const CartOverView = ({ lang }) => {
       setQuantities(initialQuantities);
       setSelectedItems(
         cartList
-          .filter((item) => item.status === CartItemStatus.AVAILABLE)
+          .filter((item) => item.status === CartItemStatus.available)
           .map((item) => item.productId),
       );
     }
@@ -83,10 +78,8 @@ const CartOverView = ({ lang }) => {
 
   const handleContinuePurchase = () => {
     if (selectedItems.length > 0) {
-      dispatch({
-        type: SELECTE_CART,
-        payload: selectedItems,
-      });
+      localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
+      push("/user/checkout");
     } else {
       toast.error("Please select at least one item to continue purchase");
     }

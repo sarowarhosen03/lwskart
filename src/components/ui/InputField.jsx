@@ -22,7 +22,7 @@ export default function InputField({
           type={type}
           name={name}
           id={name}
-          value={value}
+          defaultValue={value}
           onChange={onChange}
           className="input-box peer block w-full rounded border border-gray-300 px-4 py-3 text-sm text-gray-600 placeholder-gray-400 focus:border-primary focus:ring-0"
           {...props}

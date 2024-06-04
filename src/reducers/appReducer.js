@@ -3,10 +3,7 @@ export const appInitialState = {
   error: false,
   wishList: [],
   cartList: [],
-  selectedItems: {
-    selected: false,
-    items: [],
-  },
+
 };
 
 export const {
@@ -18,16 +15,19 @@ export const {
   ON_LOADING,
   ON_ERROR,
   ADD_CART,
-  SELECTE_CART,
+  DELETE_BULK_CART
+
 } = {
   DELETE_CART: "DELETE_CART",
+  DELETE_BULK_CART: "DELETE_BULK_CART",
+
   UPDATE_CART: "UPDATE_CART",
   TOGGLE_WISH_LIST: "TOGGLE_WISH_LIST",
   LOAD_RESULT: "LOAD_RESULT",
   ON_LOADING: "ON_LOADING",
   ON_ERROR: "ON_ERROR",
   ADD_CART: "ADD_CART",
-  SELECTE_CART: "SELECTE_CART",
+
 };
 
 export default function appReducer(state, action) {
@@ -82,6 +82,13 @@ export default function appReducer(state, action) {
         cartList: state.cartList.filter((item) => item.productId !== productId),
       };
     }
+    case DELETE_BULK_CART:{
+      const productIds = action.payload;
+      return {
+        ...state,
+        cartList: state.cartList.filter((item) => !productIds.includes(item.productId)),
+      };
+    }
     case ON_LOADING: {
       return {
         ...state,
@@ -100,15 +107,6 @@ export default function appReducer(state, action) {
       return {
         ...state,
         cartList: [...state.cartList, action.payload],
-      };
-    }
-    case SELECTE_CART: {
-      return {
-        ...state,
-        selectedItems: {
-          selected: true,
-          items: action.payload,
-        },
       };
     }
     default:

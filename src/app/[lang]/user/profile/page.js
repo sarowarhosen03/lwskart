@@ -1,6 +1,6 @@
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
-import EditFrom from "./EditFrom";
+import EditUser from "./EditUser";
 
 export default async function ProfilePage() {
   const session = await auth();
@@ -15,7 +15,8 @@ export default async function ProfilePage() {
       image: true,
       phone: true,
       address: true,
+      company: true,
     },
   });
-  return <EditFrom userInfo={userInfo} />;
+  return <EditUser userInfo={userInfo} />;
 }

@@ -12,7 +12,9 @@ export default function useAddToCart(productId, availability, quantity = 1) {
   const [hasMore, setHasMore] = useState(availability);
   const [data, setData] = useState(null);
   const [isPending, startTransition] = useTransition();
-  const isOnCart = cartList.find((cart) => cart.productId === productId);
+  const isOnCart = cartList.find(
+    (cart) => cart.productId === productId && cart.itemCount > 0,
+  );
   async function handelAddToCart() {
     startTransition(async () => {
       try {

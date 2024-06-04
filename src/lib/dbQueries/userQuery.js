@@ -1,8 +1,8 @@
 "use server";
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { addToCart } from "./products";
 export const getWishAndCartCount = async (userId) => {
   const cartItemList = await prisma.cartItems.findMany({
     where: {
@@ -79,14 +79,23 @@ export const toggleWishItem = async (productId) => {
   }
 };
 export const updateProfile = async (body, id) => {
-  const { name, phone, shippingAddress, billingAddress, image } = body;
+  const {
+    name,
+    phone,
+    shippingAddress,
+    billingAddress,
+    image,
+    company,
+    email,
+  } = body;
   await prisma.user.update({
     where: {
       id: id,
     },
     data: {
       name: name,
-
+      company,
+      email,
       phone: phone,
       image: image,
       address: { shippingAddress, billingAddress },
@@ -116,23 +125,17 @@ export const removeCartItem = async (productId) => {
     redirect("/login");
   }
 };
-export const changeCartItemCount = async (productId, itemCount,stock) => {
-  c
-  const session = await auth();
-  if (session) {
-    try {
-      const id = session.user.id;
-      const newStock = stock - itemCount;
-      await addToCart(productId,)
-      return {
-        status: "ok ",
-      };
-    } catch (error) {
-      return {
-        error: true,
-      };
-    }
-  } else {
-    redirect("/login");
-  }
+export const getUserInfo = async () => {
+  const id = headers().get("userId");
+  return await prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      name: true,
+      address: true,
+      email: true,
+      company: true,
+    },
+  });
 };

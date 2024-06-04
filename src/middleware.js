@@ -12,7 +12,7 @@ export default function middleware(req) {
     if (pathNameIsMissing) {
       return internationalization(req);
     }
-    //handel public and private routes
+    //handle public and private routes
     return handleRouteMiddleware(req);
   }
   return handleRouteMiddleware(req);

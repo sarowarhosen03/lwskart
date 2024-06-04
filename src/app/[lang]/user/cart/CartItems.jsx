@@ -24,11 +24,11 @@ const CartItem = ({
         id={`item-${item.productId}`}
         name="cartItem"
         value={item.productId}
-        checked={item.itemCount > 0 && selectedItems.includes(item.productId)}
+        checked={selectedItems.includes(item.productId)}
         onChange={() =>
           handleSelection(item.productId, item.itemCount, item.status)
         }
-        className="mr-4"
+        className="mr-4 "
       />
       <Image
         priority
