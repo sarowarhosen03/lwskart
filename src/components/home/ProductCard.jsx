@@ -16,6 +16,7 @@ export default function ProductCard({
   sku,
   availability,
   stock,
+  productDict,
 }) {
   return (
     <div className=" group row-span-3 grid grid-rows-subgrid  overflow-hidden rounded bg-white shadow ">
@@ -36,11 +37,11 @@ export default function ProductCard({
             href={`/product/${getSlug({ name, sku })}`}
             draggable={false}
             className="flex h-8 w-9 items-center justify-center rounded-full bg-primary text-lg text-white transition hover:bg-gray-800"
-            title="view product"
+            title={productDict.viewProduct}
           >
             <i className="fa-solid fa-magnifying-glass"></i>
           </Link>
-          <WishToggle productId={id} />
+          <WishToggle productId={id} productDict={productDict} />
         </div>
       </div>
       <div className="px-4 pb-3 pt-4">
@@ -63,7 +64,12 @@ export default function ProductCard({
         </div>
       </div>
 
-      <AddToCartBtn productId={id} availability={availability} stock={stock} />
+      <AddToCartBtn
+        productId={id}
+        availability={availability}
+        stock={stock}
+        productDict={productDict}
+      />
     </div>
   );
 }

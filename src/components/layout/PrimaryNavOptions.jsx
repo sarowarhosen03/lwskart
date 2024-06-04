@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-export default function PrimaryNavOptions() {
+export default function PrimaryNavOptions({ dict }) {
   const { status, data: session } = useSession();
   const isAuthorized = status === "authenticated";
   const visibility = isAuthorized ? "visible" : "invisible";
@@ -22,17 +22,16 @@ export default function PrimaryNavOptions() {
   profileImageUrl = `/user/${profileImageUrl}`;
 
   let firstLatter = session?.user?.name?.charAt(0)?.toUpperCase();
-
   return (
     <>
       <Link
-        href={`/${lang}/user/wishlist`}
+        href={`/${lang}/user/wish`}
         className={`relative text-center text-gray-700 transition hover:text-primary ${visibility} `}
       >
         <div className="text-2xl">
           <i className="fa-regular fa-heart"></i>
         </div>
-        <div className="text-xs leading-3">Wishlist</div>
+        <div className="text-xs leading-3">{dict.wishlist}</div>
         <div className="absolute -top-1 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
           {wishList.length}
         </div>
@@ -44,7 +43,7 @@ export default function PrimaryNavOptions() {
         <div className="text-2xl">
           <i className="fa-solid fa-bag-shopping"></i>
         </div>
-        <div className="text-xs leading-3">Cart</div>
+        <div className="text-xs leading-3">{dict.cart}</div>
         <div className="absolute -right-3 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-white">
           {cartList.length}
         </div>
@@ -59,7 +58,7 @@ export default function PrimaryNavOptions() {
               src={profileImageUrl}
               height={54}
               width={54}
-              className="size-[54px] rounded-full  ring-primary"
+              className="size-[54px] h-auto  rounded-full ring-primary"
               alt="profile image "
               priority
             />

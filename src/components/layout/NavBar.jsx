@@ -1,10 +1,15 @@
-import LoginButton from "@/components/ui/LoginButton";
+import { auth } from "@/auth/auth";
 import getCategories from "@/lib/dbQueries/categoryQuery";
+import { getDectionary } from "@/lib/getDictionary";
 import Image from "next/image";
 import Link from "next/link";
 import LocalLink from "../LocalLink";
-export default async function NavBar() {
+import NavLink from "../ui/NavLink";
+import SingOutButton from "../ui/SingOutButton";
+export default async function NavBar({ lang }) {
   const categories = await getCategories({ page: 1, limit: 10 });
+  const dict = await getDectionary(lang, "navBar");
+  const session = await auth();
   return (
     <nav className="bg-gray-800">
       <div className="container flex">
@@ -13,7 +18,7 @@ export default async function NavBar() {
             <i className="fa-solid fa-bars"></i>
           </span>
           <span className="ml-2 hidden capitalize text-white">
-            All Categories
+            {dict?.category}
           </span>
 
           {/* <!-- dropdown --> */}
@@ -47,32 +52,22 @@ export default async function NavBar() {
 
         <div className="flex flex-grow items-center justify-between py-5 md:pl-12">
           <div className="flex items-center space-x-6 capitalize">
-            <Link
-              href="index.html"
-              className="text-gray-200 transition hover:text-white"
-            >
-              Home
-            </Link>
-            <Link
-              href="pages/shop.html"
-              className="text-gray-200 transition hover:text-white"
-            >
-              Shop
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-200 transition hover:text-white"
-            >
-              About us
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-200 transition hover:text-white"
-            >
-              Contact us
-            </Link>
+            <NavLink href="/">{dict.home}</NavLink>
+            <NavLink href="/shop">{dict.shop}</NavLink>
+            <NavLink href="/about">{dict.shop}</NavLink>
+            <NavLink href="/contact">{dict.contact}</NavLink>
           </div>
-          <LoginButton />
+
+          {!session?.user ? (
+            <Link
+              href="/login"
+              className="text-gray-200 transition hover:text-white"
+            >
+              {dict.login}
+            </Link>
+          ) : (
+            <SingOutButton>{dict.logout}</SingOutButton>
+          )}
         </div>
       </div>
     </nav>

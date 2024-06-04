@@ -1,3 +1,6 @@
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import NavBar from "@/components/layout/NavBar";
 import { locales } from "@/lib/controler/internationalization";
 
 export function generateStaticParams() {
@@ -7,6 +10,13 @@ export function generateStaticParams() {
     };
   });
 }
-export default function layout({ children }) {
-  return <>{children}</>;
+export default function Sublayout({ children, params: { lang } }) {
+  return (
+    <>
+      <Header lang={lang} />
+      <NavBar lang={lang} />
+      {children}
+      <Footer lang={lang} />
+    </>
+  );
 }

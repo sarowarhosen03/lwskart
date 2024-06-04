@@ -75,7 +75,9 @@ export const toggleWishItem = async (productId) => {
       status: "ok ",
     };
   } else {
-    redirect("/login");
+    return {
+      redirect: "/login",
+    };
   }
 };
 export const updateProfile = async (body, id) => {

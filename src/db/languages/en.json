@@ -1,6 +1,309 @@
 {
-    "welcomeBack": "welcome back dear customer",
+  "welcomeBack": "welcome back dear customer",
+  "email": "Email Address",
+  "password": "password",
+  "headers": {
+    "logo": "en",
+    "search": "Search",
+    "wishlist": "Wishlist",
+    "cart": "Cart"
+  },
+
+  "navBar": {
+    "home": "Home",
+    "shop": "Shop",
+    "about": "About us",
+    "contact": "Contact Us",
+    "login": "Login",
+    "logout": "Logout",
+    "category": "All Categories"
+  },
+
+  "home": {
+    "hero": {
+      "title": "Best Collection For Home Decoration",
+      "subTitle": "Transform Your Home with Timeless Elegance, Unmatched Comfort, Innovative Design, and Exceptional Craftsmanship",
+      "button": "Shop Now"
+    },
+    "feature": {
+      "shipping": "Free Shipping",
+      "order": "Order over $200",
+      "money": "Money Returns",
+      "ret": "30 days money returns",
+      "support": "24/7 Support",
+      "customer": "Customer support"
+    },
+
+    "category": "SHOP BY CATEGORY",
+    "newArrival": "TOP NEW ARRIVAL",
+    "trend": "TRENDING PRODUCTS"
+  },
+  "product": {
+    "addToCart": "Add To Cart",
+    "showCart": "Show Cart",
+    "wishlistTitleAdd": "add to wishlist",
+    "wishlistTitleRemove": "remove from wishlist",
+    "viewProduct": "view product",
+    "stockOut": "Out of Stock"
+  },
+  "productDetails": {
+    "brand": "Brand",
+    "category": "Category",
+    "sku": "SKU",
+    "productDetails": "Product Details",
+    "relatedProducts": "Related Products",
+    "product": "Product",
+    "availability": "Availability"
+  },
+  "sidebar": {
+    "categories": "Categories",
+    "price": "Price",
+    "filter": "Filter"
+  },
+  "shop": {
+    "limit": "Items per page"
+  },
+  "profile": {
+    "greeting": "Hello",
+    "personal": "Personal Profile",
+    "shipping": "Shipping Address",
+    "billing": "Billing Address",
+    "edit": "Edit"
+  },
+  "personal": {
+    "title": "Update your profile",
+    "name": "Full Name",
     "email": "Email Address",
-    "password": "password",
-    "login": "Login"
+    "phone": "Phone Number",
+    "update": "Update",
+    "image": "Drop image here",
+    "choose": "Choose profile photo",
+    "empty": "You can't empty submit",
+    "phoneInvalid": "This Phone Number is invalid"
+  },
+  "wishlist": {
+    "availability": "Availability",
+    "deleteMessage": "Are You Sure Delete This Item",
+    "no": "No, cancel",
+    "yes": "Yes",
+    "empty": "No wishlist data available",
+    "wrong": "Something went wrong"
+  },
+  "cart": {
+    "empty": "No carts data available",
+    "checkout": "Checkout",
+    "totalPrice": "Total Price",
+    "deleteMessage": "Are You Sure Delete This Item"
+  },
+
+  "deleteModal": {
+    "no": "No, cancel",
+    "yes": "Yes",
+    "close": "Close modal"
+  },
+  "currency": "$",
+  "stock": {
+    "rightNow": "The stock has just run out"
+  },
+  "auth": {
+    "login": "Please login first"
+  },
+  "checkout": {
+    "labels": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phone": "Phone Number",
+      "email": "Email Address",
+      "city": "City",
+      "accountNumber": "Account Number",
+      "transactionId": "Transaction ID",
+      "shippingAddress": "Shipping Address"
+    },
+    "errorMessages": {
+      "firstName": "First name is required",
+      "lastName": "Last name is required",
+      "phone": "Phone number is required",
+      "email": "Email is required",
+      "city": "City is required",
+      "accountNumber": "Account Number is required",
+      "transactionId": "Transaction ID is required"
+    },
+    "orderSummary": {
+      "title": "Order Summary",
+      "loadingText": "Loading",
+      "orderBtn": "Place order",
+      "orderProductLists": {
+        "noProductsText": "No found",
+        "subtotalLabel": "Subtotal",
+        "shippingLabel": "Shipping",
+        "freeShippingText": "Free",
+        "totalLabel": "Total"
+      },
+      "agreementInput": {
+        "label": "I agree to the",
+        "linkText": "terms & conditions",
+        "errorMessage": "You must accept the terms and conditions"
+      }
+    }
+  },
+  "confirmOrder": {
+    "orderSuccess": "Successfully purchases",
+    "orderNumber": "Order #",
+    "notCart": "You have no data in your cart",
+    "error": "There was an problem!",
+    "alertMessage": "You have not added your shipping address yet. Please add your shipping address from your account and proceed to the check-out page.",
+    "alertTitle": "No shipping address information was found for you",
+    "yes": "Go to Profile",
+    "productList": {
+      "title": "Product List",
+      "notFound": "Not Found Product"
+    },
+    "summary": {
+      "title": "Summary",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "total": "Total"
+    },
+    "shipping": {
+      "title": "Shipping",
+      "carrierDetails": "View Courier Details",
+      "deliveryWith24Hours": "Delivery with 24 Hours"
+    },
+    "customer": {
+      "title": "Customer",
+      "previousOrders": "Previous Orders",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "shippingAddress": "Shipping Address",
+      "billingAddress": "Billing Address"
+    },
+    "downloadBtn": "Download",
+    "invoice": {
+      "company": {
+        "name": "LWS-KART PLC",
+        "email": "sales@lws-kart.com",
+        "phone": "+8801402200698",
+        "vat": "8657671212"
+      },
+      "billTo": "Bill to :",
+      "invoice": {
+        "number": "Invoice number:",
+        "date": "Invoice date:"
+      },
+      "table": {
+        "headers": {
+          "items": "Items",
+          "quantity": "Quantity",
+          "price": "Price",
+          "amount": "Amount",
+          "subtotal": "Subtotal",
+          "tax": "Tax",
+          "discount": "Discount",
+          "total": "Total"
+        },
+        "footer": "Thank you for being with us!"
+      }
+    },
+    "orderItem": {
+      "brand": "Brand"
+    }
+  },
+  "footer": {
+    "copyright": "Â© TailCommerce - All Right Reserved",
+    "text": "Transform Your Home with Timeless Elegance and Unmatched Comfort",
+    "solution": "SOLUTIONS",
+    "support": "SUPPORT",
+    "links": "USEFUL LINKS",
+    "company": "COMPANY",
+    "marketing": "Marketing",
+    "analytics": "Analytics",
+    "commerce": "Commerce",
+    "insights": "Insights",
+    "pricing": "Pricing",
+    "documentation": "Documentation",
+    "guides": "Guides",
+    "api": "API Status"
+  },
+  "shippingAndBilling": {
+    "fullName": "Full Name",
+    "address": "Address",
+    "city": "City",
+    "state": "State/Province",
+    "zip": "Zip/Postal Code",
+    "country": "Country",
+    "shippingNotFound": "No shipping data has been created yet",
+    "billingNotFound": "No billing data has been created yet",
+    "billing": "Billing Address",
+    "shipping": "Shipping Address",
+    "same": "Same as shipping address",
+    "submit": "Submitting",
+    "update": "Update",
+    "add": "Add",
+    "errorMessages": {
+      "fullName": "Full Name is required",
+      "address": "Address is required",
+      "city": "City is required",
+      "state": "State/Province is required",
+      "zip": "Zip/Postal Code is required",
+      "country": "Country is required",
+      "fetchError": "Error fetching shipping address",
+      "fetchErrorShipping": "Fill in the shipping address first",
+      "submitSuccess": "Successfully Submitted",
+      "updateWarning": "You have not updated any data."
+    }
+  },
+  "login": {
+    "title": "Login",
+    "welcomeMessage": "Welcome back customer",
+    "emailLabel": "Email address",
+    "emailRequiredError": "Email is required",
+    "passwordLabel": "Password",
+    "passwordRequiredError": "Password is required",
+    "rememberMeLabel": "Remember me",
+    "forgotPasswordLink": "Forgot password",
+    "loginButton": "Login",
+    "loginInProgress": "Logging",
+    "loginSuccessMessage": "Login successful",
+    "errorMessage": "Something went wrong!",
+    "orLoginWith": "Or login with",
+    "notAccount": "Don't have an account?",
+    "invalid": "Invalid email or password"
+  },
+  "register": {
+    "title": "Register now",
+    "linkText": "Register now",
+    "create": "Create an account",
+    "newCustomer": "Register for new costumer",
+    "nameLabel": "Full Name",
+    "nameError": "Name is required",
+    "nameError5": "Name must be at least 5 characters long.",
+    "emailLabel": "Email address",
+    "emailError": "Email is required",
+    "emailError3": "Email must have at least 3 characters before '@' symbol.",
+    "passwordLabel": "Password",
+    "passwordError": "Password is required",
+    "password8Error": "Your password must be between 8 and 32 characters in length.",
+    "password32Error": "Your password must be between 8 and 32 characters in length.",
+    "passwordPatternError": "Password must contain at least one number, one letter, one special character, and be between 8 and 32 characters in length.",
+    "confirmLabel": "ConfirmPassword",
+    "confirmError": "Confirm password is required",
+    "confirmNotMatchError": "Passwords don't match",
+    "agreementMessage": "I have read and agree to the",
+    "terms": "terms & conditions",
+    "createLoading": "Creating",
+    "account": "create account",
+    "with": "OR SIGNUP WITH",
+    "already": "Already have account?",
+    "login": "Login now",
+    "createSuccess": "Creating an account successful!",
+    "existUser": "This user already exist!",
+    "error": "There was an problem!"
+  },
+  "socialLogin": {
+    "orLoginWith": "Or login with",
+    "google": "Google",
+    "github": "GitHub"
+  }
 }

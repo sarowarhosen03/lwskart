@@ -8,7 +8,6 @@ export default function PriceSelector() {
   const price = searchParams.get("price");
   const [min, setMin] = useState("");
   const [max, setMax] = useState("");
-  const [query, setQuery] = useState([]);
   const { replace } = useRouter();
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;

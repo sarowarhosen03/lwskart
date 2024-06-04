@@ -4,7 +4,7 @@ import { getSlug } from "@/utils/slugify";
 import ProductAction from "./ProductAction";
 import ShareProduct from "./ShareProduct";
 
-export default async function ProductDetails({ productInfo, lang }) {
+export default async function ProductDetails({ productInfo, lang, dict,productdict }) {
   const {
     id,
     image,
@@ -20,6 +20,7 @@ export default async function ProductDetails({ productInfo, lang }) {
     discount_price,
     details,
     stock,
+
   } = productInfo;
 
   const url = `${process.env.SITE_URL}/${lang}/product/${getSlug({ name, sku })}`;
@@ -47,21 +48,25 @@ export default async function ProductDetails({ productInfo, lang }) {
               )}
             </p>
             <p className="space-x-2">
-              <span className="font-semibold text-gray-800">Brand: </span>
+              <span className="font-semibold text-gray-800">
+                {dict.brand}:{" "}
+              </span>
               <span className="text-gray-600">{brand.name}</span>
             </p>
             <p className="space-x-2">
-              <span className="font-semibold text-gray-800">Category: </span>
+              <span className="font-semibold text-gray-800">
+                {dict.category}:{" "}
+              </span>
               <span className="text-gray-600">{category.name}</span>
             </p>
             {availability && (
               <p className="space-x-2">
-                <span className="font-semibold text-gray-800">Stock: </span>
+                <span className="font-semibold text-gray-800"> Stock: </span>
                 <span className="text-gray-600">{stock}</span>
               </p>
             )}
             <p className="space-x-2">
-              <span className="font-semibold text-gray-800">SKU: </span>
+              <span className="font-semibold text-gray-800">{dict.sku}: </span>
               <span className="text-gray-600">{sku}</span>
             </p>
           </div>
@@ -76,13 +81,14 @@ export default async function ProductDetails({ productInfo, lang }) {
             stock={stock}
             availability={availability}
             productId={id}
+            productdict={productdict}
           />
           <ShareProduct url={url} name={name} />
         </div>
       </div>
       <div className="container mt-3 pb-16">
         <h3 className="w-fit border-b-2 border-gray-200 pb-3 font-roboto text-xl font-medium text-gray-800">
-          Product details
+          {dict.productDetails}
         </h3>
         <div className="w-3/5 pt-6">
           <div className="text-gray-600">

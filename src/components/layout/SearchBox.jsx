@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default function SearchBox() {
+export default function SearchBox({ dict }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const [search, setSearch] = useState(searchParams.get("search") || "");
@@ -37,10 +37,10 @@ export default function SearchBox() {
         value={search}
         onChange={handleChange}
         className="hidden w-full rounded-l-md border border-r-0 border-primary py-3 pl-12 pr-3 focus:outline-none md:flex"
-        placeholder="search"
+        placeholder={dict.search}
       />
       <button className="hidden items-center rounded-r-md border border-primary bg-primary px-8 text-white transition hover:bg-transparent hover:text-primary md:flex">
-        Search
+        {dict.search}
       </button>
     </form>
   );

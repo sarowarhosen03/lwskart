@@ -2,6 +2,7 @@
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
 import Log from "@/utils/Log";
+import { getSlug } from "@/utils/slugify";
 import { CartItemStatus } from "@prisma/client";
 import { revalidateTag, unstable_cache } from "next/cache";
 
@@ -131,14 +132,15 @@ export const getRelatedProducts = unstable_cache(
 export const addToCart = async (productId, quantity = 1) => {
   try {
     const session = await auth();
+    const product = await prisma.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
     if (session) {
       const id = session.user.id;
       //select product
-      const product = await prisma.product.findUnique({
-        where: {
-          id: productId,
-        },
-      });
+
       if (product) {
         const availableToPurchase = Math.min(product.stock, quantity);
         const newStock = product.stock - availableToPurchase;
@@ -195,6 +197,10 @@ export const addToCart = async (productId, quantity = 1) => {
           },
         };
       }
+    } else {
+      return {
+        redirect: `/login?clallback=/product/${getSlug({ name: product.name, sku: product.sku })}`,
+      };
     }
   } catch (error) {
     Log(error);

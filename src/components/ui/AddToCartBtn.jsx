@@ -1,13 +1,20 @@
 "use client";
 
 import useAddToCart from "@/hooks/useAddToCart";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function AddToCartBtn({ productId, availability, stock }) {
-  const { handelAddToCart, isPending, isOnCart } = useAddToCart(
+export default function AddToCartBtn({
+  productId,
+  availability,
+  stock,
+  isLoading,
+  productDict: { addToCart, stockOut, showCart },
+}) {
+  const { handleAddToCart, isPending, isOnCart } = useAddToCart(
     productId,
     availability,
   );
+  const { push } = useRouter();
 
   if (!availability && !isOnCart && stock > 0) {
     return (
@@ -15,28 +22,29 @@ export default function AddToCartBtn({ productId, availability, stock }) {
         disabled={true}
         className="block w-full cursor-not-allowed rounded-b border border-primary bg-slate-500 py-1 text-center text-white"
       >
-        Out of stock
+        {stockOut}
       </button>
     );
   }
-  if (!availability && isOnCart) {
+  if (isOnCart) {
     return (
-      <Link
-        href={`/checkout`}
-        className="block w-full cursor-not-allowed rounded-b border border-primary bg-orange-400 py-1 text-center text-white"
+      <button
+        disabled={isLoading}
+        onClick={() => push(`/user/cart`)}
+        className="block w-full cursor-pointer rounded-b border border-primary bg-orange-400 py-1 text-center text-white disabled:bg-red-400"
       >
-        Proceed To Checkout
-      </Link>
+        {showCart}
+      </button>
     );
   }
 
   return (
     <button
       disabled={isPending}
-      onClick={handelAddToCart}
+      onClick={handleAddToCart}
       className="block w-full rounded-b border border-primary bg-primary py-1 text-center text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-400 disabled:text-white"
     >
-      Add to cart
+      {addToCart}
     </button>
   );
 }

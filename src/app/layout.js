@@ -1,7 +1,3 @@
-import { auth } from "@/auth/auth";
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
-import NavBar from "@/components/layout/NavBar";
 import AppContextProvider from "@/context";
 import { runCleaner } from "@/lib/cron/releaseCartItems";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -28,18 +24,12 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const authd = await auth();
   await runCleaner();
   return (
     <html lang="en">
       <body className="selection:bg-primary selection:text-white">
         <SessionProvider>
-          <AppContextProvider>
-            <Header />
-            <NavBar />
-            {children}
-            <Footer />
-          </AppContextProvider>
+          <AppContextProvider>{children}</AppContextProvider>
         </SessionProvider>
         <ToastContainer position="bottom-center" limit={2} />
       </body>

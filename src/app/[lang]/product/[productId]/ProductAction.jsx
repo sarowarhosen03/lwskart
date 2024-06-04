@@ -7,20 +7,25 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 
-export default function ProductAction({ availability, productId, stock }) {
+export default function ProductAction({
+  availability,
+  productId,
+  stock,
+  productdict: { addToCart, stockOut, showCart ,wishlistTitleAdd,wishlistTitleRemove},
+}) {
   const [quantity, setQuantity] = useState(1);
   const [availableStock, setAvailableStock] = useState(stock);
-  const { handelAddToCart, isPending, isOnCart } = useAddToCart(
+  const { handleAddToCart, isPending, isOnCart } = useAddToCart(
     productId,
     availability,
     quantity,
   );
   const { status } = useSession();
-  const handleAddToCart = useCallback(async () => {
-    await handelAddToCart(quantity);
+  const handleAddCart = useCallback(async () => {
+    await handleAddToCart(quantity);
     setAvailableStock((prev) => prev - quantity);
     setQuantity(1);
-  }, [quantity, handelAddToCart]);
+  }, [quantity, handleAddToCart]);
   return (
     <>
       {availability && (
@@ -35,7 +40,7 @@ export default function ProductAction({ availability, productId, stock }) {
         {availability || isOnCart ? (
           <button
             disabled={isPending || availableStock == 0 || !availability}
-            onClick={handleAddToCart}
+            onClick={handleAddCart}
             className="flex min-w-fit items-center gap-2 rounded border border-primary bg-primary px-8 py-2 font-medium uppercase text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-300 disabled:text-white"
           >
             <div className="flex items-center justify-center gap-2">
@@ -44,18 +49,18 @@ export default function ProductAction({ availability, productId, stock }) {
             </div>
           </button>
         ) : (
-          <p className="text-xl font-bold">Out Of Stock</p>
+          <p className="text-xl font-bold">{stockOut}</p>
         )}
 
-        <WishToggleButton productId={productId} />
+        <WishToggleButton productId={productId} productdict={{wishlistTitleAdd,wishlistTitleRemove}} />
       </div>
       {status === "authenticated" && isOnCart && (
         <Link
-          href={`/checkout`}
+          href={`/user/cart`}
           className="block bg-orange-400 px-4 py-3 text-center font-bold text-white"
         >
           {" "}
-          Processed To Checkout
+          {showCart}
         </Link>
       )}
     </>
