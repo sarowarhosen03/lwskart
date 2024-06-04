@@ -13,16 +13,14 @@ export default function ProductAction({ availability, productId, stock }) {
   const { handelAddToCart, isPending, isOnCart } = useAddToCart(
     productId,
     availability,
-    quantity
+    quantity,
   );
   const { status } = useSession();
-
   const handleAddToCart = useCallback(async () => {
     await handelAddToCart(quantity);
     setAvailableStock((prev) => prev - quantity);
-    setQuantity(1)
+    setQuantity(1);
   }, [quantity, handelAddToCart]);
-
   return (
     <>
       {availability && (
@@ -34,7 +32,7 @@ export default function ProductAction({ availability, productId, stock }) {
       )}
 
       <div className="mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5">
-        {(availability || isOnCart) ? (
+        {availability || isOnCart ? (
           <button
             disabled={isPending || availableStock == 0 || !availability}
             onClick={handleAddToCart}
@@ -51,7 +49,7 @@ export default function ProductAction({ availability, productId, stock }) {
 
         <WishToggleButton productId={productId} />
       </div>
-      {(status === "authenticated" && isOnCart) && (
+      {status === "authenticated" && isOnCart && (
         <Link
           href={`/checkout`}
           className="block bg-orange-400 px-4 py-3 text-center font-bold text-white"

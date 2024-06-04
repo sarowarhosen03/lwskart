@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function CategoryItem({ name, thumbnail }) {
   return (
     <Link
-      href={`/shop?category=${name}`}
+      href={`/shop?category=${decodeURIComponent(name)}`}
       className="group relative overflow-hidden rounded-sm "
     >
       <Image

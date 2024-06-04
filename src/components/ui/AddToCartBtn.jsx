@@ -3,13 +3,13 @@
 import useAddToCart from "@/hooks/useAddToCart";
 import Link from "next/link";
 
-export default function AddToCartBtn({ productId, availability }) {
+export default function AddToCartBtn({ productId, availability, stock }) {
   const { handelAddToCart, isPending, isOnCart } = useAddToCart(
     productId,
     availability,
   );
 
-  if (!availability && !isOnCart) {
+  if (!availability && !isOnCart && stock > 0) {
     return (
       <button
         disabled={true}
