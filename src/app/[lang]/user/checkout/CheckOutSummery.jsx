@@ -34,8 +34,6 @@ export default function CheckOutSummery({ userInfo }) {
           selectedItems.includes(item.productId),
         );
         setSelectedCarts(items);
-      } else if (!isOrderPlaced && !selectedItems) {
-        push("/user/cart");
       }
     }
   }, [cartList, push, isOrderPlaced]);
@@ -69,13 +67,14 @@ export default function CheckOutSummery({ userInfo }) {
             type: DELETE_BULK_CART,
             payload: selectedCarts.map((item) => item.productId),
           });
-          setIsOrderPlaced(true);
           localStorage.removeItem("selectedItems");
+
           push(res.invoice);
         } else {
           throw Error("Failed to place order");
         }
       } catch (error) {
+        console.log(error, "here");
         toast.error("Failed to place order");
       }
     });
