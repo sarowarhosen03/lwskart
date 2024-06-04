@@ -29,22 +29,27 @@ export const getProducts = unstable_cache(
   },
 );
 
-export const getNewArrivalProducts = unstable_cache(async () => {
-  return prisma.Product.findMany({
-    take: 4,
-    orderBy: {
-      createdAt: "desc",
-    },
+export const getNewArrivalProducts = async () => {
+  try {
+    const product = await prisma.Product.findMany({
+      take: 4,
+      orderBy: {
+        createdAt: "desc",
+      },
 
-    include: {
-      wishItem: {
-        select: {
-          userId: true,
+      include: {
+        wishItem: {
+          select: {
+            userId: true,
+          },
         },
       },
-    },
-  });
-}, ["products"]);
+    });
+    return product;
+  } catch (error) {
+    return null;
+  }
+};
 export const getProductByNameAndSku = unstable_cache(
   async (productString) => {
     const [name, sku] = decodeURI(productString).split("-");
@@ -64,8 +69,13 @@ export const getProductByNameAndSku = unstable_cache(
   },
 );
 
-export const getRelatedProducts = unstable_cache(
-  async ({ productId, categoryId, tags, price }) => {
+export const getRelatedProducts = async ({
+  productId,
+  categoryId,
+  tags,
+  price,
+}) => {
+  try {
     const priceRange = {
       min: price * 0.1,
       max: price * 2.5,
@@ -123,12 +133,13 @@ export const getRelatedProducts = unstable_cache(
       products: relatedProducts,
       total: totalCount,
     };
-  },
-  {
-    tags: ["products"],
-  },
-);
-
+  } catch (error) {
+    return {
+      products: [],
+      total: 0,
+    };
+  }
+};
 export const addToCart = async (productId, quantity = 1) => {
   try {
     const session = await auth();

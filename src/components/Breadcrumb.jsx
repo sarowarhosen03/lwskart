@@ -1,35 +1,21 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Breadcrumb() {
-    const pathName = usePathname()
-    const pathItems = pathName.split("/");
-    pathItems.pop()
-    let cumulativePath = "";
+  let pathName = usePathname();
+  pathName = pathName.split("/").pop();
 
-    const paths = pathItems.map((pathItem, i) => {
-        cumulativePath += (i > 0 ? "/" : "") + pathItem;
-        return {
-            text: pathItem,
-            path: cumulativePath
-        };
-    });
+  return (
+    <div className="container flex items-center gap-3 py-4">
+      <Link href="/" className="text-base text-primary">
+        <i className="fa-solid fa-house"></i>
+      </Link>
+      <span className="text-sm text-gray-400">
+        <i className="fa-solid fa-chevron-right"></i>
+      </span>
 
-
-    return (
-        <div className="container py-4 flex items-center gap-3">
-            <Link href="/" className="text-primary text-base">
-                <i className="fa-solid fa-house"></i>
-            </Link>
-            <span className="text-sm text-gray-400">
-                <i className="fa-solid fa-chevron-right"></i>
-            </span>
-
-            {
-                paths.map((path, i) => <p key={i} className="text-gray-600 font-medium ">{path.text}</p>)
-            }
-
-        </div>
-    )
+      <p className="font-medium text-gray-600 ">{pathName}</p>
+    </div>
+  );
 }

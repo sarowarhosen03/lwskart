@@ -11,10 +11,12 @@ function LanguageSwitcher() {
   const currentLangPath = pathname?.split("/")[1];
   const languages = locales;
   const searchParams = useSearchParams();
-  const lang = getCookie("lang");
-  if (!lang || lang !== currentLangPath) {
-    setCookie("lang", currentLangPath);
-  }
+  useEffect(() => {
+    const lang = getCookie("lang");
+    if (!lang || lang !== currentLangPath) {
+      setCookie("lang", currentLangPath);
+    }
+  });
   const found = languages.find((lang) => lang.code === currentLangPath);
   const [selectedLanguage, setSelectedLanguage] = useState(
     found ?? languages[0],
