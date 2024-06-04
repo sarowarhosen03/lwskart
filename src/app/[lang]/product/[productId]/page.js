@@ -16,6 +16,32 @@ export async function generateStaticParams() {
   }));
 }
 
+export async function generateMetadata(
+  { params: { productId }, searchParams },
+  parent,
+) {
+  const product = await getProductByNameAndSku(productId);
+  if (!product) {
+    return {
+      title: `Product not found |  ${productId}`,
+      description: "Product not found",
+    };
+  }
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: product?.name + "| Lwskart",
+    openGraph: {
+      images: [
+        `/assets/images/products/${product?.image?.[0]}`,
+        ...previousImages,
+      ],
+    },
+    description: product?.description,
+  };
+}
+
 export default async function prodctDetailsPage({
   params: { productId, lang },
 }) {

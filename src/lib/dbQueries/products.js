@@ -52,7 +52,7 @@ export const getNewArrivalProducts = async () => {
 };
 export const getProductByNameAndSku = async (productString) => {
   const [name, sku] = decodeURI(productString).split("-");
-  
+
   return prisma.product.findFirst({
     where: {
       name: name,
@@ -206,7 +206,7 @@ export const addToCart = async (productId, quantity = 1) => {
       }
     } else {
       return {
-        redirect: `/login?clallback=/product/${getSlug({ name: product.name, sku: product.sku })}`,
+        redirect: `/login?callback=/product/${getSlug({ name: product.name, sku: product.sku })}`,
       };
     }
   } catch (error) {

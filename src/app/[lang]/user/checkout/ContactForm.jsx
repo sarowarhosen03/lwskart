@@ -89,6 +89,16 @@ export default function ContactForm({
           error={errors.email}
           value={email}
         />
+             <InputField
+          label="Payment Method"
+          name="paymentMethod"
+          type="text"
+          register={register}
+          validation={{ required: true }}
+          error={errors.email}
+          value={"cash on delivery "}
+          readOnly={true}
+        />
       </div>
     </div>
   );

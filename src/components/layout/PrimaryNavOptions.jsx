@@ -58,7 +58,7 @@ export default function PrimaryNavOptions({ dict }) {
               src={profileImageUrl}
               height={54}
               width={54}
-              className="size-[54px] h-auto  rounded-full ring-primary"
+              className="h-auto w-auto  rounded-full ring-primary"
               alt="profile image "
               priority
             />
