@@ -90,10 +90,10 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         phone,
         email,
       };
-      await sendInvoiceEmail(
-        { invoice, qr, items: productItems, customer },
-        session.user.email,
-      );
+      // await sendInvoiceEmail(
+      //   { invoice, qr, items: productItems, customer },
+      //   session.user.email,
+      // );
 
       return {
         success: true,
