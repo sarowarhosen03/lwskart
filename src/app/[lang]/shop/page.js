@@ -4,7 +4,7 @@ import ProductScaffolding from "@/components/ui/loader/ProductScaffolding";
 import { Suspense } from "react";
 import SideBar from "./SideBar";
 
-export default async function shopPage({ searchParams }) {
+export default async function shopPage({ searchParams,params:{lang} }) {
   return (
     <>
       <Breadcrumb />
@@ -13,7 +13,7 @@ export default async function shopPage({ searchParams }) {
           <SideBar />
         </Suspense>
         <Suspense fallback={<ProductScaffolding count={10} />}>
-          <ShopProductList searchParams={searchParams} />
+          <ShopProductList searchParams={searchParams} lang={lang}/>
         </Suspense>
       </div>
     </>
