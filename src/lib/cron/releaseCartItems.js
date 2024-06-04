@@ -46,10 +46,12 @@ export const runCleaner = async () => {
     process.env.NODE_ENV === "production" &&
     !process.env?.NEXT_IS_EXPORT_WORKER
   ) {
-    fetch(process.env.SITE_URL + "/api/cron", {
-      next: {
-        revalidate: 5 * 60,
-      },
-    });
+    try {
+      fetch(process.env.SITE_URL + "/api/cron", {
+        next: {
+          revalidate: 5 * 60,
+        },
+      });
+    } catch (error) {}
   }
 };
