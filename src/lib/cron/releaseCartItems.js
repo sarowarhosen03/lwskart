@@ -47,7 +47,7 @@ export const runCleaner = async () => {
     !process.env?.NEXT_IS_EXPORT_WORKER
   ) {
     try {
-      fetch(process.env.SITE_URL + "/api/cron", {
+      fetch(process.env.NEXT_PUBLIC_SITE_URL + "/api/cron", {
         next: {
           revalidate: 5 * 60,
         },

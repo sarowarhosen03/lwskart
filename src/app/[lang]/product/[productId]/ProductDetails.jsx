@@ -4,7 +4,12 @@ import { getSlug } from "@/utils/slugify";
 import ProductAction from "./ProductAction";
 import ShareProduct from "./ShareProduct";
 
-export default async function ProductDetails({ productInfo, lang, dict,productdict }) {
+export default async function ProductDetails({
+  productInfo,
+  lang,
+  dict,
+  productdict,
+}) {
   const {
     id,
     image,
@@ -20,10 +25,11 @@ export default async function ProductDetails({ productInfo, lang, dict,productdi
     discount_price,
     details,
     stock,
-
   } = productInfo;
 
-  const url = `${process.env.SITE_URL}/${lang}/product/${getSlug({ name, sku })}`;
+  const url = `${
+    process.env.NEXT_PUBLIC_SITE_URL
+  }/${lang}/product/${getSlug({ name, sku })}`;
   return (
     <>
       <div className="container grid grid-cols-2 gap-6">

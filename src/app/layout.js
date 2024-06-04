@@ -22,6 +22,7 @@ export const metadata = {
   title: "Lwskart - Online Shopping",
   description: "Discover the best products online",
   image: "public/assets/images/logo.svg",
+  metadataBase: process.env.NEXT_PUBLIC_SITE_URL,
 };
 
 export default async function RootLayout({ children }) {

@@ -72,7 +72,7 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         path: `./public/pdf/${newOrder.id}.pdf`, // Required. Path where you would like to generate the PDF file.
       };
       const qr = {
-        data: `${process.env.SITE_URL}/user/invoice/`,
+        data: `${process.env.NEXT_PUBLIC_SITE_URL}/user/invoice/`,
         width: 100, // Default is 50.
       };
 

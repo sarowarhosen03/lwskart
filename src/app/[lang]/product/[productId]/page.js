@@ -46,6 +46,7 @@ export default async function prodctDetailsPage({
   params: { productId, lang },
 }) {
   const productInfo = await getProductByNameAndSku(productId);
+  console.log("productInfo", productInfo);
   if (!productInfo) {
     notFound();
   }

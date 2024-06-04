@@ -1,48 +1,46 @@
-import { createTransport } from 'nodemailer';
+import { createTransport } from "nodemailer";
 
 export async function sendEmail(params) {
+  const { to, url, from } = params;
+  const { host } = new URL(url);
 
-    const { to, url, from } = params
-    const { host } = new URL(url)
+  const transport = createTransport({
+    host: process.env.EMAIL_SERVER,
+    port: 587,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
 
-    const transport = createTransport({
-        host: process.env.EMAIL_SERVER,
-        port: 587,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASSWORD
-        }
-    });
-
-    const result = await transport.sendMail({
-        to: `<${to}>`,
-        from: `Email Verification  <${from}>`,
-        subject: `Lwskart New  account verification ${host}`,
-        text: text({ url, host }),
-        html: html({ url }),
-    })
-    const failed = result.rejected.concat(result.pending).filter(Boolean)
-    if (failed.length) {
-        throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`)
-    }
+  const result = await transport.sendMail({
+    to: `<${to}>`,
+    from: `Email Verification  <${from}>`,
+    subject: `Lwskart New  account verification ${host}`,
+    text: text({ url, host }),
+    html: html({ url }),
+  });
+  const failed = result.rejected.concat(result.pending).filter(Boolean);
+  if (failed.length) {
+    throw new Error(`Email(s) (${failed.join(", ")}) could not be sent`);
+  }
 }
 
 function html(params) {
-    const { url } = params;
+  const { url } = params;
 
+  const brandColor = "#fd3d57"; // You can replace this with the actual brand color value
 
-    const brandColor = "#fd3d57";  // You can replace this with the actual brand color value
+  const color = {
+    background: "#f9f9f9",
+    text: "#444",
+    mainBackground: "#fff",
+    buttonBackground: brandColor,
+    buttonBorder: brandColor,
+    buttonText: "#fff",
+  };
 
-    const color = {
-        background: "#f9f9f9",
-        text: "#444",
-        mainBackground: "#fff",
-        buttonBackground: brandColor,
-        buttonBorder: brandColor,
-        buttonText: "#fff",
-    };
-
-    return `
+  return `
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,7 +100,7 @@ function html(params) {
 <body>
     <div class="email-container">
         <div class="email-header">
-            <img src="${process.env.SITE_URL}/assets/images/logo.svg" alt="Company Logo">
+            <img src="${process.env.NEXT_PUBLIC_SITE_URL}/assets/images/logo.svg" alt="Company Logo">
         </div>
         <div class="email-content">
             <h1>Email Verification</h1>
@@ -118,5 +116,5 @@ function html(params) {
 
 // Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
 function text({ url, host }) {
-    return `Verify your Email Address ${host}\n${url}\n\n`
+  return `Verify your Email Address ${host}\n${url}\n\n`;
 }

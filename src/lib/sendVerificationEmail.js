@@ -10,7 +10,7 @@ export default async function sendVerificationEmail({ email, userId }) {
     const token = jwt.sign(
       { type: VERIFICATION_TYPE.EMAIL_VERIFY, email, userId },
       process.env.AUTH_SECRET,
-      { expiresIn: Math.floor(new Date(expireTime).getTime() / 1000), },
+      { expiresIn: Math.floor(new Date(expireTime).getTime() / 1000) },
     );
 
     await prisma.VerificationToken.create({
@@ -24,7 +24,7 @@ export default async function sendVerificationEmail({ email, userId }) {
     });
     return sendEmail({
       to: email,
-      url: `${process.env.SITE_URL}/verify?email=${email}&token=${token}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/verify?email=${email}&token=${token}`,
       from: "noreply@lwskart.com",
     });
   } catch (error) {

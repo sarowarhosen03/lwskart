@@ -24,6 +24,8 @@ export default function ProductCard({
         <Image
           priority
           height={358}
+          placeholder="blur"
+          blurDataURL="/assets/images/placeholder.svg"
           width={265}
           src={`/assets/images/products/${image[0]}`}
           alt="product 1"

@@ -35,7 +35,7 @@ const payload = {
     address: "1234 Main Street, Dhaka, Bangladesh",
     phone: "Tel: (+880) 245 543 903",
     email: "Mail: sells@lwskart.com",
-    website: `Web: ${process.env.SITE_URL}`,
+    website: `Web: ${process.env.NEXT_PUBLIC_SITE_URL}`,
     taxId: "Tax ID: 1234567890", // Optional.
   },
 
