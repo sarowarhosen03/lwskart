@@ -2,7 +2,9 @@ import { auth } from "@/auth/auth";
 import WishToggleButton from "@/components/ui/WishToggleButton";
 import prisma from "@/db/db";
 import { getDectionary } from "@/lib/getDictionary";
+import { getSlug } from "@/utils/slugify";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function wishPage({ params: { lang } }) {
   const sessin = await auth();
@@ -14,6 +16,7 @@ export default async function wishPage({ params: { lang } }) {
       product: {
         select: {
           id: true,
+          sku: true,
           name: true,
           image: true,
         },
@@ -36,7 +39,12 @@ export default async function wishPage({ params: { lang } }) {
             className="h-64 w-full object-cover"
           />
           <div className="p-4">
-            <h2 className="mb-2 text-lg font-bold">{item.product.name}</h2>
+            <Link
+              href={`/product/${getSlug({ name: item.product.name, sku: item.product.sku })}`}
+              className="mb-2 text-lg font-bold"
+            >
+              {item.product.name}
+            </Link>
             <WishToggleButton
               productId={item.product.id}
               productdict={dictionary}
@@ -44,6 +52,17 @@ export default async function wishPage({ params: { lang } }) {
           </div>
         </div>
       ))}
+      {!wishList.length && (
+        <div className="text-center">
+          <h2 className="text-2xl font-bold">No items in your wishlist</h2>
+          <Link
+            className="text-lg hover:bg-primary hover:text-white"
+            href={`/shop`}
+          >
+            Shop now
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
