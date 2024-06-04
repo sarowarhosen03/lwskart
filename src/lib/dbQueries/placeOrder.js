@@ -104,6 +104,7 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
       };
     }
   } catch (error) {
+    console.log(error);
     return {
       error: true,
       message: "Something went wrong",
