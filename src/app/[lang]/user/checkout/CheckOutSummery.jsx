@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ContactForm from "./ContactForm";
 import OrderSummary from "./OrderSummary";
+import { placeOrder } from "@/lib/dbQueries/placeOrder";
 
 export default function CheckOutSummery({ userInfo }) {
   const {
@@ -56,11 +57,12 @@ export default function CheckOutSummery({ userInfo }) {
     startTransition(async () => {
       try {
         console.log("testing");
-        // const res = await placeOrder({
-        //   customerInfo: data,
-        //   items: selectedCarts,
-        //   totalPrice,
-        // });
+        const res = await placeOrder({
+          customerInfo: data,
+          items: selectedCarts,
+          totalPrice,
+        });
+        console.log(res);
 
         // if (res?.success) {
         //   toast.success("Order placed successfully");
