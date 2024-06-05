@@ -76,7 +76,7 @@ export default function CheckOutSummery({ userInfo }) {
           throw Error(res?.message);
         }
       } catch (error) {
-        console.log(error, "here");
+        console.log(error, "here changed");
         toast.error("Failed to place order");
       }
     });

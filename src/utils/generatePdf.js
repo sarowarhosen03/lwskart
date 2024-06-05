@@ -1,3 +1,4 @@
+"use server";
 import { PDFInvoice } from "@h1dd3nsn1p3r/pdf-invoice";
 
 const payload = {
