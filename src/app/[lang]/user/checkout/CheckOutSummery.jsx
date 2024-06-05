@@ -1,6 +1,6 @@
 "use client";
 import { useAppContext } from "@/context";
-import { placeOrder } from "@/lib/dbQueries/placeOrder";
+import { testFun } from "@/lib/dbQueries/products";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -63,12 +63,9 @@ export default function CheckOutSummary({ userInfo }) {
   async function handlePlaceOrder(data) {
     startTransition(async () => {
       try {
-        const res = await placeOrder({
-          customerInfo: data,
-          items: selectedCarts,
-          totalPrice,
-        });
+        const res = await testFun();
 
+        console.log(res);
         if (res?.success) {
           toast.success("Order placed successfully");
           dispatch({

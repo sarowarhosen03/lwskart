@@ -5,7 +5,11 @@ import Log from "@/utils/Log";
 import { getSlug } from "@/utils/slugify";
 import { CartItemStatus } from "@prisma/client";
 import { revalidateTag, unstable_cache } from "next/cache";
-
+export const testFun = async () => {
+  return {
+    message: "Hello",
+  };
+};
 export const getProducts = unstable_cache(
   async function (options) {
     const { page = 1, limit = 15 } = options || {};
