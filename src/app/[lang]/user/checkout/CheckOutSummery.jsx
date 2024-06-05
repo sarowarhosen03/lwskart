@@ -1,8 +1,8 @@
 "use client";
 import { useAppContext } from "@/context";
-import { testFun } from "@/lib/dbQueries/products";
+import { placeOrder } from "@/lib/dbQueries/placeOrder";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ContactForm from "./ContactForm";
@@ -12,12 +12,10 @@ export default function CheckOutSummary({ userInfo }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     clearErrors,
     setValue,
   } = useForm();
-  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [isSubmitting, startTransition] = useTransition();
   const { push } = useRouter();
   const {
     state: { cartList, isLoading },
@@ -27,27 +25,23 @@ export default function CheckOutSummary({ userInfo }) {
 
   useEffect(() => {
     const selectedProductIds = localStorage.getItem("selectedItems");
-    if (selectedProductIds) {
+    if (selectedProductIds && !isLoading) {
       const selectedItems = JSON.parse(selectedProductIds);
       const items = cartList.filter((item) =>
         selectedItems.includes(item.productId),
       );
       setSelectedCarts(items);
     }
-  }, [cartList, isOrderPlaced, isLoading, push]);
+  }, [cartList, isLoading]);
 
   useEffect(() => {
     // If selectedCarts is empty and loading is done, redirect to cart page
+    const selectedProductIds = localStorage.getItem("selectedItems");
 
-    if (
-      !localStorage.getItem("selectedItems") &&
-      !selectedCarts?.length &&
-      !isLoading &&
-      !isOrderPlaced
-    ) {
+    if (!selectedCarts?.length && !isLoading && !selectedProductIds) {
       push("/user/cart");
     }
-  }, [isLoading, push, isOrderPlaced, selectedCarts]);
+  }, [isLoading, push, selectedCarts]);
 
   const totalPrice = selectedCarts.reduce(
     (pre, cur) => {
@@ -60,10 +54,13 @@ export default function CheckOutSummary({ userInfo }) {
     { actualPrice: 0, discountPrice: 0 },
   );
 
-  const handlePlaceOrder = startTransition(async () => {
+  const handlePlaceOrder = async (data) => {
     try {
-      const res = await testFun();
-
+      const res = await placeOrder({
+        customerInfo: data,
+        items: selectedCarts,
+        totalPrice,
+      });
       console.log(res);
       if (res?.success) {
         toast.success("Order placed successfully");
@@ -71,17 +68,14 @@ export default function CheckOutSummary({ userInfo }) {
           type: "DELETE_BULK_CART",
           payload: selectedCarts.map((item) => item.productId),
         });
-        setIsOrderPlaced(true);
-        localStorage.removeItem("selectedItems");
         push(`/user/invoice`);
       } else {
-        throw new Error(res?.message);
+        toast.error("Failed to place order");
       }
     } catch (error) {
-      console.error("Order placement error:", error);
       toast.error("Failed to place order");
     }
-  });
+  };
 
   return (
     <form
