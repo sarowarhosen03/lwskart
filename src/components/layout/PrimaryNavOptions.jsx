@@ -14,7 +14,6 @@ export default function PrimaryNavOptions({ dict }) {
     state: { wishList, cartList },
   } = useAppContext();
   const { lang } = useParams();
-
   let profileImageUrl = session?.user?.image;
   if (profileImageUrl && profileImageUrl.startsWith("https://")) {
     profileImageUrl = `/assets/profile/${profileImageUrl}`;
@@ -25,6 +24,8 @@ export default function PrimaryNavOptions({ dict }) {
   return (
     <>
       <Link
+        prefetch={false}
+        key={"wishlist"}
         href={`/${lang}/user/wish`}
         className={`relative text-center text-gray-700 transition hover:text-primary ${visibility} `}
       >
@@ -37,6 +38,8 @@ export default function PrimaryNavOptions({ dict }) {
         </div>
       </Link>
       <Link
+        prefetch={false}
+        key={"cartlist"}
         href={`/${lang}/user/cart`}
         className={`relative text-center text-gray-700 transition hover:text-primary ${visibility} `}
       >
@@ -49,8 +52,10 @@ export default function PrimaryNavOptions({ dict }) {
         </div>
       </Link>
       <Link
+        prefetch={false}
+        key={"profile"}
         className={`relative text-center text-gray-700 transition hover:text-primary  ${visibility}`}
-        href={`/user/profile`}
+        href={`/${lang}/user/profile`}
       >
         <div className="text-2xl">
           {profileImageUrl && session ? (

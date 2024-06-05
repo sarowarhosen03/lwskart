@@ -41,6 +41,11 @@ export function pathNameIsMissingLocale(request) {
       !pathname.startsWith(`/${locale.code}`) &&
       !pathname.startsWith(`/${locale.code}/`),
   );
+
+  if (!pathNameIsMissingLocale) {
+    const langcode = pathname.split("/").splice(1)?.[0];
+    if (langcode) return !locales.some((locale) => locale.code === langcode);
+  }
   return pathNameIsMissingLocale;
 }
 

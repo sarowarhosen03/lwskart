@@ -1,4 +1,5 @@
 import { auth } from "@/auth/auth";
+import AddToCartBtn from "@/components/ui/AddToCartBtn";
 import WishToggleButton from "@/components/ui/WishToggleButton";
 import prisma from "@/db/db";
 import { getDectionary } from "@/lib/getDictionary";
@@ -19,24 +20,24 @@ export default async function wishPage({ params: { lang } }) {
           sku: true,
           name: true,
           image: true,
+          availability: true,
+          stock: true,
         },
       },
     },
   });
   const dictionary = await getDectionary(lang, "product");
+
   return (
-    <div className="my-2 grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:grid-cols-3">
+    <div className="flex w-dvw flex-wrap items-center  justify-between p-9  py-12 text-center">
       {wishList.map((item) => (
-        <div
-          key={item.id}
-          className="overflow-hidden rounded-lg border shadow-md"
-        >
+        <div key={item.id} className="flex  rounded-lg border shadow-md">
           <Image
             height={64}
             width={100}
             src={`/assets/images/products/${item.product.image[0]}`}
             alt={item.product.name}
-            className="h-64 w-full object-cover"
+            className="h-auto w-[200px] object-cover"
           />
           <div className="p-4">
             <Link
@@ -45,21 +46,33 @@ export default async function wishPage({ params: { lang } }) {
             >
               {item.product.name}
             </Link>
-            <WishToggleButton
-              productId={item.product.id}
-              productdict={dictionary}
-            />
+            <div className="flex flex-col gap-1">
+              {" "}
+              <WishToggleButton
+                productId={item.product.id}
+                productdict={dictionary}
+              />
+              <AddToCartBtn
+                {...{
+                  productId: item.product.id,
+                  availability: item.product.availability,
+                  stock: item.product.stock,
+                  isLoading: false,
+                }}
+                productDict={dictionary}
+              />
+            </div>
           </div>
         </div>
       ))}
       {!wishList.length && (
-        <div className="text-center">
+        <div className=" mx-auto flex flex-col items-center gap-4 text-center">
           <h2 className="text-2xl font-bold">No items in your wishlist</h2>
           <Link
-            className="text-lg hover:bg-primary hover:text-white"
+            className="w-fit rounded-md bg-primary p-3 text-lg text-white"
             href={`/shop`}
           >
-            Shop now
+            visit Shop now
           </Link>
         </div>
       )}

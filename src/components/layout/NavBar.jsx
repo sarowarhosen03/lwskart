@@ -1,15 +1,12 @@
-import { auth } from "@/auth/auth";
 import getCategories from "@/lib/dbQueries/categoryQuery";
 import { getDectionary } from "@/lib/getDictionary";
 import Image from "next/image";
-import Link from "next/link";
 import LocalLink from "../LocalLink";
 import NavLink from "../ui/NavLink";
-import SingOutButton from "../ui/SingOutButton";
+import LoginOrRegister from "../ui/logiInOrRegister";
 export default async function NavBar({ lang }) {
   const categories = await getCategories({ page: 1, limit: 10 });
   const dict = await getDectionary(lang, "navBar");
-  const session = await auth();
   return (
     <nav className="bg-gray-800">
       <div className="container flex">
@@ -58,16 +55,7 @@ export default async function NavBar({ lang }) {
             <NavLink href="/contact">{dict.contact}</NavLink>
           </div>
 
-          {!session?.user ? (
-            <Link
-              href="/login"
-              className="text-gray-200 transition hover:text-white"
-            >
-              {dict.login}
-            </Link>
-          ) : (
-            <SingOutButton>{dict.logout}</SingOutButton>
-          )}
+          <LoginOrRegister dict={dict} />
         </div>
       </div>
     </nav>

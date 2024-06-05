@@ -16,39 +16,31 @@ export default function AppContextProvider({ children }) {
   const { status, data: session } = useSession();
 
   useEffect(() => {
-    let ignore = false;
-
     (async () => {
       if (status === "authenticated") {
-        if (!ignore) {
-          try {
-            dispatch({
-              type: ON_LOADING,
-            });
+        try {
+          dispatch({
+            type: ON_LOADING,
+          });
 
-            const { wishList, cartItemList } = await getWishAndCartCount(
-              session.user.id,
-            );
-            dispatch({
-              type: LOAD_RESULT,
-              payload: {
-                wishList,
-                cartList: cartItemList,
-              },
-            });
-          } catch (error) {
-            dispatch({
-              type: ON_ERROR,
-              payload: error,
-            });
-          }
+          const { wishList, cartItemList } = await getWishAndCartCount(
+            session.user.id,
+          );
+          dispatch({
+            type: LOAD_RESULT,
+            payload: {
+              wishList,
+              cartList: cartItemList,
+            },
+          });
+        } catch (error) {
+          dispatch({
+            type: ON_ERROR,
+            payload: error,
+          });
         }
       }
     })();
-
-    return () => {
-      ignore = true;
-    };
   }, [status, session]);
 
   return (

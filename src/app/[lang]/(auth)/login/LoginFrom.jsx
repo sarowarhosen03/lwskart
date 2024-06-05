@@ -6,7 +6,7 @@ import useAuthntiCated from "@/hooks/useAuthntiCated";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm({ infoData }) {
@@ -19,9 +19,10 @@ export default function LoginForm({ infoData }) {
     setValue,
   } = useForm();
 
-  const [showPasswordIcon, showPassword] = useShowHidePassword();
-  useAuthntiCated();
+  const router = useRouter();
   const searchParams = useSearchParams();
+  useAuthntiCated();
+  const [showPasswordIcon, showPassword] = useShowHidePassword();
   const email = searchParams.get("email");
   if (email) {
     setValue("email", email);
@@ -34,7 +35,9 @@ export default function LoginForm({ infoData }) {
         password: data.password,
         redirect: false,
       });
-      if (res.error === "AccessDenied") {
+      if (!res.error) {
+        router.refresh();
+      } else if (res.error === "AccessDenied") {
         return setError("formStatus", {
           type: "error",
           message:

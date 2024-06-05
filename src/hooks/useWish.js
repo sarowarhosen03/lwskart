@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function useWish(productId) {
   const [wishListed, setWishListed] = useState(false);
   const { data: session } = useSession();
-  
+
   const {
     dispatch,
     state: { wishList },
@@ -29,7 +29,7 @@ export default function useWish(productId) {
       payload: productId,
     });
 
-    try {
+    try { 
       const res = await toggleWishItem(productId);
       if (res?.redirect) {
         push(res.redirect);

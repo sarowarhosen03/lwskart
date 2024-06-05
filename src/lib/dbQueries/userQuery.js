@@ -1,6 +1,7 @@
 "use server";
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 export const getWishAndCartCount = async (userId) => {
@@ -70,7 +71,8 @@ export const toggleWishItem = async (productId) => {
         },
       });
     }
-    // revalidatePath('/')
+    revalidatePath("/[lang]/user/wish");
+
     return {
       status: "ok ",
     };

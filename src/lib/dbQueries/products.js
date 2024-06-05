@@ -188,7 +188,7 @@ export const addToCart = async (productId, quantity = 1) => {
             data: productUpdateData,
           }),
         ]);
-        revalidateTag("products");
+        // revalidateTag("products");
         return {
           success: true,
           data: {

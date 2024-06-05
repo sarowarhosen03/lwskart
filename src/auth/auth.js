@@ -25,8 +25,8 @@ export const {
   callbacks: {
     async jwt(...arg) {
       const [{ token, user, account, trigger, session }] = arg;
-      if (trigger === 'update') {
-        return { ...token, user: { ...token.user, ...session } }
+      if (trigger === "update") {
+        return { ...token, user: { ...token.user, ...session } };
       }
       if (trigger === "signUp") {
         if (user?.image && user.image.startsWith("https://")) {
@@ -42,28 +42,28 @@ export const {
             });
 
             token.image = filename;
-          } catch (error) {
-
-          }
+          } catch (error) {}
         }
       }
+      if (trigger === "signIn") {
+        if (user && user?.user?.provider === "credentials") {
+          return { ...token, ...user };
+        }
 
-      if (user && user?.user?.provider === "credentials") {
-        return { ...token, ...user };
-      } else if (token?.user?.provider === "credentials") {
+        //handle google,discore provider
+        if (account && isSameProvider(account.provider)) {
+          // Save the access token and refresh token in the JWT on the initial login, as well as the user details
+          return {
+            access_token: account.access_token,
+            expires_at: account.expires_at,
+            refresh_token: account.refresh_token,
+            user: { ...token, provider: account.provider, id: user.id },
+          };
+        }
+      }
+      if (token?.user?.provider === "credentials") {
         if (Date.now() < token.expires_at) return token;
         return refreshToken(token);
-      }
-
-      //handel google,discore provider
-      if (account && isSameProvider(account.provider)) {
-        // Save the access token and refresh token in the JWT on the initial login, as well as the user details
-        return {
-          access_token: account.access_token,
-          expires_at: account.expires_at,
-          refresh_token: account.refresh_token,
-          user: { ...token, provider: account.provider, id: user.id },
-        };
       }
 
       if (isSameProvider(token?.provider)) {

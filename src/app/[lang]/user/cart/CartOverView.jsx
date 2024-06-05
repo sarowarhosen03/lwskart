@@ -1,5 +1,4 @@
 "use client";
-import LocalLink from "@/components/LocalLink";
 import CartSkeleton from "@/components/product/CartSkeleton";
 import Alert from "@/components/ui/Alert";
 import { useAppContext } from "@/context";
@@ -170,12 +169,12 @@ function EmptyCart({ lang }) {
         <div className="flex w-full  max-w-3xl flex-col rounded-lg bg-white p-6 shadow-lg">
           <i className="fa-solid fa-cart-flatbed-suitcase block text-center text-6xl text-primary"></i>
           <h1 className=" text-center text-2xl">Your cart is empty</h1>
-          <LocalLink
+          {/* <LocalLink
             href={`/shop`}
             className="mt-4 w-full rounded bg-primary px-4 py-2 text-center text-white"
           >
             Shop now
-          </LocalLink>
+          </LocalLink> */}
         </div>
       </div>
     </>

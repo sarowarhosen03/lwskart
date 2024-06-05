@@ -8,9 +8,7 @@ const duaDate = 1000 * 60 * 60 * 24 * 7; // 7 days
 export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
   try {
     const session = await auth();
-    return {
-      error: "hi ",
-    };
+
     if (session) {
       const {
         firstName,
@@ -93,10 +91,10 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         phone,
         email,
       };
-      // await sendInvoiceEmail(
-      //   { invoice, qr, items: productItems, customer },
-      //   session.user.email,
-      // );
+      await sendInvoiceEmail(
+        { invoice, qr, items: productItems, customer },
+        session.user.email,
+      );
 
       return {
         success: true,
@@ -110,7 +108,6 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
       error: "accessDenied",
     };
   } catch (error) {
-    console.log(error);
     return {
       error: true,
       message: error.message,

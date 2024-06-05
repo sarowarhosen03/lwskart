@@ -1,5 +1,4 @@
 import { auth } from "@/auth/auth";
-import LocalLink from "@/components/LocalLink";
 import prisma from "@/db/db";
 import Link from "next/link";
 
@@ -45,12 +44,12 @@ export default async function invoicePage() {
       {!orderList?.length && (
         <div className="flex min-h-screen flex-col justify-center gap-3">
           <h1>No Invoice Found</h1>
-          <LocalLink
+          {/* <LocalLink
             className="mx-auto w-fit rounded-md bg-primary px-3 py-1 text-white"
             href="/shop"
           >
             Shop Now
-          </LocalLink>
+          </LocalLink> */}
         </div>
       )}
     </div>

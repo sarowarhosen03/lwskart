@@ -2,9 +2,8 @@ import { getDectionary } from "@/lib/getDictionary";
 import Image from "next/image";
 import Link from "next/link";
 import logoImage from "../../../public/assets/images/logo.svg";
-import LanguageSwitcher from "../ui/LanguageSwitcher";
-import PrimaryNavOptions from "./PrimaryNavOptions";
 import SearchBox from "./SearchBox";
+import PrimaryNavOptions from "./PrimaryNavOptions";
 
 export default async function Header({ lang }) {
   const dict = await getDectionary(lang, "headers");
@@ -17,8 +16,8 @@ export default async function Header({ lang }) {
 
         <SearchBox dict={dict} />
 
-        <div className="flex items-center gap-2 space-x-4">
-          <LanguageSwitcher />
+        <div className="flex items-center gap-3 space-x-4">
+          {/* <LanguageSwitcher /> */}
           <PrimaryNavOptions dict={dict} />
         </div>
       </div>
