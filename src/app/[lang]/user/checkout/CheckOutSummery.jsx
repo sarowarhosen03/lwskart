@@ -1,7 +1,5 @@
 "use client";
 import { useAppContext } from "@/context";
-import { placeOrder } from "@/lib/dbQueries/placeOrder";
-import { DELETE_BULK_CART } from "@/reducers/appReducer";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -57,26 +55,27 @@ export default function CheckOutSummery({ userInfo }) {
   async function handlePlaceOrder(data) {
     startTransition(async () => {
       try {
-        const res = await placeOrder({
-          customerInfo: data,
-          items: selectedCarts,
-          totalPrice,
-        });
+        console.log("testing");
+        // const res = await placeOrder({
+        //   customerInfo: data,
+        //   items: selectedCarts,
+        //   totalPrice,
+        // });
 
-        if (res?.success) {
-          toast.success("Order placed successfully");
-          dispatch({
-            type: DELETE_BULK_CART,
-            payload: selectedCarts.map((item) => item.productId),
-          });
-          setIsOrderPlaced(true);
-          localStorage.removeItem("selectedItems");
-          push(res.invoice);
-        } else {
-          throw Error(res?.message);
-        }
+        // if (res?.success) {
+        //   toast.success("Order placed successfully");
+        //   dispatch({
+        //     type: DELETE_BULK_CART,
+        //     payload: selectedCarts.map((item) => item.productId),
+        //   });
+        //   setIsOrderPlaced(true);
+        //   localStorage.removeItem("selectedItems");
+        //   push(res.invoice);
+        // } else {
+        //   throw Error(res?.message);
+        // }
       } catch (error) {
-        console.log(error, "here changed");
+        console.log(error, "here changed 1");
         toast.error("Failed to place order");
       }
     });
