@@ -60,30 +60,28 @@ export default function CheckOutSummary({ userInfo }) {
     { actualPrice: 0, discountPrice: 0 },
   );
 
-  async function handlePlaceOrder(data) {
-    startTransition(async () => {
-      try {
-        const res = await testFun();
+  const handlePlaceOrder = startTransition(async () => {
+    try {
+      const res = await testFun();
 
-        console.log(res);
-        if (res?.success) {
-          toast.success("Order placed successfully");
-          dispatch({
-            type: "DELETE_BULK_CART",
-            payload: selectedCarts.map((item) => item.productId),
-          });
-          setIsOrderPlaced(true);
-          localStorage.removeItem("selectedItems");
-          push(`/user/invoice`);
-        } else {
-          throw new Error(res?.message);
-        }
-      } catch (error) {
-        console.error("Order placement error:", error);
-        toast.error("Failed to place order");
+      console.log(res);
+      if (res?.success) {
+        toast.success("Order placed successfully");
+        dispatch({
+          type: "DELETE_BULK_CART",
+          payload: selectedCarts.map((item) => item.productId),
+        });
+        setIsOrderPlaced(true);
+        localStorage.removeItem("selectedItems");
+        push(`/user/invoice`);
+      } else {
+        throw new Error(res?.message);
       }
-    });
-  }
+    } catch (error) {
+      console.error("Order placement error:", error);
+      toast.error("Failed to place order");
+    }
+  });
 
   return (
     <form
