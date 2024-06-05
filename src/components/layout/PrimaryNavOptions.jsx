@@ -25,7 +25,6 @@ export default function PrimaryNavOptions({ dict }) {
     <>
       <Link
         prefetch={false}
-        key={"wishlist"}
         href={`/${lang}/user/wish`}
         className={`relative text-center text-gray-700 transition hover:text-primary ${visibility} `}
       >

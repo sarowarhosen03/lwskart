@@ -1,20 +1,19 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import ProductScaffolding from "@/components/ui/loader/ProductScaffolding";
-import prisma from "@/db/db";
 import { getProductByNameAndSku } from "@/lib/dbQueries/products";
 import { getDectionary } from "@/lib/getDictionary";
-import { getSlug, parsSlug } from "@/utils/slugify";
+import { parsSlug } from "@/utils/slugify";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import ProductDetails from "./ProductDetails";
 import RelatedProducts from "./RelatedProducts";
 
-export async function generateStaticParams() {
-  const products = await prisma.product.findMany({});
-  return products.map((product) => ({
-    productId: getSlug({ name: product.name, sku: product.sku }),
-  }));
-}
+// export async function generateStaticParams() {
+//   const products = await prisma.product.findMany({});
+//   return products.map((product) => ({
+//     productId: getSlug({ name: product.name, sku: product.sku }),
+//   }));
+// }
 
 export async function generateMetadata(
   { params: { productId }, searchParams },

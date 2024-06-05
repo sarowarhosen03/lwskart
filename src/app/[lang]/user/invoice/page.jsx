@@ -6,7 +6,7 @@ export default async function invoicePage() {
   const session = await auth();
   const orderList = await prisma.Order.findMany({
     where: {
-      customerId: session.user.id,
+      customerId: session?.user?.id,
     },
     select: {
       id: true,
@@ -44,12 +44,12 @@ export default async function invoicePage() {
       {!orderList?.length && (
         <div className="flex min-h-screen flex-col justify-center gap-3">
           <h1>No Invoice Found</h1>
-          {/* <LocalLink
+          <Link
             className="mx-auto w-fit rounded-md bg-primary px-3 py-1 text-white"
             href="/shop"
           >
             Shop Now
-          </LocalLink> */}
+          </Link>
         </div>
       )}
     </div>
