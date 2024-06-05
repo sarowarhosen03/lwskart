@@ -1,9 +1,8 @@
-"use server";
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
+import { generatePdf } from "@/utils/generatePdf";
 import { OrderStatus } from "@prisma/client";
 import { createTransport } from "nodemailer";
-import { generatePdf } from "../../utils/generatePdf";
 const duaDate = 1000 * 60 * 60 * 24 * 7; // 7 days
 export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
   try {
@@ -108,7 +107,6 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
       error: "accessDenied",
     };
   } catch (error) {
-    console.log(error);
     return {
       error: true,
       message: error.message,

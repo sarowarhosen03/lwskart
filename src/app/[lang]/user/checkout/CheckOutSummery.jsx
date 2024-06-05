@@ -1,6 +1,5 @@
 "use client";
 import { useAppContext } from "@/context";
-import { placeOrder } from "@/lib/dbQueries/placeOrder";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -56,13 +55,19 @@ export default function CheckOutSummary({ userInfo }) {
 
   const handlePlaceOrder = async (data) => {
     try {
-      const res = await placeOrder({
-        customerInfo: data,
-        items: selectedCarts,
-        totalPrice,
+      const res = await fetch("/api/user/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customerInfo: data,
+          items: selectedCarts,
+          totalPrice,
+        }),
       });
-      console.log(res);
-      if (res?.success) {
+      const responseData = await res.json();
+      if (responseData?.success) {
         toast.success("Order placed successfully");
         dispatch({
           type: "DELETE_BULK_CART",
