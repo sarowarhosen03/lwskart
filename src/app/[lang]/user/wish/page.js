@@ -59,6 +59,7 @@ export default async function wishPage({ params: { lang } }) {
                   availability: item.product.availability,
                   stock: item.product.stock,
                   isLoading: false,
+                 
                 }}
                 productDict={dictionary}
               />

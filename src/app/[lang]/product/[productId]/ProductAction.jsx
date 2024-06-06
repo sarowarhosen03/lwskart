@@ -11,7 +11,14 @@ export default function ProductAction({
   availability,
   productId,
   stock,
-  productdict: { addToCart, stockOut, showCart ,wishlistTitleAdd,wishlistTitleRemove},
+  name,sku,
+  productdict: {
+    addToCart,
+    stockOut,
+    showCart,
+    wishlistTitleAdd,
+    wishlistTitleRemove,
+  },
 }) {
   const [quantity, setQuantity] = useState(1);
   const [availableStock, setAvailableStock] = useState(stock);
@@ -19,6 +26,8 @@ export default function ProductAction({
     productId,
     availability,
     quantity,
+    name,
+    sku,
   );
   const { status } = useSession();
   const handleAddCart = useCallback(async () => {
@@ -52,7 +61,10 @@ export default function ProductAction({
           <p className="text-xl font-bold">{stockOut}</p>
         )}
 
-        <WishToggleButton productId={productId} productdict={{wishlistTitleAdd,wishlistTitleRemove}} />
+        <WishToggleButton
+          productId={productId}
+          productdict={{ wishlistTitleAdd, wishlistTitleRemove }}
+        />
       </div>
       {status === "authenticated" && isOnCart && (
         <Link

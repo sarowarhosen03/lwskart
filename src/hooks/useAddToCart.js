@@ -1,26 +1,43 @@
 import { useAppContext } from "@/context";
 import { addToCart } from "@/lib/dbQueries/products";
 import { UPDATE_CART } from "@/reducers/appReducer";
-import { useRouter } from "next/navigation";
+import { getSlug } from "@/utils/slugify";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "react-toastify";
 
-export default function useAddToCart(productId, availability, quantity = 1) {
+export default function useAddToCart(
+  productId,
+  availability,
+  quantity = 1,
+  name,
+  sku,
+) {
   const {
     dispatch,
     state: { cartList },
   } = useAppContext();
+  const pathName = usePathname();
+  const { lang } = useParams();
   const [hasMore, setHasMore] = useState(availability);
   const [data, setData] = useState(null);
   const [isPending, startTransition] = useTransition();
-  const { push } = useRouter();
+  const { push, refresh } = useRouter();
   const isOnCart = cartList.find(
     (cart) => cart.productId === productId && cart.itemCount > 0,
   );
   async function handleAddToCart() {
     startTransition(async () => {
       try {
-        const response = await addToCart(productId, quantity);
+        const response = await addToCart(
+          productId,
+          quantity,
+          `/${lang}/product/${getSlug({
+            name,
+            sku,
+          })}`,
+        );
+        refresh();
         if (response?.success) {
           dispatch({
             type: UPDATE_CART,

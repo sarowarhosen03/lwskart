@@ -6,27 +6,6 @@ import { getSlug, parsSlug } from "@/utils/slugify";
 import { CartItemStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export const getProducts = async function (options) {
-  // const { page = 1, limit = 15 } = options || {};
-  // return prisma.Product.findMany({
-  //   skip: 4 + (page - 1) * limit,
-  //   take: limit,
-  //   orderBy: {
-  //     createdAt: "desc",
-  //   },
-  //   include: {
-  //     wishItem: {
-  //       select: {
-  //         userId: true,
-  //       },
-  //     },
-  //   },
-  // });
-
-
-  
-};
-
 export const getNewArrivalProducts = async () => {
   try {
     const product = await prisma.Product.findMany({
@@ -138,7 +117,7 @@ export const getRelatedProducts = async ({
     };
   }
 };
-export const addToCart = async (productId, quantity = 1) => {
+export const addToCart = async (productId, quantity = 1, path) => {
   try {
     const session = await auth();
     const product = await prisma.product.findUnique({
@@ -196,7 +175,8 @@ export const addToCart = async (productId, quantity = 1) => {
             data: productUpdateData,
           }),
         ]);
-        await relavidProducts();
+        revalidatePath(path, "page");
+        console.log(path);
         return {
           success: true,
           data: {
@@ -254,7 +234,7 @@ export const deleteCartItem = async (cartId) => {
         }),
       ]);
 
-      await relavidProducts();
+      await revalidateProducts();
       return {
         success: true,
         payload: cartItem.id,
@@ -269,8 +249,9 @@ export const deleteCartItem = async (cartId) => {
   }
 };
 
-async function relavidProducts() {
-  await revalidatePath(`[lang]/product/[productId]`, "page");
-  await revalidatePath(`[lang]`, "page");
-  await revalidatePath(`[lang]/shop`, "page");
+function revalidateProducts(path) {
+  revalidatePath(path, "page");
+  revalidatePath(`/[lang]/product/[productId]`, "page");
+  revalidatePath(`/[lang]`, "page");
+  revalidatePath(`/[lang]/shop`, "page");
 }

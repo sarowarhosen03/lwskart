@@ -3,7 +3,7 @@ import ProductScaffolding from "@/components/ui/loader/ProductScaffolding";
 import prisma from "@/db/db";
 import { getProductByNameAndSku } from "@/lib/dbQueries/products";
 import { getDectionary } from "@/lib/getDictionary";
-import { getSlug, parsSlug } from "@/utils/slugify";
+import { getSlug } from "@/utils/slugify";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import ProductDetails from "./ProductDetails";
@@ -51,18 +51,13 @@ export default async function prodctDetailsPage({
   return (
     <>
       <Breadcrumb />
-      {productInfo ? (
-        <ProductDetails
-          productInfo={productInfo}
-          lang={lang}
-          dict={dict}
-          productdict={productdict}
-        />
-      ) : (
-        <div className="container h-dvh w-dvw">
-          <h1>No Product found {[parsSlug(productId)]}</h1>
-        </div>
-      )}
+      <ProductDetails
+        productInfo={productInfo}
+        lang={lang}
+        dict={dict}
+        productdict={productdict}
+      />
+      )
       <div className="container pb-16">
         <h2 className="mb-6 text-2xl font-medium uppercase text-gray-800">
           {dict.relatedProducts}
@@ -84,3 +79,5 @@ export default async function prodctDetailsPage({
     </>
   );
 }
+
+export const revalidate = 0;
