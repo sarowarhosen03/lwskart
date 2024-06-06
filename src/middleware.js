@@ -5,18 +5,17 @@ import internationalization, {
   pathNameIsMissingLocale,
 } from "./lib/controler/internationalization";
 
-export default function middleware(req) {
-  if (!req.nextUrl.pathname?.startsWith("/api")) {
-    //add internationalization
-    const pathNameIsMissing = pathNameIsMissingLocale(req);
-    if (pathNameIsMissing) {
-      return internationalization(req);
-    }
-    //handle public and private routes
-    return handleRouteMiddleware(req);
-  }
-  return handleRouteMiddleware(req);
-}
+// Define public routes with dynamic segments
+const publicOnlyRoutes = [
+  pathToRegexp("/:lang/verify"),
+  pathToRegexp("/:lang/login"),
+  pathToRegexp("/:lang/register"),
+];
+const privateRoute = [
+  pathToRegexp("/:lang/account"),
+  pathToRegexp("/:lang/user/:rest*"),
+  pathToRegexp("/api/user/:rest*"),
+];
 
 // Define matchRoute function
 function matchRoute(pathname, routes) {
@@ -28,19 +27,16 @@ function matchRoute(pathname, routes) {
   return false;
 }
 
-// Function to match the pathname against the routes
-
-// Define public routes with dynamic segments
-const publicOnlyRoutes = [
-  pathToRegexp("/:locals/verify"),
-  pathToRegexp("/:locals/login"),
-  pathToRegexp("/:locals/register"),
-];
-const privateRoute = [
-  pathToRegexp("/:locals/account"),
-  pathToRegexp("/:locals/user/:rest*"),
-  pathToRegexp("/api/user/:rest*"),
-];
+export default function middleware(req) {
+  if (!req.nextUrl.pathname?.startsWith("/api")) {
+    // Add internationalization
+    const pathNameIsMissing = pathNameIsMissingLocale(req);
+    if (pathNameIsMissing) {
+      return internationalization(req);
+    }
+  }
+  return handleRouteMiddleware(req);
+}
 
 // Middleware function to handle routes
 async function handleRouteMiddleware(req) {
@@ -48,12 +44,10 @@ async function handleRouteMiddleware(req) {
   const isPublicOnly = matchRoute(pathname, publicOnlyRoutes);
   if (isPublicOnly) {
     const options = { req, secret: process.env.AUTH_SECRET };
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === "production" && req.url.startsWith("https")) {
       options.secureCookie = true;
     }
-
     const session = await getToken(options);
-
     if (session) {
       return NextResponse.redirect(new URL("/", req.url));
     }
@@ -65,7 +59,9 @@ async function handleRouteMiddleware(req) {
       options.secureCookie = true;
     }
     const session = await getToken(options);
-    if (session) {
+    if (!session && !pathname?.includes("login")) {
+      return NextResponse.redirect(new URL("/login", req.url));
+    } else {
       const requestHeaders = new Headers(req.headers);
       requestHeaders.set("userId", session.user.id);
       return NextResponse.next({
@@ -78,7 +74,6 @@ async function handleRouteMiddleware(req) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
-
   return NextResponse.next();
 }
 

@@ -1,5 +1,6 @@
 import { auth } from "@/auth/auth";
 import WishList from "@/components/WishList";
+import Modal from "@/components/ui/Modal";
 import prisma from "@/db/db";
 import { getDectionary } from "@/lib/getDictionary";
 
@@ -25,7 +26,11 @@ export default async function wishPage({ params: { lang } }) {
   const dictionary = await getDectionary(lang, "product");
   const { empty } = await getDectionary(lang, "wishlist");
 
-  return <WishList {...{ dictionary, wishList, empty }} />;
+  return (
+    <Modal>
+      <WishList {...{ dictionary, wishList, empty }} />
+    </Modal>
+  );
 }
 
 export const revalidate = 0;

@@ -2,7 +2,6 @@
 
 import Alert from "@/components/ui/Alert";
 import InputField from "@/components/ui/InputField";
-import useAuthntiCated from "@/hooks/useAuthntiCated";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
@@ -21,7 +20,10 @@ export default function LoginForm({ infoData }) {
 
   const router = useRouter();
   const searchParams = useSearchParams();
+<<<<<<< HEAD:src/app/[lang]/(auth)/login/LoginFrom.jsx
   useAuthntiCated();
+=======
+>>>>>>> bugfix:src/components/auth/LoginFrom.jsx
   const [showPasswordIcon, showPassword] = useShowHidePassword();
   const email = searchParams.get("email");
   if (email) {

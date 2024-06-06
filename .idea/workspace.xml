@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e78ac6c0-cbb5-4b86-9328-68dfa2074086" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generateDummyData.js" beforeDir="false" afterPath="$PROJECT_DIR$/generateDummyData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/user/profile/[id]/page.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/api/user/route.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/api/user/route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Breadcrumb.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Breadcrumb.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/Header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/NavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/NavBar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/PrimaryNavopions.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/dbQueries/categoryQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/dbQueries/categoryQuery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/lib/dbQueries/userQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib/dbQueries/userQuery.js" afterDir="false" />
-    </list>
+    <list default="true" id="e78ac6c0-cbb5-4b86-9328-68dfa2074086" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,29 +43,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/shuvo/Vscode/lwskart/src/app/[lang]&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;/home/shuvo/.nvm/versions/node/v20.13.1/bin/node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/shuvo/Vscode/lwskart/node_modules/prettier&quot;,
-    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Colors&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/shuvo/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "code.cleanup.on.save": "true",
+    "git-widget-placeholder": "bugfix",
+    "last_opened_file_path": "/home/shuvo/Vscode/lwskart",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/home/shuvo/Vscode/lwskart/node_modules/prettier",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "settings.sync",
+    "ts.external.directory.path": "/home/shuvo/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -105,7 +92,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-WS-241.17011.90" />
       </set>
     </attachedChunks>
   </component>
@@ -138,6 +125,7 @@
       <workItem from="1716883497101" duration="8770000" />
       <workItem from="1716926408798" duration="643000" />
       <workItem from="1717180971989" duration="81000" />
+      <workItem from="1717701620716" duration="53000" />
     </task>
     <servers />
   </component>

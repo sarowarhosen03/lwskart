@@ -1,8 +1,9 @@
 "use client";
+import useAuthntiCated from "@/hooks/useAuthntiCated";
+import { redirectFromServer } from "@/lib/actions/redirect";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Alert from "./Alert";
 
@@ -10,6 +11,13 @@ export default function SocialLogin({ dict, isLoginPage = false }) {
   const searchPersms = useSearchParams();
   const errorFromOuth = searchPersms.get("error");
   const [error, setError] = useState("");
+  const { status, rerefLink } = useAuthntiCated();
+  const router = useRouter();
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push(rerefLink);
+    }
+  }, [status, router, rerefLink]);
   useEffect(() => {
     if (errorFromOuth === "OAuthAccountNotLinked") {
       setError(
@@ -51,12 +59,29 @@ export default function SocialLogin({ dict, isLoginPage = false }) {
       </div>
       <p className="mt-4 text-center text-gray-600">
         {isLoginPage ? dict.login.notAccount : dict.register.already}
-        <Link
-          href={isLoginPage ? "/register" : "/login"}
-          className="ms-2 text-primary"
-        >
-          {!isLoginPage ? dict.login.title : dict.register.title}
-        </Link>
+
+        {!isLoginPage && (
+          <button
+            key={"register"}
+            onClick={async (e) => {
+              redirectFromServer("/login");
+            }}
+            className="ms-2 text-primary"
+          >
+            {dict.login.title}
+          </button>
+        )}
+        {isLoginPage && (
+          <button
+            key={"login"}
+            onClick={async (e) => {
+              redirectFromServer("/register");
+            }}
+            className="ms-2 text-primary"
+          >
+            {dict.register.title}
+          </button>
+        )}
       </p>
     </>
   );
