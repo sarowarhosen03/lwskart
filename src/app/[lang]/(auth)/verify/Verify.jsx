@@ -31,7 +31,7 @@ export default function Verify({ dict }) {
     }
   };
   if (!(token || email || router?.push)) {
-    // router.push("/login");
+    router.push("/login");
   }
   let iconName = "verification.svg";
   if (response?.error) {

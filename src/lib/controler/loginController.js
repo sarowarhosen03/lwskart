@@ -9,7 +9,7 @@ const expireTimes = {
   refreshExpireTime: (remember) => (remember ? "1d" : "90d"),
 };
 
-export default async function loginControler({ email, password, remember }) {
+export default async function loginController({ email, password, remember }) {
   try {
     const foundUser = await prisma.user.findUnique({
       where: {
@@ -38,10 +38,9 @@ export default async function loginControler({ email, password, remember }) {
       const payload = { email: result.email, userId: result.id };
       return {
         user: { ...result, provider: "credentials" },
-        access_token: generatAccessToken(payload),
+        access_token: generateAccessToken(payload),
         refresh_token: generateRefreshToken(payload, remember),
         expires_at: Date.now() + expireTimes.expires_in,
-
       };
     }
 
@@ -62,19 +61,19 @@ export async function refreshToken(tokens) {
       userId: refreshTokenData.userId,
     };
 
-    const access_token = generatAccessToken(payload);
+    const access_token = generateAccessToken(payload);
 
     return {
       ...tokens,
       access_token,
-      expires_at: Date.now() + expireTimes.expires_in
+      expires_at: Date.now() + expireTimes.expires_in,
     };
   } catch (e) {
     throw new Error("Invalid refresh token");
   }
 }
 
-function generatAccessToken(payload) {
+function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.AUTH_ACCESS_SECRET, {
     expiresIn: expireTimes.accessToken_jwt,
   });

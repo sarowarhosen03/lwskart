@@ -1,39 +1,46 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
 
 export default function Modal({ children }) {
   const overlay = useRef(null);
   const wrapper = useRef(null);
   const router = useRouter();
+  const pathName = usePathname();
+  const prevPathName = useRef(pathName);
 
   const onDismiss = useCallback(() => {
     router.back();
   }, [router]);
 
+  useEffect(() => {
+    if (prevPathName.current !== pathName) {
+      router.back();
+    }
+  }, [pathName, router]);
   const onClick = useCallback(
     (e) => {
       if (e.target === overlay.current || e.target === wrapper.current) {
         if (onDismiss) onDismiss();
       }
     },
-    [onDismiss, overlay, wrapper]
+    [onDismiss, overlay, wrapper],
   );
 
   const onKeyDown = useCallback(
     (e) => {
       if (e.key === "Escape") onDismiss();
     },
-    [onDismiss]
+    [onDismiss],
   );
 
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
     return () => {
       document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = 'unset'; // Re-enable background scrolling
+      document.body.style.overflow = "unset"; // Re-enable background scrolling
     };
   }, [onKeyDown]);
 
@@ -47,7 +54,7 @@ export default function Modal({ children }) {
     >
       <div
         ref={wrapper}
-        className="relative w-full max-w-2xl bg-white p-4 shadow-lg max-h-[90vh] overflow-auto"
+        className="relative max-h-[90vh] w-full max-w-2xl overflow-auto bg-white p-4 shadow-lg"
       >
         {children}
       </div>

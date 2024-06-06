@@ -30,7 +30,7 @@ export default function RegisterForm({ dict: { register: registerDict } }) {
           message: registerDict.createSuccess,
         });
         setTimeout(() => {
-          // router.push("/login");
+          router.push("/login");
         }, 5000);
       } else {
         setError("formStatus", {

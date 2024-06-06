@@ -1,6 +1,6 @@
 import { authConFig } from "@/auth/auth.config";
 import prisma, { default as prismaInstance } from "@/db/db";
-import { refreshToken } from "@/lib/controler/loginControler";
+import { refreshToken } from "@/lib/controler/loginController";
 import { downloadFile } from "@/lib/downloadImage";
 import { refreshDiscordToken, refreshGoogleToken } from "@/lib/refreswhTokens";
 import { PrismaAdapter } from "@auth/prisma-adapter";

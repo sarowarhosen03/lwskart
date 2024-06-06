@@ -13,10 +13,13 @@ function LanguageSwitcher() {
   const searchParams = useSearchParams();
   useEffect(() => {
     const lang = getCookie("lang");
-    if (!lang || lang !== currentLangPath) {
+    if (
+      (locales.some((local) => local.code === lang) && !lang) ||
+      lang !== currentLangPath
+    ) {
       setCookie("lang", currentLangPath);
     }
-  });
+  }, [currentLangPath]);
   const found = languages.find((lang) => lang.code === currentLangPath);
   const [selectedLanguage, setSelectedLanguage] = useState(
     found ?? languages[0],
