@@ -4,7 +4,6 @@ import { SessionProvider } from "next-auth/react";
 import { Poppins, Roboto } from "next/font/google";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../globals.css";
 
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
@@ -42,12 +41,13 @@ export async function generateMetadata({ params: { lang } }) {
   };
 }
 
-export default async function Sublayout({ children, params: { lang } }) {
+export default async function Sublayout({ children, params: { lang }, modal }) {
   await runCleaner();
 
   return (
     <SessionProvider>
       <AppContextProvider>
+        {/* {modal} */}
         <Header lang={lang} />
         <NavBar lang={lang} />
         {children}

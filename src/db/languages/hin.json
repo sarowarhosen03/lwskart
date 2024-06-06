@@ -1,0 +1,344 @@
+{
+  "welcomeBack": "वापसी पर आपका स्वागत है प्रिय ग्राहक",
+  "email": "ईमेल पता",
+  "password": "पासवर्ड",
+  "headers": {
+    "logo": "en",
+    "search": "खोजें",
+    "wishlist": "इच्छा-सूची",
+    "cart": "कार्ट"
+  },
+
+  "navBar": {
+    "home": "मुखपृष्ठ",
+    "shop": "दुकान",
+    "about": "हमारे बारे में",
+    "contact": "संपर्क करें",
+    "login": "लॉगिन",
+    "logout": "लॉगआउट",
+    "category": "सभी श्रेणियाँ",
+    "orders": "मेरे ऑर्डर"
+  },
+
+  "home": {
+    "hero": {
+      "title": "घर की सजावट के लिए बेहतरीन संग्रह",
+      "subTitle": "अपने घर को शाश्वत सुंदरता, अद्वितीय आराम, नवाचारी डिज़ाइन और असाधारण शिल्पकला से बदलें",
+      "button": "अभी खरीदें"
+    },
+    "visitShop": "दुकान पर जाएं",
+    "feature": {
+      "shipping": "मुफ़्त शिपिंग",
+      "order": "$200 से ऊपर के ऑर्डर",
+      "money": "पैसे की वापसी",
+      "ret": "30 दिनों में पैसे की वापसी",
+      "support": "24/7 समर्थन",
+      "customer": "ग्राहक समर्थन"
+    },
+
+    "category": "श्रेणी के अनुसार खरीदारी करें",
+    "newArrival": "सर्वश्रेष्ठ नई आगमन",
+    "trend": "प्रचलित उत्पाद"
+  },
+  "product": {
+    "addToCart": "कार्ट में जोड़ें",
+    "showCart": "कार्ट दिखाएं",
+    "wishlistTitleAdd": "इच्छा-सूची में जोड़ें",
+    "wishlistTitleRemove": "इच्छा-सूची से हटाएं",
+    "viewProduct": "उत्पाद देखें",
+    "stockOut": "स्टॉक ख़त्म",
+    "inStock": "स्टॉक में",
+    "soldCount": "बिका हुआ"
+  },
+  "productDetails": {
+    "brand": "ब्रांड",
+    "category": "श्रेणी",
+    "sku": "SKU",
+    "productDetails": "उत्पाद विवरण",
+    "relatedProducts": "संबंधित उत्पाद",
+    "product": "उत्पाद",
+    "availability": "उपलब्धता"
+  },
+  "sidebar": {
+    "categories": "श्रेणियाँ",
+    "price": "मूल्य",
+    "filter": "फिल्टर"
+  },
+  "shop": {
+    "limit": "प्रति पृष्ठ आइटम"
+  },
+  "profile": {
+    "greeting": "नमस्ते",
+    "personal": "व्यक्तिगत प्रोफ़ाइल",
+    "shipping": "शिपिंग पता",
+    "billing": "बिलिंग पता",
+    "edit": "संपादित करें"
+  },
+  "personal": {
+    "title": "अपनी प्रोफ़ाइल अपडेट करें",
+    "name": "पूरा नाम",
+    "email": "ईमेल पता",
+    "phone": "फ़ोन नंबर",
+    "company": "कंपनी",
+    "notSet": "अभी तक सेट नहीं किया गया",
+    "update": "अपडेट करें",
+    "image": "यहां छवि डालें",
+    "choose": "प्रोफ़ाइल फ़ोटो चुनें",
+    "empty": "आप खाली सबमिट नहीं कर सकते",
+    "phoneInvalid": "यह फ़ोन नंबर अमान्य है"
+  },
+
+  "wishlist": {
+    "availability": "उपलब्धता",
+    "deleteMessage": "क्या आप इस आइटम को हटाने के लिए सुनिश्चित हैं",
+    "no": "नहीं, रद्द करें",
+    "yes": "हाँ",
+    "empty": "कोई इच्छा-सूची डेटा उपलब्ध नहीं",
+    "wrong": "कुछ गलत हो गया"
+  },
+  "cart": {
+    "empty": "कोई कार्ट डेटा उपलब्ध नहीं",
+    "checkout": "चेकआउट",
+    "totalPrice": "कुल मूल्य",
+    "deleteMessage": "क्या आप इस आइटम को हटाने के लिए सुनिश्चित हैं",
+    "out": "समय समाप्त हो रहा है"
+  },
+
+  "invoice": {
+    "invoiceId": "चालान आईडी",
+    "PaymentMethod": "भुगतान का तरीका",
+    "Total": "कुल",
+    "PaymentStatus": "भुगतान स्थिति",
+    "DueDate": "नियत तारीख",
+    "DownloadInvoice": "चालान डाउनलोड करें"
+  },
+  "deleteModal": {
+    "no": "नहीं, रद्द करें",
+    "yes": "हाँ",
+    "close": "मोडल बंद करें"
+  },
+  "currency": "$",
+  "stock": {
+    "rightNow": "स्टॉक अभी ख़त्म हो गया है"
+  },
+  "auth": {
+    "login": "कृपया पहले लॉगिन करें"
+  },
+  "checkout": {
+    "labels": {
+      "firstName": "पहला नाम",
+      "lastName": "अंतिम नाम",
+      "phone": "फ़ोन नंबर",
+      "company": "कंपनी",
+      "region": "देश/क्षेत्र",
+      "streetAddress": "सड़क का पता",
+      "PaymentMethod": "भुगतान का तरीका",
+      "email": "ईमेल पता",
+      "city": "शहर",
+      "accountNumber": "खाता नंबर",
+      "transactionId": "लेन-देन आईडी",
+      "shippingAddress": "शिपिंग पता"
+    },
+    "shipping": "शिपिंग पता",
+    "errorMessages": {
+      "firstName": "पहला नाम आवश्यक है",
+      "lastName": "अंतिम नाम आवश्यक है",
+      "phone": "फ़ोन नंबर आवश्यक है",
+      "email": "ईमेल आवश्यक है",
+      "city": "शहर आवश्यक है",
+      "accountNumber": "खाता नंबर आवश्यक है",
+      "transactionId": "लेन-देन आईडी आवश्यक है"
+    },
+    "orderSummary": {
+      "title": "ऑर्डर सारांश",
+      "loadingText": "लोड हो रहा है",
+      "orderBtn": "ऑर्डर दें",
+      "orderProductLists": {
+        "noProductsText": "कोई नहीं मिला",
+        "subtotalLabel": "उप-योग",
+        "shippingLabel": "शिपिंग",
+        "freeShippingText": "मुफ़्त",
+        "totalLabel": "कुल"
+      },
+      "agreementInput": {
+        "label": "मैं सहमत हूँ",
+        "linkText": "नियम और शर्तें",
+        "errorMessage": "आपको नियम और शर्तें स्वीकार करनी होंगी"
+      }
+    }
+  },
+  "confirmOrder": {
+    "orderSuccess": "सफलतापूर्वक खरीदा गया",
+    "orderNumber": "ऑर्डर #",
+    "notCart": "आपके कार्ट में कोई डेटा नहीं है",
+    "error": "एक समस्या थी!",
+    "alertMessage": "आपने अभी तक अपना शिपिंग पता नहीं जोड़ा है। कृपया अपने खाते से अपना शिपिंग पता जोड़ें और चेक-आउट पृष्ठ पर आगे बढ़ें।",
+    "alertTitle": "आपके लिए कोई शिपिंग पता जानकारी नहीं मिली",
+    "yes": "प्रोफ़ाइल पर जाएं",
+    "productList": {
+      "title": "उत्पाद सूची",
+      "notFound": "उत्पाद नहीं मिला"
+    },
+    "summary": {
+      "title": "सारांश",
+      "subtotal": "उप-योग",
+      "discount": "छूट",
+      "shipping": "शिपिंग",
+      "total": "कुल"
+    },
+    "shipping": {
+      "title": "शिपिंग",
+      "carrierDetails": "कोरियर विवरण देखें",
+      "deliveryWith24Hours": "24 घंटों के भीतर डिलीवरी"
+    },
+    "customer": {
+      "title": "ग्राहक",
+      "previousOrders": "पिछले ऑर्डर",
+      "name": "नाम",
+      "email": "ईमेल",
+      "phone": "फ़ोन",
+      "shippingAddress": "शिपिंग पता",
+      "billingAddress": "बिलिंग पता"
+    },
+    "downloadBtn": "डाउनलोड करें",
+    "invoice": {
+      "company": {
+        "name": "LWS-KART PLC",
+        "email": "sales@lws-kart.com",
+        "phone": "+8801402200698",
+        "vat": "8657671212"
+      },
+      "billTo": "बिल भेजें :",
+      "invoice": {
+        "number": "चालान संख्या:",
+        "date": "चालान तिथि:"
+      },
+      "table": {
+        "headers": {
+          "items": "आइटम",
+          "quantity": "मात्रा",
+          "price": "मूल्य",
+          "amount": "राशि",
+          "subtotal": "उप-योग",
+          "tax": "कर",
+          "discount": "छूट",
+          "total": "कुल"
+        },
+        "footer": "हमारे साथ रहने के लिए धन्यवाद!"
+      }
+    },
+    "orderItem": {
+      "brand": "ब्रांड"
+    }
+  },
+  "footer": {
+    "copyright": "© TailCommerce - सभी अधिकार सुरक्षित",
+    "text": "अपने घर को शाश्वत सुंदरता और अद्वितीय आराम के साथ बदलें",
+    "solution": "समाधान",
+    "support": "समर्थन",
+    "links": "उपयोगी लिंक",
+    "company": "कंपनी",
+    "marketing": "मार्केटिंग",
+    "analytics": "विश्लेषण",
+    "commerce": "वाणिज्य",
+    "insights": "अवलोकन",
+    "pricing": "मूल्य निर्धारण",
+    "documentation": "प्रलेखन",
+    "guides": "मार्गदर्शिकाएँ",
+    "api": "API स्थिति"
+  },
+  "shippingAndBilling": {
+    "fullName": "पूरा नाम",
+    "address": "पता",
+    "city": "शहर",
+    "state": "राज्य/प्रांत",
+    "zip": "ज़िप/पोस्टल कोड",
+    "country": "देश",
+    "shippingNotFound": "अभी तक कोई शिपिंग डेटा नहीं बनाया गया है",
+    "billingNotFound": "अभी तक कोई बिलिंग डेटा नहीं बनाया गया है",
+    "billing": "बिलिंग पता",
+    "shipping": "शिपिंग पता",
+    "same": "शिपिंग पते के समान",
+    "submit": "सबमिट कर रहा है",
+    "update": "अपडेट करें",
+    "add": "जोड़ें",
+    "errorMessages": {
+      "fullName": "पूरा नाम आवश्यक है",
+      "address": "पता आवश्यक है",
+      "city": "शहर आवश्यक है",
+      "state": "राज्य/प्रांत आवश्यक है",
+      "zip": "ज़िप/पोस्टल कोड आवश्यक है",
+      "country": "देश आवश्यक है",
+      "fetchError": "शिपिंग पता लाने में त्रुटि",
+      "fetchErrorShipping": "पहले शिपिंग पता भरें",
+      "submitSuccess": "सफलतापूर्वक सबमिट किया गया",
+      "updateWarning": "आपने कोई डेटा अपडेट नहीं किया है।"
+    }
+  },
+  "login": {
+    "title": "लॉगिन",
+    "welcomeMessage": "वापसी पर आपका स्वागत है ग्राहक",
+    "emailLabel": "ईमेल पता",
+    "emailRequiredError": "ईमेल आवश्यक है",
+    "passwordLabel": "पासवर्ड",
+    "passwordRequiredError": "पासवर्ड आवश्यक है",
+    "rememberMeLabel": "मुझे याद रखें",
+    "forgotPasswordLink": "पासवर्ड भूल गए",
+    "loginButton": "लॉगिन",
+    "loginInProgress": "लॉगिन हो रहा है",
+    "loginSuccessMessage": "लॉगिन सफल",
+    "errorMessage": "कुछ गलत हो गया!",
+    "orLoginWith": "या लॉगिन करें",
+    "notAccount": "क्या आपका खाता नहीं है?",
+    "invalid": "अमान्य ईमेल या पासवर्ड"
+  },
+  "verify": {
+    "btn": "ईमेल सत्यापित करें",
+    "message": "अपने ईमेल पते की पुष्टि के लिए नीचे दिए गए बटन पर क्लिक करें"
+  },
+  "address": {
+    "address": "पता",
+    "PostalCode": "पोस्टल कोड",
+    "phone": "फ़ोन",
+    "country": "देश",
+    "city": "शहर",
+    "state": "राज्य"
+  },
+  "register": {
+    "title": "अभी पंजीकरण करें",
+    "linkText": "अभी पंजीकरण करें",
+    "create": "खाता बनाएं",
+    "newCustomer": "नए ग्राहक के लिए पंजीकरण",
+    "nameLabel": "पूरा नाम",
+    "nameError": "नाम आवश्यक है",
+    "nameError5": "नाम कम से कम 5 अक्षरों का होना चाहिए।",
+    "nameError30": "नाम 30 अक्षरों से कम का होना चाहिए",
+    "emailLabel": "ईमेल पता",
+    "emailError": "ईमेल आवश्यक है",
+    "emailError3": "ईमेल में '@' प्रतीक से पहले कम से कम 3 अक्षर होने चाहिए।",
+
+    "passwordLabel": "पासवर्ड",
+    "passwordError": "पासवर्ड आवश्यक है",
+    "password8Error": "आपका पासवर्ड 8 से 32 अक्षरों की लंबाई के बीच होना चाहिए।",
+    "password32Error": "आपका पासवर्ड 8 से 32 अक्षरों की लंबाई के बीच होना चाहिए।",
+    "passwordPatternError": "पासवर्ड में कम से कम एक नंबर, एक अक्षर, एक विशेष अक्षर होना चाहिए, और 8 से 32 अक्षरों की लंबाई के बीच होना चाहिए।",
+    "confirmLabel": "पासवर्ड की पुष्टि करें",
+    "confirmError": "पासवर्ड की पुष्टि आवश्यक है",
+    "confirmNotMatchError": "पासवर्ड मेल नहीं खाते",
+    "agreementMessage": "मैंने पढ़ा और सहमति दी है",
+    "terms": "नियम और शर्तें",
+    "createLoading": "बना रहा है",
+    "account": "खाता बनाएं",
+    "with": "या साइनअप करें",
+    "already": "पहले से ही खाता है?",
+    "login": "अभी लॉगिन करें",
+    "createSuccess": "खाता बनाने में सफल!",
+    "existUser": "यह उपयोगकर्ता पहले से मौजूद है!",
+    "error": "एक समस्या थी!"
+  },
+  "socialLogin": {
+    "orLoginWith": "या लॉगिन करें",
+    "google": "Google",
+    "github": "GitHub"
+  }
+}

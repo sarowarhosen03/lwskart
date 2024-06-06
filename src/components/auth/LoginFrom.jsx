@@ -21,7 +21,7 @@ export default function LoginForm({ infoData }) {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  useAuthntiCated();
+  const { rerefLink } = useAuthntiCated();
   const [showPasswordIcon, showPassword] = useShowHidePassword();
   const email = searchParams.get("email");
   if (email) {
@@ -37,6 +37,7 @@ export default function LoginForm({ infoData }) {
       });
       if (!res.error) {
         router.refresh();
+        router.push(rerefLink);
       } else if (res.error === "AccessDenied") {
         return setError("formStatus", {
           type: "error",
