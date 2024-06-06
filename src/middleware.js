@@ -70,8 +70,6 @@ async function handleRouteMiddleware(req) {
           headers: requestHeaders,
         },
       });
-    } else {
-      return NextResponse.redirect(new URL("/login", req.url));
     }
   }
   return NextResponse.next();

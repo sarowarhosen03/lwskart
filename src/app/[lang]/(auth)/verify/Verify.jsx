@@ -5,25 +5,25 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default function Verify() {
+export default function Verify({ dict }) {
   const router = useRouter();
   const urlsearchPerms = useSearchParams();
 
   const [isPending, setIsPending] = useState(false);
-  const [response, setRespons] = useState();
+  const [response, setResponse] = useState();
   const token = urlsearchPerms.get("token");
   const email = urlsearchPerms.get("email");
 
-  const handelVerify = async () => {
+  const handleVerify = async () => {
     try {
       setIsPending(true);
       const verifyResponse = await verifyEmail({ token, email });
-      setRespons(verifyResponse);
+      setResponse(verifyResponse);
       if (!verifyResponse?.error) {
         setTimeout(() => router.push(`/login?email=${email}`), 3000);
       }
     } catch (error) {
-      setRespons({
+      setResponse({
         error: true,
         message: error.message,
       });
@@ -58,17 +58,15 @@ export default function Verify() {
           />
         </div>
       )}
-      {!!!response?.message && (
-        <p>Click the button below to verify your email adress</p>
-      )}
+      {!!!response?.message && <p>{dict.message}</p>}
 
       {!response && (
         <button
-          onClick={handelVerify}
+          onClick={handleVerify}
           disabled={!!isPending}
           className=" rounded-md bg-primary p-2 text-white shadow-sm  disabled:bg-red-400"
         >
-          Verify Email
+          {dict.btn}
         </button>
       )}
     </div>

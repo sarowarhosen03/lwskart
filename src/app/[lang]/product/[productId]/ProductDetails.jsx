@@ -91,8 +91,6 @@ export default async function ProductDetails({
             availability={availability}
             productId={id}
             productdict={productdict}
-            name={name}
-            sku={sku}
           />
           <ShareProduct url={url} name={name} />
         </div>

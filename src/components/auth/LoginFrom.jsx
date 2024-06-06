@@ -20,10 +20,6 @@ export default function LoginForm({ infoData }) {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-<<<<<<< HEAD:src/app/[lang]/(auth)/login/LoginFrom.jsx
-  useAuthntiCated();
-=======
->>>>>>> bugfix:src/components/auth/LoginFrom.jsx
   const [showPasswordIcon, showPassword] = useShowHidePassword();
   const email = searchParams.get("email");
   if (email) {
