@@ -47,7 +47,7 @@ export default function ProductCard({
         </div>
       </div>
       <div className="px-4 pb-3 pt-4">
-        <Link draggable={false} href={`/product/${name}-${sku}`}>
+        <Link draggable={false} href={`/product/${getSlug({ name, sku })}`}>
           <h4 className="mb-2 text-xl font-medium uppercase text-gray-800 transition hover:text-primary">
             {name}
           </h4>

@@ -7,6 +7,12 @@ export default cache(async function getCategories(options = {}) {
   return await prisma.Category.findMany({
     skip: (page - 1) * limit,
     take: limit,
+    include: {
+      product: {
+        select: {
+          id: true,
+        },
+      },
+    },
   });
-}
-)
+});

@@ -37,11 +37,11 @@ export const POST = async (req) => {
     const headerList = headers();
     const { pathname } = new URL(headerList.get("referer"));
     revalidatePath(pathname);
+    revalidatePath(`/[lang]/user/checkout`);
     return NextResponse.json({
       Message: "Success",
       status: 201,
-      data: newData
-
+      data: newData,
     });
   } catch (error) {
     return NextResponse.json({ error: "No files received." }, { status: 400 });

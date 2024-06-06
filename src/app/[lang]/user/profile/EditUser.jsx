@@ -8,7 +8,12 @@ import { toast } from "react-toastify";
 import FormSection from "./FormSection";
 import ImageUpload from "./ImageUpload.jsx";
 
-export default function EditUser({ userInfo }) {
+export default function EditUser({
+  userInfo,
+  profileDict: { personal, shipping, billing, edit },
+  personal: personalDict,
+  addressDict,
+}) {
   const imageInputRef = useRef();
   const [isPending, startTransition] = useTransition();
   const { update } = useSession();
@@ -108,19 +113,28 @@ export default function EditUser({ userInfo }) {
             <div className="mx-auto max-w-5xl">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <FormSection
-                  title="Personal Profile"
+                  notSet={personalDict.notSet}
+                  title={personal}
                   section="personal"
                   setValue={setValue}
                   fields={[
-                    { label: "Name", field: "name" },
+                    { label: personalDict.name, field: "name" },
                     {
-                      label: "Email",
+                      label: personalDict.email,
                       field: "email",
                       readOnly: email !== null,
                       type: "email",
                     },
-                    { label: "Phone", field: "phone", type: "number" },
-                    { label: "Company", field: "company", required: false },
+                    {
+                      label: personalDict.phone,
+                      field: "phone",
+                      type: "number",
+                    },
+                    {
+                      label: personalDict.company,
+                      field: "company",
+                      required: false,
+                    },
                   ]}
                   isEditing={isEditing}
                 >
@@ -132,32 +146,30 @@ export default function EditUser({ userInfo }) {
                   />
                 </FormSection>
                 <FormSection
-                  title="Shipping address"
+                  title={shipping}
                   section="shippingAddress"
                   fields={[
-                    { label: "Name", field: "name" },
-                    { label: "Address", field: "address" },
-                    { label: "Postal Code", field: "postalCode" },
-                    { label: "Phone", field: "phone" },
-                    { label: "Country", field: "country" },
-                    { label: "City", field: "city" },
-                    { label: "State", field: "state" },
+                    { label: addressDict.address, field: "address" },
+                    { label: addressDict.PostalCode, field: "postalCode" },
+                    { label: addressDict.phone, field: "phone" },
+                    { label: addressDict.country, field: "country" },
+                    { label: addressDict.state, field: "state" },
+                    { label: addressDict.city, field: "city" },
                   ]}
                   isEditing={isEditing}
                   isSameAddress={isSameAddress}
                   handleSameAddressChange={handleSameAddressChange}
                 />
                 <FormSection
-                  title="Billing address"
+                  title={billing}
                   section="billingAddress"
                   fields={[
-                    { label: "Name", field: "name" },
-                    { label: "Address", field: "address" },
-                    { label: "Postal Code", field: "postalCode" },
-                    { label: "Phone", field: "phone" },
-                    { label: "Country", field: "country" },
-                    { label: "City", field: "city" },
-                    { label: "State", field: "state" },
+                    { label: addressDict.address, field: "address" },
+                    { label: addressDict.PostalCode, field: "postalCode" },
+                    { label: addressDict.phone, field: "phone" },
+                    { label: addressDict.country, field: "country" },
+                    { label: addressDict.state, field: "state" },
+                    { label: addressDict.city, field: "city" },
                   ]}
                   isEditing={isEditing}
                 />
@@ -175,7 +187,7 @@ export default function EditUser({ userInfo }) {
                   }}
                   className="rounded bg-primary px-4 py-2 text-center text-white hover:bg-white hover:text-primary disabled:bg-red-400 disabled:text-white"
                 >
-                  {isEditing ? "Save Changes" : "Edit"}
+                  {isEditing ? "Save Changes" : edit}
                 </button>
                 {isEditing && (
                   <button

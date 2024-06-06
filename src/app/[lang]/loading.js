@@ -1,6 +1,6 @@
 export default function loading() {
   return (
-    <div className="flex h-dvh w-dvw items-center justify-center bg-transparent">
+    <div className="flex h-dvh w-dvw flex-col items-center justify-center bg-transparent">
       <svg
         className="h-32 w-32 animate-pulse text-gray-900"
         viewBox="0 0 50 50"

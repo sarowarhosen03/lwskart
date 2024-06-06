@@ -1,9 +1,11 @@
 import { getDectionary } from "@/lib/getDictionary";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import logoImage from "../../../public/assets/images/logo.svg";
-import SearchBox from "./SearchBox";
+import LanguageSwitcher from "../ui/LanguageSwitcher";
 import PrimaryNavOptions from "./PrimaryNavOptions";
+import SearchBox from "./SearchBox";
 
 export default async function Header({ lang }) {
   const dict = await getDectionary(lang, "headers");
@@ -14,10 +16,13 @@ export default async function Header({ lang }) {
           <Image priority src={logoImage} alt="Logo" className="h-auto w-32 " />
         </Link>
 
-        <SearchBox dict={dict} />
-
+        <Suspense>
+          <SearchBox dict={dict} />
+        </Suspense>
         <div className="flex items-center gap-3 space-x-4">
-          {/* <LanguageSwitcher /> */}
+          <Suspense>
+            <LanguageSwitcher />
+          </Suspense>
           <PrimaryNavOptions dict={dict} />
         </div>
       </div>

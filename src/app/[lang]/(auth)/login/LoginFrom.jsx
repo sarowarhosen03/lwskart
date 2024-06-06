@@ -73,10 +73,10 @@ export default function LoginForm({ infoData }) {
           autoComplete="username"
           register={register}
           validation={{
-            required: "Email is required",
+            required: infoData.login.emailRequiredError,
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: "Entered value does not match email format",
+              message: infoData.login.invalid,
             },
             onBlur: (e) =>
               setValue("email", e.target.value.toLowerCase().trim()),
@@ -89,10 +89,10 @@ export default function LoginForm({ infoData }) {
           name="password"
           type={showPassword ? "text" : "password"}
           register={register}
-          validation={{ required: "Password is required" }}
+          validation={{ required: infoData.login.passwordRequiredError }}
           error={errors.password}
-          placeholder={showPassword ? "password" : "*******"}
-          autoComplete="new-password"
+          placeholder={showPassword ? infoData.password : "*******"}
+          autoComplete="password"
           showPasswordIcon={showPasswordIcon}
         />
       </div>
@@ -109,11 +109,11 @@ export default function LoginForm({ infoData }) {
             htmlFor="remember"
             className="ml-3 cursor-pointer text-gray-600"
           >
-            Remember me
+            {infoData.login.rememberMeLabel}
           </label>
         </div>
         <Link href="/" className="text-primary">
-          Forgot password
+          {infoData.login.forgotPasswordLink}
         </Link>
       </div>
       {errors?.formStatus && (
@@ -128,7 +128,7 @@ export default function LoginForm({ infoData }) {
           type="submit"
           className="block w-full rounded border border-primary bg-primary py-2 text-center font-roboto font-medium uppercase text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-300"
         >
-          Login
+          {isSubmitting ? infoData.login.loginInProgress : infoData.login.title}
         </button>
       </div>
     </form>

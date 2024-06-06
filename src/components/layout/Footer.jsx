@@ -10,14 +10,18 @@ export default function Footer() {
             <Image
               src="/assets/images/logo.svg"
               alt="logo"
-              className="w-auto h-auto"
+              className="h-auto w-auto"
               height={518}
               width={168}
             />
             <div className="mr-2">
               <p className="text-gray-500">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia,
-                hic?
+                Lwskart is a platform where you can get all the necessary
+                furniture for your home. We have a wide range of products that
+                you can choose from. We have a team of experts who will help you
+                choose the best furniture for your home. We have a wide range of
+                products that you can choose from. We have a team of experts who
+                will help you choose the best furniture for your home.
               </p>
             </div>
             <div className="flex space-x-5">
@@ -53,7 +57,7 @@ export default function Footer() {
                     href="#"
                     className="block text-base text-gray-500 hover:text-gray-900"
                   >
-                    Analitycs
+                    Analytics
                   </a>
                   <a
                     href="#"
@@ -118,7 +122,7 @@ export default function Footer() {
                     href="#"
                     className="block text-base text-gray-500 hover:text-gray-900"
                   >
-                    Analitycs
+                    Analytics
                   </a>
                   <a
                     href="#"

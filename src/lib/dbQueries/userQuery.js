@@ -71,7 +71,7 @@ export const toggleWishItem = async (productId) => {
         },
       });
     }
-    revalidatePath("/[lang]/user/wish");
+    revalidatePath("/[lang]/user/wish", "page");
 
     return {
       status: "ok ",

@@ -56,13 +56,13 @@ export default function PrimaryNavOptions({ dict }) {
         className={`relative text-center text-gray-700 transition hover:text-primary  ${visibility}`}
         href={`/${lang}/user/profile`}
       >
-        <div className="text-2xl">
+        <div className="peer text-2xl">
           {profileImageUrl && session ? (
             <Image
               src={profileImageUrl}
               height={54}
               width={54}
-              className="h-auto w-auto  rounded-full ring-primary"
+              className=" h-auto w-auto rounded-full object-cover  ring-primary"
               alt="profile image "
               priority
             />
@@ -77,6 +77,7 @@ export default function PrimaryNavOptions({ dict }) {
             </div>
           )}
         </div>
+
         <div className="text-xs leading-3">{session?.user?.name}</div>
       </Link>
     </>

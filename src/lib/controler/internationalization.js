@@ -26,11 +26,16 @@ function getLocale(request) {
   const headers = { "accept-language": acceptedLanguage };
   const languages = new Negotiator({ headers })?.languages();
 
-  return match(
-    languages,
-    locales.map((loc) => loc.code),
-    defaultLocale,
-  ); // en or bn
+  try {
+    return match(
+      languages,
+      locales.map((loc) => loc.code),
+      defaultLocale,
+    );
+  } catch (error) {
+    return defaultLocale;
+  }
+  return; // en or bn
 }
 export function pathNameIsMissingLocale(request) {
   // get the pathname from request url

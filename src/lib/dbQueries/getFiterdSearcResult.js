@@ -1,23 +1,17 @@
+
 import prisma from "@/db/db";
-import { getNewArrivalProducts } from "./products";
 
 export default async function getFilteredSearchResult({
   category = [],
   price = [],
   search = "",
+  page = 1,
+  limit = 15,
 }) {
   const categoryFilter = category.filter((c) => c); // Filter out empty strings
   const minPrice = price[0] ? parseFloat(price[0]) : 0;
   const maxPrice = price[1] ? parseFloat(price[1]) : 1000000;
-  if (
-    !categoryFilter.length &&
-    minPrice === 0 &&
-    maxPrice === 1000000 &&
-    search === ""
-  ) {
-    return await getNewArrivalProducts();
-  }
-  const products = await prisma.product.findMany({
+  let filter = {
     where: {
       AND: [
         categoryFilter.length > 0
@@ -53,10 +47,21 @@ export default async function getFilteredSearchResult({
         },
       ],
     },
-    include: {
-      category: true,
-    },
+  };
+  const products = await prisma.product.findMany({
+    ...filter,
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+  const pageCount = await prisma.product.count({
+    ...filter,
   });
 
-  return products;
+  return {
+    products,
+    pageCount: Math.ceil(pageCount / limit),
+    limit: limit,
+    page,
+    total: pageCount,
+  };
 }

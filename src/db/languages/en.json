@@ -16,7 +16,8 @@
     "contact": "Contact Us",
     "login": "Login",
     "logout": "Logout",
-    "category": "All Categories"
+    "category": "All Categories",
+    "orders": "My Orders"
   },
 
   "home": {
@@ -25,6 +26,7 @@
       "subTitle": "Transform Your Home with Timeless Elegance, Unmatched Comfort, Innovative Design, and Exceptional Craftsmanship",
       "button": "Shop Now"
     },
+    "visitShop": "Visit Shop",
     "feature": {
       "shipping": "Free Shipping",
       "order": "Order over $200",
@@ -44,7 +46,9 @@
     "wishlistTitleAdd": "add to wishlist",
     "wishlistTitleRemove": "remove from wishlist",
     "viewProduct": "view product",
-    "stockOut": "Out of Stock"
+    "stockOut": "Out of Stock",
+    "inStock": "In Stock",
+    "soldCount": "Sold"
   },
   "productDetails": {
     "brand": "Brand",
@@ -75,12 +79,15 @@
     "name": "Full Name",
     "email": "Email Address",
     "phone": "Phone Number",
+    "company": "Company",
+    "notSet": " Not Set Yet",
     "update": "Update",
     "image": "Drop image here",
     "choose": "Choose profile photo",
     "empty": "You can't empty submit",
     "phoneInvalid": "This Phone Number is invalid"
   },
+
   "wishlist": {
     "availability": "Availability",
     "deleteMessage": "Are You Sure Delete This Item",
@@ -93,9 +100,18 @@
     "empty": "No carts data available",
     "checkout": "Checkout",
     "totalPrice": "Total Price",
-    "deleteMessage": "Are You Sure Delete This Item"
+    "deleteMessage": "Are You Sure Delete This Item",
+    "out": "Time Running Out"
   },
 
+  "invoice": {
+    "invoiceId": "Invoice ID",
+    "PaymentMethod": "Payment Method",
+    "Total": "Total",
+    "PaymentStatus": "Payment Status",
+    "DueDate": "Due Date",
+    "DownloadInvoice": "Download Invoice"
+  },
   "deleteModal": {
     "no": "No, cancel",
     "yes": "Yes",
@@ -113,12 +129,17 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "phone": "Phone Number",
+      "company": "Company",
+      "region": "Country/Region",
+      "streetAddress": "Street Address",
+      "PaymentMethod": "Payment Method",
       "email": "Email Address",
       "city": "City",
       "accountNumber": "Account Number",
       "transactionId": "Transaction ID",
       "shippingAddress": "Shipping Address"
     },
+    "shipping": "Shipping Address",
     "errorMessages": {
       "firstName": "First name is required",
       "lastName": "Last name is required",
@@ -271,6 +292,14 @@
     "notAccount": "Don't have an account?",
     "invalid": "Invalid email or password"
   },
+  "address": {
+    "address": "Address",
+    "PostalCode": "Postal Code",
+    "phone": "Phone",
+    "country": "Country",
+    "city": "City",
+    "state": "State"
+  },
   "register": {
     "title": "Register now",
     "linkText": "Register now",
@@ -279,9 +308,11 @@
     "nameLabel": "Full Name",
     "nameError": "Name is required",
     "nameError5": "Name must be at least 5 characters long.",
+    "nameError30": "Name must be less than 30 characters",
     "emailLabel": "Email address",
     "emailError": "Email is required",
     "emailError3": "Email must have at least 3 characters before '@' symbol.",
+
     "passwordLabel": "Password",
     "passwordError": "Password is required",
     "password8Error": "Your password must be between 8 and 32 characters in length.",

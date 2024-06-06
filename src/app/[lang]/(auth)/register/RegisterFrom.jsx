@@ -8,7 +8,7 @@ import { register as userRegister } from "@/lib/actions/authActions";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-export default function RegisterForm() {
+export default function RegisterForm({ dict: { register: registerDict } }) {
   const {
     register,
     formState: { errors, isSubmitting },
@@ -29,8 +29,7 @@ export default function RegisterForm() {
       if (!response.error) {
         setError("formStatus", {
           type: "success",
-          message:
-            "User registered successfully. Please check your email inbox to verify it.",
+          message: registerDict.createSuccess,
         });
         setTimeout(() => {
           router.push("/login");
@@ -59,34 +58,34 @@ export default function RegisterForm() {
     >
       <div className="space-y-2">
         <InputField
-          label="Full Name"
+          label={registerDict.nameLabel}
           name="name"
           type="text"
           register={register}
           validation={{
-            required: "Name is required",
+            required: registerDict.nameError,
             minLength: {
-              value: 3,
-              message: "Name must be at least 3 characters",
+              value: 5,
+              message: registerDict.nameError5,
             },
             maxLength: {
               value: 30,
-              message: "Name must be less than 30 characters",
+              message: registerDict.nameError30,
             },
           }}
           error={errors.name}
-          placeholder="Full Name"
+          placeholder={registerDict.nameLabel}
         />
         <InputField
-          label="Email address"
+          label={registerDict.emailLabel}
           name="email"
           type="email"
           register={register}
           validation={{
-            required: "Email is required",
+            required: registerDict.emailError,
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: "Entered value does not match email format",
+              message: registerDict.emailError3,
             },
             onBlur: (e) =>
               setValue("email", e.target.value.toLowerCase().trim()),
@@ -96,40 +95,42 @@ export default function RegisterForm() {
           autoComplete="email"
         />
         <InputField
-          label="Password"
+          label={registerDict.passwordLabel}
           name="password"
           type={showPassword ? "text" : "password"}
           register={register}
           validation={{
-            required: "Password is required",
+            required: registerDict.passwordError,
             minLength: {
-              value: 6,
-              message: "Password must be at least 6 characters long",
+              value: 8,
+              message: registerDict.password8Error,
             },
             maxLength: {
               value: 32,
-              message: "Password must be less than 32 characters",
+              message: registerDict.password32Error,
             },
             validate: (value) =>
-              value === getValues()?.confirm || "The passwords do not match",
+              value === getValues()?.confirm ||
+              registerDict.confirmNotMatchError,
           }}
           error={errors.password}
-          placeholder={showPassword ? "password" : "*******"}
+          placeholder={showPassword ? registerDict.passwordLabel : "*******"}
           showPasswordIcon={showPasswordIcon}
           autoComplete="new-password"
         />
         <InputField
-          label="Confirm password"
+          label={registerDict.confirmLabel}
           name="confirm"
           type={showPassword ? "text" : "password"}
           register={register}
           validation={{
-            required: "Confirm password is required",
+            required: registerDict.confirmError,
             validate: (value) =>
-              value === getValues()?.password || "The passwords do not match",
+              value === getValues()?.password ||
+              registerDict.confirmNotMatchError,
           }}
           error={errors.confirm}
-          placeholder={showPassword ? "confirm password" : "*******"}
+          placeholder={showPassword ? registerDict.confirmLabel : "*******"}
           showPasswordIcon={showPasswordIcon}
           autoComplete="new-password"
         />
@@ -151,9 +152,9 @@ export default function RegisterForm() {
             htmlFor="agreement"
             className="ml-3 cursor-pointer text-gray-600"
           >
-            I have read and agree to the{" "}
+            {registerDict.agreementMessage}{" "}
             <a href="#" className="text-primary">
-              terms & conditions
+              {registerDict.terms}
             </a>
           </label>
         </div>
@@ -173,7 +174,9 @@ export default function RegisterForm() {
           disabled={isSubmitting}
           className="block w-full rounded border border-primary bg-primary py-2 text-center font-roboto font-medium uppercase text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-400"
         >
-          {isSubmitting ? "Creating account..." : "Create account"}
+          {isSubmitting
+            ? registerDict.createLoading + "..."
+            : registerDict.account}
         </button>
       </div>
     </form>

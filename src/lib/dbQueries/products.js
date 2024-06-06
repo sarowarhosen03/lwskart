@@ -2,36 +2,30 @@
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
 import Log from "@/utils/Log";
-import { getSlug } from "@/utils/slugify";
+import { getSlug, parsSlug } from "@/utils/slugify";
 import { CartItemStatus } from "@prisma/client";
-import { revalidateTag, unstable_cache } from "next/cache";
-export const testFun = async () => {
-  return {
-    message: "Hello",
-  };
+import { revalidatePath } from "next/cache";
+
+export const getProducts = async function (options) {
+  // const { page = 1, limit = 15 } = options || {};
+  // return prisma.Product.findMany({
+  //   skip: 4 + (page - 1) * limit,
+  //   take: limit,
+  //   orderBy: {
+  //     createdAt: "desc",
+  //   },
+  //   include: {
+  //     wishItem: {
+  //       select: {
+  //         userId: true,
+  //       },
+  //     },
+  //   },
+  // });
+
+
+  
 };
-export const getProducts = unstable_cache(
-  async function (options) {
-    const { page = 1, limit = 15 } = options || {};
-    return prisma.Product.findMany({
-      skip: 4 + (page - 1) * limit,
-      take: limit,
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        wishItem: {
-          select: {
-            userId: true,
-          },
-        },
-      },
-    });
-  },
-  {
-    tags: ["products"],
-  },
-);
 
 export const getNewArrivalProducts = async () => {
   try {
@@ -55,18 +49,22 @@ export const getNewArrivalProducts = async () => {
   }
 };
 export const getProductByNameAndSku = async (productString) => {
-  const [name, sku] = decodeURI(productString).split("-");
-
-  return prisma.product.findFirst({
-    where: {
-      name: name,
-      sku: Number(sku) || undefined,
-    },
-    include: {
-      brand: true,
-      category: true,
-    },
-  });
+  const [name, sku] = parsSlug(productString);
+  try {
+    const product = await prisma.product.findFirst({
+      where: {
+        name: name,
+        sku: sku,
+      },
+      include: {
+        brand: true,
+        category: true,
+      },
+    });
+    return product;
+  } catch (error) {
+    return null;
+  }
 };
 
 export const getRelatedProducts = async ({
@@ -147,6 +145,12 @@ export const addToCart = async (productId, quantity = 1) => {
       where: {
         id: productId,
       },
+      select: {
+        stock: true,
+        name: true,
+        sku: true,
+        id: true,
+      },
     });
     if (session) {
       const id = session.user.id;
@@ -192,7 +196,7 @@ export const addToCart = async (productId, quantity = 1) => {
             data: productUpdateData,
           }),
         ]);
-        // revalidateTag("products");
+        await relavidProducts();
         return {
           success: true,
           data: {
@@ -250,7 +254,7 @@ export const deleteCartItem = async (cartId) => {
         }),
       ]);
 
-      revalidateTag(["products"]);
+      await relavidProducts();
       return {
         success: true,
         payload: cartItem.id,
@@ -264,3 +268,9 @@ export const deleteCartItem = async (cartId) => {
     };
   }
 };
+
+async function relavidProducts() {
+  await revalidatePath(`[lang]/product/[productId]`, "page");
+  await revalidatePath(`[lang]`, "page");
+  await revalidatePath(`[lang]/shop`, "page");
+}

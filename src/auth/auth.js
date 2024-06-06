@@ -11,6 +11,8 @@ const isSameProvider = (provider) => sameProviders.includes(provider);
 export const {
   handlers: { GET, POST },
   auth,
+  signIn,
+  signOut,
 } = NextAuth({
   adapter: PrismaAdapter(prismaInstance),
   trustHost: true,

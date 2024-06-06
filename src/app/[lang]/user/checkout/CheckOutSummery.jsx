@@ -7,13 +7,14 @@ import { toast } from "react-toastify";
 import ContactForm from "./ContactForm";
 import OrderSummary from "./OrderSummary";
 
-export default function CheckOutSummary({ userInfo }) {
+export default function CheckOutSummary({ userInfo, dictionary }) {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     clearErrors,
     setValue,
+    lang,
   } = useForm();
   const { push } = useRouter();
   const {
@@ -96,6 +97,8 @@ export default function CheckOutSummary({ userInfo }) {
           register={register}
           errors={errors}
           setValue={setValue}
+          lang={lang}
+          dictionary={dictionary} 
         />
         <OrderSummary
           isSubmitting={isSubmitting}
@@ -106,6 +109,8 @@ export default function CheckOutSummary({ userInfo }) {
           }}
           register={register}
           errors={errors}
+          lang={lang}
+          dictionary={dictionary}
         />
       </div>
     </form>

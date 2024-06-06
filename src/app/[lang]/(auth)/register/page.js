@@ -1,27 +1,25 @@
 import SocialLogin from "@/components/ui/SocialLogin";
-import Link from "next/link";
+import { getDectionary } from "@/lib/getDictionary.js";
 import { Suspense } from "react";
 import RegisterFrom from "./RegisterFrom.jsx";
 
-export default function registerPage() {
+export default async function registerPage({ params: { lang } }) {
+  const dict = await getDectionary(lang);
+
   return (
     <div className="contain py-16">
       <div className="mx-auto max-w-lg overflow-hidden rounded px-6 py-7 shadow">
         <h2 className="mb-1 text-2xl font-medium uppercase">
-          Create an account
+          {dict.register.create}
         </h2>
-        <p className="mb-6 text-sm text-gray-600">Register for new cosutumer</p>
+        <p className="mb-6 text-sm text-gray-600">
+          {dict.register.newCustomer}
+        </p>
 
         <Suspense>
-          <RegisterFrom />
-          <SocialLogin />
+          <RegisterFrom dict={dict} />
+          <SocialLogin dict={dict} />
         </Suspense>
-        <p className="mt-4 text-center text-gray-600">
-          Already have account?{" "}
-          <Link href="/login" className="text-primary">
-            Login now
-          </Link>
-        </p>
       </div>
     </div>
   );

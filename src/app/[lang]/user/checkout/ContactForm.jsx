@@ -3,21 +3,23 @@ import InputField from "@/components/ui/InputField";
 export default function ContactForm({
   userInfo,
   register,
-  handleSubmit,
-  clearErrors,
   errors,
   setValue,
-  handleLogin,
+  dictionary,
 }) {
   const { name, email, company } = userInfo;
   const { shippingAddress } = userInfo.address || {};
+  const labels = dictionary.labels;
+
   return (
     <div className="col-span-8 rounded border border-gray-200 p-4">
-      <h3 className="mb-4 text-lg font-medium capitalize">Shipiing Details </h3>
+      <h3 className="mb-4 text-lg font-medium capitalize">
+        {dictionary.shipping}{" "}
+      </h3>
       <div>
         <div className="grid grid-cols-2 gap-4">
           <InputField
-            label="First Name"
+            label={labels.firstName}
             name="firstName"
             register={register}
             validation={{ required: "Name is required" }}
@@ -25,7 +27,7 @@ export default function ContactForm({
             value={name}
           />
           <InputField
-            label="Last Name"
+            label={labels.lastName}
             name="lastName"
             register={register}
             validation={{}}
@@ -33,7 +35,7 @@ export default function ContactForm({
           />
         </div>
         <InputField
-          label="Company"
+          label={labels.company}
           name="company"
           value={company}
           register={register}
@@ -42,7 +44,7 @@ export default function ContactForm({
           placeholder="optional"
         />
         <InputField
-          label="Country/Region"
+          label={labels.region}
           name="region"
           register={register}
           validation={{ required: true }}
@@ -50,7 +52,7 @@ export default function ContactForm({
           value={shippingAddress?.country}
         />
         <InputField
-          label="Street address"
+          label={labels.streetAddress}
           name="address"
           register={register}
           validation={{ required: true }}
@@ -58,7 +60,7 @@ export default function ContactForm({
           value={shippingAddress.address}
         />
         <InputField
-          label="City"
+          label={labels.city}
           name="city"
           value={shippingAddress?.city}
           register={register}
@@ -66,7 +68,7 @@ export default function ContactForm({
           error={errors.city}
         />
         <InputField
-          label="Phone number"
+          label={labels.phone}
           name="phone"
           register={register}
           value={shippingAddress?.phone}
@@ -81,7 +83,7 @@ export default function ContactForm({
           error={errors.phone}
         />
         <InputField
-          label="Email address"
+          label={labels.email}
           name="email"
           type="email"
           register={register}
@@ -89,8 +91,8 @@ export default function ContactForm({
           error={errors.email}
           value={email}
         />
-             <InputField
-          label="Payment Method"
+        <InputField
+          label={labels.PaymentMethod}
           name="paymentMethod"
           type="text"
           register={register}

@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import CartItem from "./CartItems";
 let timeoutId;
 
-const CartOverView = ({ lang }) => {
+const CartOverView = ({ cartDict }) => {
   const {
     state: { isLoading, error, cartList },
     dispatch,
@@ -126,7 +126,7 @@ const CartOverView = ({ lang }) => {
       handleQuantityChange={handleQuantityChange}
       handleDeleteItem={handleDeleteItem}
       deletingItems={deletingItems}
-      lang={lang}
+      cartDict={cartDict}
     />
   ));
   let isEmpty = cartList.length > 0 && !isLoading && !error;
@@ -157,19 +157,19 @@ const CartOverView = ({ lang }) => {
           </button>
         )}
 
-        {!isEmpty && <EmptyCart />}
+        {!isEmpty && <EmptyCart cartDict={cartDict} />}
       </div>
     </div>
   );
 };
 
-function EmptyCart({ lang }) {
+function EmptyCart({ cartDict }) {
   return (
     <>
       <div className="flex min-h-screen items-center justify-center bg-gray-100">
         <div className="flex w-full  max-w-3xl flex-col rounded-lg bg-white p-6 shadow-lg">
           <i className="fa-solid fa-cart-flatbed-suitcase block text-center text-6xl text-primary"></i>
-          <h1 className=" text-center text-2xl">Your cart is empty</h1>
+          <h1 className=" text-center text-2xl">{cartDict.empty}</h1>
           <Link
             href={`/shop`}
             className="mt-4 w-full rounded bg-primary px-4 py-2 text-center text-white"

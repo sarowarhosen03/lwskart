@@ -28,6 +28,16 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
           },
         });
       });
+      const updateProduct = items.map((item) => {
+        return prisma.product.update({
+          where: {
+            id: item.productId,
+          },
+          data: {
+            soldCount: { increment: item.itemCount },
+          },
+        });
+      });
       const [newOrder, ...arg] = await prisma.$transaction([
         prisma.order.create({
           data: {

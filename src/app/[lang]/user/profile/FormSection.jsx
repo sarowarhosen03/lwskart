@@ -8,6 +8,7 @@ const FormSection = ({
   handleSameAddressChange,
   children,
   setValue,
+  notSet
 }) => {
   const { watch, control } = useFormContext();
   const profile = watch();
@@ -51,7 +52,7 @@ const FormSection = ({
               />
             ) : (
               <p className="text-gray-800">
-                {getValue(field) || "Not Set Yet"}
+                {getValue(field) || notSet}
               </p>
             )}
           </div>

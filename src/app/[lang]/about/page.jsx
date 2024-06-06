@@ -1,6 +1,6 @@
 const AboutUs = () => {
   return (
-    <div className=" prose lw:prose-2 py-16">
+    <div className=" lw:prose-2 prose mx-auto py-16">
       <div className="container mx-auto px-4">
         <h2 className="mb-8 text-3xl font-bold">About Us</h2>
         <p className="mb-8 text-lg">

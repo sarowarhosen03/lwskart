@@ -8,6 +8,7 @@ export default function OrderSummary({
   register,
   errors,
   isSubmitting,
+  dictionary,
 }) {
   const {
     state: { isLoading },
@@ -26,11 +27,11 @@ export default function OrderSummary({
       </div>
     );
   }
-
+  const { title, orderBtn, agreementInput } = dictionary.orderSummary;
   return (
     <div className="col-span-4 rounded border border-gray-200 p-4">
       <h4 className="mb-4 text-lg font-medium uppercase text-gray-800">
-        Order Summary
+        {title}
       </h4>
       <div className="space-y-2">
         {cartList.map((cart) => (
@@ -85,7 +86,7 @@ export default function OrderSummary({
           type="checkbox"
           name="agreement"
           {...register("agreement", {
-            required: "You must agree to the terms and conditions",
+            required: agreementInput.errorMessage,
           })}
           className="h-3 w-3 cursor-pointer rounded-sm text-primary focus:ring-0"
         />
@@ -93,9 +94,9 @@ export default function OrderSummary({
           htmlFor="agreement"
           className="ml-3 cursor-pointer text-sm text-gray-600"
         >
-          I agree to the{" "}
-          <a href="#" className="text-primary">
-            terms & conditions
+          {agreementInput.label}
+          <a href="#" className="ms-2 text-primary">
+            {agreementInput.linkText}
           </a>
         </label>
       </div>
@@ -106,9 +107,9 @@ export default function OrderSummary({
       <button
         disabled={isSubmitting || errors?.agreement || cartList.length === 0}
         type="submit"
-        className="block w-full rounded-md border border-primary bg-primary px-4 py-3 text-center font-medium text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-400"
+        className="block w-full rounded-md border border-primary bg-primary px-4 py-3 text-center font-medium text-white transition hover:bg-transparent hover:text-primary disabled:bg-red-400 disabled:text-white"
       >
-        Place Order
+        {orderBtn}
       </button>
     </div>
   );

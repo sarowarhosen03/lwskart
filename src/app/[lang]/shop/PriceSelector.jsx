@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
-export default function PriceSelector() {
+export default function PriceSelector({ sidebarDict }) {
   const searchParams = useSearchParams();
   const price = searchParams.get("price");
   const [min, setMin] = useState("");
@@ -25,15 +25,7 @@ export default function PriceSelector() {
       setMax(max);
     }
   }, [price]);
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (min && max) {
-      params.set("price", `${min}|${max}`);
-    } else {
-      params.delete("price");
-    }
-    replace(`?${params.toString()}`);
-  }, [min, max, replace, searchParams]);
+
   function handleChangeValue(event) {
     const { name, value } = event.target;
     if (value === min || value === max) return;
@@ -43,7 +35,7 @@ export default function PriceSelector() {
   return (
     <div className="pt-4">
       <h3 className="mb-3 text-xl font-medium uppercase text-gray-800">
-        Price
+        {sidebarDict.price}
       </h3>
       <div className="mt-4 flex items-center">
         <input
@@ -65,6 +57,20 @@ export default function PriceSelector() {
           className="w-full rounded border-gray-300 px-3 py-1 text-gray-600 shadow-sm focus:border-primary focus:ring-0"
           placeholder="max"
         />
+        <button
+          className="mx-2s bg-primary p-1 text-white"
+          onClick={() => {
+            const params = new URLSearchParams(searchParams.toString());
+            if (min && max) {
+              params.set("price", `${min}|${max}`);
+            } else {
+              params.delete("price");
+            }
+            replace(`?${params.toString()}`);
+          }}
+        >
+          {sidebarDict.filter}
+        </button>
       </div>
     </div>
   );

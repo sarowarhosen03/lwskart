@@ -52,3 +52,24 @@ export default function CategorySelector({ name }) {
     />
   );
 }
+export function AllCategoryBtn() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const category = searchParams.get("category");
+  let isACtive = "";
+  if (!category) isACtive = "text-primary";
+  function handleAllCategory() {
+    const params = new URLSearchParams(searchParams.toString());
+    if (params) params.delete("category");
+    replace(`${pathname}?${params.toString()}`);
+  }
+  return (
+    <button
+      className={`cusror-pointer ml-3  ${isACtive}`}
+      onClick={handleAllCategory}
+    >
+      All{" "}
+    </button>
+  );
+}

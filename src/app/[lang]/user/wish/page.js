@@ -27,6 +27,7 @@ export default async function wishPage({ params: { lang } }) {
     },
   });
   const dictionary = await getDectionary(lang, "product");
+  const { empty } = await getDectionary(lang, "wishlist");
 
   return (
     <div className="flex w-dvw flex-wrap items-center  justify-between p-9  py-12 text-center">
@@ -66,8 +67,8 @@ export default async function wishPage({ params: { lang } }) {
         </div>
       ))}
       {!wishList.length && (
-        <div className=" mx-auto flex flex-col items-center gap-4 text-center">
-          <h2 className="text-2xl font-bold">No items in your wishlist</h2>
+        <div className=" mx-auto flex flex-col  items-center  gap-4 text-center">
+          <h2 className="text-2xl font-bold">{empty}</h2>
           <Link
             className="w-fit rounded-md bg-primary p-3 text-lg text-white"
             href={`/shop`}

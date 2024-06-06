@@ -25,6 +25,7 @@ export default async function ProductDetails({
     discount_price,
     details,
     stock,
+    soldCount
   } = productInfo;
 
   const url = `${
@@ -48,7 +49,9 @@ export default async function ProductDetails({
             <p className="space-x-2 font-semibold text-gray-800">
               <span>Availability: </span>
               {availability ? (
-                <span className="text-green-600">In Stock</span>
+                <span className="text-green-600">
+                  {productdict.inStock} ({stock})
+                </span>
               ) : (
                 <span className="text-red-600">Out Of Stock</span>
               )}
@@ -67,8 +70,8 @@ export default async function ProductDetails({
             </p>
             {availability && (
               <p className="space-x-2">
-                <span className="font-semibold text-gray-800"> Stock: </span>
-                <span className="text-gray-600">{stock}</span>
+                <span className="font-semibold text-gray-800"> {productdict.soldCount}: </span>
+                <span className="text-gray-600">{soldCount}</span>
               </p>
             )}
             <p className="space-x-2">

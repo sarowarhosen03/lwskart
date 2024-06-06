@@ -1,8 +1,9 @@
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
+import { getDectionary } from "@/lib/getDictionary";
 import Link from "next/link";
 
-export default async function invoicePage() {
+export default async function invoicePage({ params: { lang } }) {
   const session = await auth();
   const orderList = await prisma.Order.findMany({
     where: {
@@ -13,33 +14,49 @@ export default async function invoicePage() {
       invoice: true,
     },
   });
+  const {
+    invoiceId,
+    PaymentMethod,
+    Total,
+    paymentStatus,
+    DueDate,
+    DownloadInvoice,
+  } = await getDectionary(lang, "invoice");
 
   return (
     <div className="flex flex-col justify-center gap-2 px-4 text-center">
       {orderList?.map((invoice) => (
-        <Link
-          href={`/pdf/${invoice.id}.pdf`}
+        <div
           key={invoice.id}
-          className="border-primar2 mx-4  my-4 overflow-hidden  bg-white shadow hover:shadow-lg sm:rounded-lg"
+          className="mx-4 my-4 overflow-hidden border-primary bg-white shadow hover:shadow-lg sm:rounded-lg"
         >
           <div className="px-4 py-5 sm:px-6">
             <h2 className="text-lg font-medium leading-6 text-gray-900 hover:underline">
-              Invoice ID: {invoice.id}
+              {invoiceId} : {invoice.id}
             </h2>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Payment Method: {invoice.invoice.payment}
+              {PaymentMethod}: {invoice.invoice.payment}
             </p>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Payment Status: {invoice.invoice.paymentStatus}
+              {paymentStatus}: {invoice.invoice.paymentStatus}
             </p>
             <p className="mt-1 max-w-2xl text-sm font-bold text-gray-500">
-              Total: {invoice.invoice.total.discountPrice}
+              {Total}: {invoice.invoice.total.discountPrice}
             </p>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              Due Date: {new Date(invoice.invoice.dueDate).toLocaleDateString()}
+              {DueDate}:{" "}
+              {new Date(invoice.invoice.dueDate).toLocaleDateString()}
             </p>
+            <div className="mt-4 flex justify-around">
+              <button className="rounded-md bg-blue-500 px-3 py-1 text-white hover:bg-blue-700">
+                <Link href={`/pdf/${invoice.id}.pdf`} target="_blank">
+                  {DownloadInvoice}
+                </Link>
+                {/* Download Invoice Button */}
+              </button>
+            </div>
           </div>
-        </Link>
+        </div>
       ))}
       {!orderList?.length && (
         <div className="flex min-h-screen flex-col justify-center gap-3">
@@ -55,4 +72,5 @@ export default async function invoicePage() {
     </div>
   );
 }
+
 export const revalidate = 0;

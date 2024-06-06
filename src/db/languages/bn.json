@@ -17,7 +17,8 @@
     "contact": "যোগাযোগ করুন",
     "login": "প্রবেশ করুন",
     "logout": "প্রস্থান করুন",
-    "category": "সমস্ত বিভাগ"
+    "category": "সমস্ত বিভাগ",
+    "orders": "আপনার অর্ডার "
   },
 
   "home": {
@@ -45,7 +46,9 @@
     "wishlistTitleRemove": "ইচ্ছেতালিকা থেকে সরান",
     "viewProduct": "পণ্য দেখুন",
     "stockOut": "স্টক আউট",
-    "showCart": "কার্ট দেখুন"
+    "showCart": "কার্ট দেখুন",
+    "inStock": "স্টকে আছে",
+    "soldCount": "বিক্রি হয়েছে"
   },
   "productDetails": {
     "brand": "ব্র্যান্ড",
@@ -80,8 +83,19 @@
     "image": "এখানে ইমেজ পরিমাণ ছেড়ে দিন",
     "choose": "প্রোফাইল ছবি নির্বাচন করুন",
     "empty": "আপনি ফাঁকা ফর্ম সাবমিট করতে পারবেন না",
-    "phoneInvalid": "এই ফোন নম্বরটি অবৈধ"
+    "phoneInvalid": "এই ফোন নম্বরটি অবৈধ",
+    "company": "প্রতিষ্ঠান",
+    "notSet": " সেট না"
   },
+  "invoice": {
+    "invoiceId": "চালান আইডি",
+    "PaymentMethod": "পেমেন্ট পদ্ধতি",
+    "Total": "মোট",
+    "PaymentStatus": "পেমেন্ট স্থিতি",
+    "DueDate": "নির্ধারিত তারিখ",
+    "DownloadInvoice": "চালান ডাউনলোড করুন"
+  },
+
   "wishlist": {
     "availability": "উপলব্ধিতা",
     "deleteMessage": "আপনি কি নিশ্চিত যে এই আইটেমটি মুছে ফেলতে চান",
@@ -94,7 +108,8 @@
     "empty": "আপনার কার্ট নেই।",
     "checkout": "চেকআউট",
     "deleteMessage": "আপনি কি নিশ্চিত যে এই আইটেমটি মুছে ফেলতে চান",
-    "totalPrice": "মোট মূল্য"
+    "totalPrice": "মোট মূল্য",
+    "out": "সময় অতিবাহিত হয়ে গেছে"
   },
   "deleteModal": {
     "no": "না, বাতিল করুন",
@@ -109,11 +124,16 @@
     "login": "দয়া করে প্রথমে লগইন করুন"
   },
   "checkout": {
+    "shipping": "প্রেরণের ঠিকানা",
     "labels": {
       "firstName": "প্রথম নাম",
       "lastName": "শেষ নাম",
       "phone": "ফোন নম্বর",
       "email": "ইমেল ঠিকানা",
+      "company": "কোম্পানি",
+      "region": "দেশ/অঞ্চল",
+      "streetAddress": "রাস্তা ঠিকানা",
+      "PaymentMethod": "পেমেন্ট পদ্ধতি",
       "city": "শহর",
       "accountNumber": "অ্যাকাউন্ট নাম্বার",
       "transactionId": "লেনদেন আইডি",
@@ -279,6 +299,7 @@
     "nameLabel": "পুরো নাম",
     "nameError": "নাম আবশ্যক",
     "nameError5": "নাম অবশ্যই কমপক্ষে ৫ অক্ষর দীর্ঘ হতে হবে।",
+    "nameError30": "নামটি ৩০ অক্ষরের চেয়ে কম হতে হবে",
     "emailLabel": "ইমেইল ঠিকানা",
     "emailError": "ইমেইল আবশ্যক",
     "emailError3": "ইমেইল '@' চিহ্নের আগে কমপক্ষে ৩টি অক্ষর থাকতে হবে।",
@@ -301,6 +322,16 @@
     "existUser": "এই ব্যবহারকারী ইতিমধ্যে বিদ্যমান!",
     "error": "একটি সমস্যা হয়েছে!"
   },
+
+  "address": {
+    "address": "ঠিকানা",
+    "PostalCode": "পোস্টাল কোড",
+    "phone": "ফোন",
+    "country": "দেশ",
+    "city": "শহর",
+    "state": "রাজ্য"
+  },
+
   "socialLogin": {
     "orLoginWith": "অথবা লগইন করুন",
     "google": "গুগল",
