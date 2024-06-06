@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import Alert from "./Alert";
 
 export default function SocialLogin({ dict, isLoginPage = false }) {
-  z;
   const searchPersms = useSearchParams();
   const errorFromOuth = searchPersms.get("error");
   const [error, setError] = useState("");

@@ -11,6 +11,7 @@ export default function ProductAction({
   availability,
   productId,
   stock,
+  name,sku,
   productdict: {
     addToCart,
     stockOut,
@@ -25,6 +26,8 @@ export default function ProductAction({
     productId,
     availability,
     quantity,
+    name,
+    sku,
   );
   const { status } = useSession();
   const handleAddCart = useCallback(async () => {

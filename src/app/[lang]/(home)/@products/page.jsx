@@ -6,4 +6,4 @@ export default async function Page({ params: { lang } }) {
 
   return <ProductList dict={dict.trend} lang={lang} />;
 }
-export const revalidate = 0;
+// export const revaliDateTags = ["products"];

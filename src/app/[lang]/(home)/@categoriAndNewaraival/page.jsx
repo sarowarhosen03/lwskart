@@ -12,4 +12,4 @@ export default async function Page({ params: { lang } }) {
     </>
   );
 }
-export const revalidate = 0;
+export const revaliDateTags = ["products"];

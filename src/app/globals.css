@@ -27,151 +27,33 @@
   }
 
   /* Firefox */
-  input[type="number"] {
+  input[type=number] {
     appearance: none;
   }
 }
 
 @layer utilities {
+
   .grid-item {
     @apply flex flex-col;
   }
 
-  .grid-item > * {
+  .grid-item>* {
     @apply flex-1;
+
   }
 }
 
 @layer components {
-  .size-selector input:checked + label {
+  .size-selector input:checked+label {
     @apply bg-primary text-white;
   }
 
-  .color-selector input:checked + label {
+  .color-selector input:checked+label {
     @apply ring-2 ring-primary;
   }
 
   .input-box {
-    @apply block w-full rounded border border-gray-300 px-4 py-3 text-sm text-gray-600 placeholder-gray-400 focus:border-primary focus:ring-0;
-  }
-
-  .rootLoader {
-    display: inline-flex;
-    gap: 20px;
-  }
-  .rootLoader:before,
-  .rootLoader:after {
-    content: "";
-    height: 140px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(farthest-side, #000 95%, #0000) 35% 35%/50px
-      50px no-repeat #fff;
-    transform: scaleX(var(--s, 1)) rotate(0deg);
-    animation: rootAnimation 1s infinite linear;
-  }
-  .rootLoader:after {
-    --s: -1;
-    animation-delay: -0.1s;
-  }
-  @keyframes rootAnimation {
-    100% {
-      transform: scaleX(var(--s, 1)) rotate(360deg);
-    }
-  }
-
-  .loader-circle {
-    width: 25px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: 8px solid #514b82;
-    animation:
-      l20-1 0.8s infinite linear alternate,
-      l20-2 1.6s infinite linear;
-  }
-  @keyframes l20-1 {
-    0% {
-      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
-    }
-    12.5% {
-      clip-path: polygon(
-        50% 50%,
-        0 0,
-        50% 0%,
-        100% 0%,
-        100% 0%,
-        100% 0%,
-        100% 0%
-      );
-    }
-    25% {
-      clip-path: polygon(
-        50% 50%,
-        0 0,
-        50% 0%,
-        100% 0%,
-        100% 100%,
-        100% 100%,
-        100% 100%
-      );
-    }
-    50% {
-      clip-path: polygon(
-        50% 50%,
-        0 0,
-        50% 0%,
-        100% 0%,
-        100% 100%,
-        50% 100%,
-        0% 100%
-      );
-    }
-    62.5% {
-      clip-path: polygon(
-        50% 50%,
-        100% 0,
-        100% 0%,
-        100% 0%,
-        100% 100%,
-        50% 100%,
-        0% 100%
-      );
-    }
-    75% {
-      clip-path: polygon(
-        50% 50%,
-        100% 100%,
-        100% 100%,
-        100% 100%,
-        100% 100%,
-        50% 100%,
-        0% 100%
-      );
-    }
-    100% {
-      clip-path: polygon(
-        50% 50%,
-        50% 100%,
-        50% 100%,
-        50% 100%,
-        50% 100%,
-        50% 100%,
-        0% 100%
-      );
-    }
-  }
-  @keyframes l20-2 {
-    0% {
-      transform: scaleY(1) rotate(0deg);
-    }
-    49.99% {
-      transform: scaleY(1) rotate(135deg);
-    }
-    50% {
-      transform: scaleY(-1) rotate(0deg);
-    }
-    100% {
-      transform: scaleY(-1) rotate(-135deg);
-    }
+    @apply block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm rounded placeholder-gray-400 focus:border-primary focus:ring-0;
   }
 }

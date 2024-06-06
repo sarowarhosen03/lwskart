@@ -2,6 +2,7 @@
 
 import Alert from "@/components/ui/Alert";
 import InputField from "@/components/ui/InputField";
+import useAuthntiCated from "@/hooks/useAuthntiCated";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
 import { register as userRegister } from "@/lib/actions/authActions";
 import { useRouter } from "next/navigation";
@@ -18,6 +19,7 @@ export default function RegisterForm({ dict: { register: registerDict } }) {
     handleSubmit,
   } = useForm();
 
+  useAuthntiCated();
   const router = useRouter();
   const [showPasswordIcon, showPassword] = useShowHidePassword();
 
@@ -30,7 +32,7 @@ export default function RegisterForm({ dict: { register: registerDict } }) {
           message: registerDict.createSuccess,
         });
         setTimeout(() => {
-          // router.push("/login");
+          router.push("/login");
         }, 5000);
       } else {
         setError("formStatus", {

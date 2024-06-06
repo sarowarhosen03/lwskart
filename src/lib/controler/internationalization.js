@@ -15,16 +15,6 @@ export let locales = [
     language: "Bangla",
     image: "/assets/images/icons/bd.png",
   },
-  {
-    code: "hin",
-    language: "Hindi",
-    image: "/assets/images/icons/hindi.png",
-  },
-  {
-    code: "rus",
-    language: "Russian",
-    image: "/assets/images/icons/rus.png",
-  },
 ];
 
 function getLocale(request) {

@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import SideBar from "./SideBar";
 
 export default async function shopPage({ searchParams, params: { lang } }) {
+ 
   return (
     <>
       <Breadcrumb />
@@ -19,4 +20,3 @@ export default async function shopPage({ searchParams, params: { lang } }) {
     </>
   );
 }
-export const revalidate = 0;

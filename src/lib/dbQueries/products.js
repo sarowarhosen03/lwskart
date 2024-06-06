@@ -175,7 +175,8 @@ export const addToCart = async (productId, quantity = 1, path) => {
             data: productUpdateData,
           }),
         ]);
-        revalidateProducts(path, "page");
+        revalidatePath(path, "page");
+        console.log(path);
         return {
           success: true,
           data: {
@@ -233,13 +234,14 @@ export const deleteCartItem = async (cartId) => {
         }),
       ]);
 
-      // await revalidateProducts();
+      await revalidateProducts();
       return {
         success: true,
         payload: cartItem.id,
       };
     }
   } catch (error) {
+    Log(error);
     return {
       error: true,
       message: "Something went wrong",
@@ -249,4 +251,7 @@ export const deleteCartItem = async (cartId) => {
 
 function revalidateProducts(path) {
   revalidatePath(path, "page");
+  revalidatePath(`/[lang]/product/[productId]`, "page");
+  revalidatePath(`/[lang]`, "page");
+  revalidatePath(`/[lang]/shop`, "page");
 }

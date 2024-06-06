@@ -292,10 +292,6 @@
     "notAccount": "Don't have an account?",
     "invalid": "Invalid email or password"
   },
-  "verify": {
-    "btn": "Verify Email",
-    "message": "Click the button below to verify your email address"
-  },
   "address": {
     "address": "Address",
     "PostalCode": "Postal Code",
