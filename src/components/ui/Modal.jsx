@@ -50,11 +50,12 @@ export default function Modal({ children }) {
       onClick={onClick}
       id="default-modal"
       tabIndex="-1"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-5 backdrop-blur-sm"
     >
       <div
+        resi
         ref={wrapper}
-        className="relative max-h-[90vh] w-full max-w-2xl overflow-auto bg-white p-4 shadow-lg"
+        className="relative mx-auto max-h-[90vh] w-fit overflow-auto bg-white p-4 px-3 shadow-lg"
       >
         {children}
       </div>

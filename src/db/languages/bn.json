@@ -92,6 +92,7 @@
     "PaymentMethod": "পেমেন্ট পদ্ধতি",
     "Total": "মোট",
     "PaymentStatus": "পেমেন্ট স্থিতি",
+    "ViewInvoice": "চালান দেখুন",
     "DueDate": "নির্ধারিত তারিখ",
     "DownloadInvoice": "চালান ডাউনলোড করুন"
   },

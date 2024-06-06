@@ -110,6 +110,7 @@
     "Total": "कुल",
     "PaymentStatus": "भुगतान स्थिति",
     "DueDate": "नियत तारीख",
+    "ViewInvoice": "चालान देखें",
     "DownloadInvoice": "चालान डाउनलोड करें"
   },
   "deleteModal": {

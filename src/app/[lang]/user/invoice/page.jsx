@@ -13,6 +13,9 @@ export default async function invoicePage({ params: { lang } }) {
       id: true,
       invoice: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   const {
     invoiceId,
@@ -20,7 +23,7 @@ export default async function invoicePage({ params: { lang } }) {
     Total,
     paymentStatus,
     DueDate,
-    DownloadInvoice,
+    ViewInvoice,
   } = await getDectionary(lang, "invoice");
 
   return (
@@ -33,6 +36,8 @@ export default async function invoicePage({ params: { lang } }) {
           <div className="px-4 py-5 sm:px-6">
             <h2 className="text-lg font-medium leading-6 text-gray-900 hover:underline">
               {invoiceId} : {invoice.id}
+              <br />
+              {invoiceId?.orderDate}
             </h2>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
               {PaymentMethod}: {invoice.invoice.payment}
@@ -49,10 +54,8 @@ export default async function invoicePage({ params: { lang } }) {
             </p>
             <div className="mt-4 flex justify-around">
               <button className="rounded-md bg-blue-500 px-3 py-1 text-white hover:bg-blue-700">
-                <Link href={`/pdf/${invoice.id}.pdf`} target="_blank">
-                  {DownloadInvoice}
-                </Link>
-                {/* Download Invoice Button */}
+                <Link href={`/user/invoice/${invoice.id}`}>{ViewInvoice}</Link>
+                {/* Download Button */}
               </button>
             </div>
           </div>

@@ -110,7 +110,8 @@
     "Total": "Total",
     "PaymentStatus": "Payment Status",
     "DueDate": "Due Date",
-    "DownloadInvoice": "Download Invoice"
+    "ViewInvoice": "View Invoice"
+    
   },
   "deleteModal": {
     "no": "No, cancel",

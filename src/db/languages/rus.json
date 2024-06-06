@@ -110,6 +110,7 @@
     "Total": "Итого",
     "PaymentStatus": "Статус оплаты",
     "DueDate": "Срок оплаты",
+    "ViewInvoice": "Просмотреть счет",
     "DownloadInvoice": "Скачать счет"
   },
   "deleteModal": {

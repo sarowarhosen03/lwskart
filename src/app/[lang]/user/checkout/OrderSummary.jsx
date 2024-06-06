@@ -1,5 +1,6 @@
 import { useAppContext } from "@/context";
 import { getSlug } from "@/utils/slugify";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function OrderSummary({
@@ -42,7 +43,7 @@ export default function OrderSummary({
                   "/product/" +
                   getSlug({ name: cart.product.name, sku: cart.product.sku })
                 }
-                className="font-medium text-gray-800"
+                className="font-medium text-gray-800 hover:text-primary"
               >
                 {cart.product.name}
               </Link>
@@ -50,12 +51,18 @@ export default function OrderSummary({
                 Price: ${Number.parseFloat(cart.product.price).toFixed(2)}
               </p>
             </div>
-            <p className="text-gray-600">{cart.itemCount}x</p>
-            <p className="font-medium text-gray-800">
-              $
-              {Number.parseFloat(cart.product.price * cart.itemCount).toFixed(
-                2,
-              )}
+            <Image
+              src={`/assets/images/products/${cart.product.image[0]}`}
+              alt="product thumb"
+              height={90}
+              width={60}
+              className="w-auto rounded-md object-cover "
+              priority
+            />
+            <p className="text-gray-600">
+              {`${cart.itemCount} x $ ${Number.parseFloat(
+                cart.product.price * cart.itemCount,
+              ).toFixed(2)}`}
             </p>
           </div>
         ))}

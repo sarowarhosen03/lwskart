@@ -60,7 +60,9 @@ async function handleRouteMiddleware(req) {
     }
     const session = await getToken(options);
     if (!session && !pathname?.includes("login")) {
-      return NextResponse.redirect(new URL("/login", req.url));
+      return NextResponse.redirect(
+        new URL(`/login?callback=${req?.url}`, req.url),
+      );
     } else {
       const requestHeaders = new Headers(req.headers);
       requestHeaders.set("userId", session.user.id);
