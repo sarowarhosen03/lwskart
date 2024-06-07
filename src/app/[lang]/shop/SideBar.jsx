@@ -1,4 +1,6 @@
+import SizeSelector from "@/components/shop/SizeSelector";
 import getCategories from "@/lib/dbQueries/categoryQuery";
+import { getSizes } from "@/lib/dbQueries/getProdcuts";
 import { getDectionary } from "@/lib/getDictionary";
 import CategorySelector, { AllCategoryBtn } from "./CategorySelector";
 import PriceSelector from "./PriceSelector";
@@ -6,7 +8,8 @@ import PriceSelector from "./PriceSelector";
 export default async function SideBar({ lang }) {
   const categories = await getCategories({ page: 1, limit: 10 });
   const sidebarDict = await getDectionary(lang, "sidebar");
-  
+  const sizes = await getSizes();
+
   return (
     <div className="overflow-hiddenb col-span-1 hidden rounded bg-white px-4 pb-6 shadow md:block">
       <div className="space-y-5 divide-y divide-gray-200">
@@ -35,6 +38,7 @@ export default async function SideBar({ lang }) {
         </div>
 
         <PriceSelector sidebarDict={sidebarDict} />
+        <SizeSelector sizes={sizes} sidebarDict={sidebarDict} />
       </div>
     </div>
   );

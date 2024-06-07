@@ -62,7 +62,9 @@
   "sidebar": {
     "categories": "Categories",
     "price": "Price",
-    "filter": "Filter"
+    "filter": "Filter",
+    "Size": "Size",
+    "allSize": "All"
   },
   "shop": {
     "limit": "Items per page"

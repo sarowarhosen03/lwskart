@@ -62,7 +62,9 @@
   "sidebar": {
     "categories": "Категории",
     "price": "Цена",
-    "filter": "Фильтр"
+    "filter": "Фильтр",
+    "Size": "Размер",
+    "allSize": "Все"
   },
   "shop": {
     "limit": "Товаров на странице"

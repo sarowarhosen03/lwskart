@@ -1,4 +1,3 @@
-
 import prisma from "@/db/db";
 
 export default async function getFilteredSearchResult({
@@ -7,6 +6,7 @@ export default async function getFilteredSearchResult({
   search = "",
   page = 1,
   limit = 15,
+  size = "",
 }) {
   const categoryFilter = category.filter((c) => c); // Filter out empty strings
   const minPrice = price[0] ? parseFloat(price[0]) : 0;
@@ -23,6 +23,13 @@ export default async function getFilteredSearchResult({
               },
             }
           : {}, // Ignore the category filter if empty
+        size && size !== "all"
+          ? {
+              sizes: {
+                has: size,
+              },
+            }
+          : {},
         {
           price: {
             gte: minPrice,

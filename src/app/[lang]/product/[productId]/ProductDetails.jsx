@@ -1,6 +1,7 @@
 import ImageGalary from "@/app/[lang]/product/[productId]/ImageGalary";
 import RatingStart from "@/components/ui/RatingStart";
 import { getSlug } from "@/utils/slugify";
+import Link from "next/link";
 import ProductAction from "./ProductAction";
 import ShareProduct from "./ShareProduct";
 
@@ -25,7 +26,7 @@ export default async function ProductDetails({
     discount_price,
     details,
     stock,
-    soldCount
+    soldCount,
   } = productInfo;
 
   const url = `${
@@ -49,7 +50,7 @@ export default async function ProductDetails({
             <p className="space-x-2 font-semibold text-gray-800">
               <span>Availability: </span>
               {availability ? (
-                <span className="text-green-600">
+                <span className="text-green-700">
                   {productdict.inStock} ({stock})
                 </span>
               ) : (
@@ -66,11 +67,19 @@ export default async function ProductDetails({
               <span className="font-semibold text-gray-800">
                 {dict.category}:{" "}
               </span>
-              <span className="text-gray-600">{category.name}</span>
+              <Link
+                href={`/shop?category=${category.name}`}
+                className="text-gray-600 hover:underline"
+              >
+                {category.name}
+              </Link>
             </p>
             {availability && (
               <p className="space-x-2">
-                <span className="font-semibold text-gray-800"> {productdict.soldCount}: </span>
+                <span className="font-semibold text-gray-800">
+                  {" "}
+                  {productdict.soldCount}:{" "}
+                </span>
                 <span className="text-gray-600">{soldCount}</span>
               </p>
             )}

@@ -11,6 +11,7 @@ export default async function ShopProductList({ searchParams, lang }) {
     search = "",
     page = 1,
     limit = 15,
+    size=""
   } = searchParams;
 
   const { products, ...paginate } = await getFiterdSearcResult({
@@ -19,6 +20,7 @@ export default async function ShopProductList({ searchParams, lang }) {
     search: decodeURIComponent(search),
     page: parseInt(page),
     limit: parseInt(limit),
+    size
   });
   const productDict = await getDectionary(lang, "product");
   const { limit: limitDict } = await getDectionary(lang, "shop");

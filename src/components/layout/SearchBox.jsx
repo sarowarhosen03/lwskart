@@ -21,7 +21,7 @@ export default function SearchBox({ dict }) {
     } else {
       params.delete("search");
     }
-    replace(`shop/?${params.toString()}`);
+    replace(`/shop/?${params.toString()}`);
   };
 
   return (
@@ -39,7 +39,7 @@ export default function SearchBox({ dict }) {
         className="hidden w-full rounded-l-md border border-r-0 border-primary py-3 pl-12 pr-3 focus:outline-none md:flex"
         placeholder={dict.search}
       />
-      <button className="hidden items-center rounded-r-md border border-primary bg-primary px-8 text-white transition hover:bg-transparent hover:text-primary md:flex">
+      <button className="hidden items-center rounded-r-md border border-primary bg-red-600 px-8 text-white transition hover:bg-transparent hover:bg-white hover:text-primary md:flex">
         {dict.search}
       </button>
     </form>

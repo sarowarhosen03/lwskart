@@ -62,7 +62,9 @@
   "sidebar": {
     "categories": "श्रेणियाँ",
     "price": "मूल्य",
-    "filter": "फिल्टर"
+    "filter": "फिल्टर",
+    "Size": "आकार",
+    "allSize": "सभी"
   },
   "shop": {
     "limit": "प्रति पृष्ठ आइटम"

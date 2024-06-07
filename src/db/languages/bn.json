@@ -62,7 +62,9 @@
   "sidebar": {
     "categories": "বিভাগসমূহ",
     "price": "দাম",
-    "filter": "ফিল্টার"
+    "filter": "ফিল্টার",
+    "Size": "আকার",
+    "allSize": "সব"
   },
   "shop": {
     "limit": "পৃষ্ঠা প্রতি আইটেম"

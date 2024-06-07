@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/db/db";
+import { cache } from "react";
 const TREINDING_LIMIT = 20;
 export async function getTrendingProducts() {
   try {
@@ -15,7 +16,7 @@ export async function getTrendingProducts() {
   }
 }
 
-export async function getSizes() {
+export const getSizes = cache(async () => {
   try {
     const sizes = await prisma.product.findMany({
       select: { sizes: true },
@@ -35,4 +36,4 @@ export async function getSizes() {
   } catch (error) {
     return [];
   }
-}
+});
