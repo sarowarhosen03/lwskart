@@ -1,7 +1,7 @@
 "use client";
 import { useAppContext } from "@/context";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ContactForm from "./ContactForm";
@@ -16,32 +16,24 @@ export default function CheckOutSummary({ userInfo, dictionary }) {
     setValue,
     lang,
   } = useForm();
+
   const { push } = useRouter();
   const {
     state: { cartList, isLoading },
     dispatch,
   } = useAppContext();
-  const [selectedCarts, setSelectedCarts] = useState([]);
+
+  const productSkuList = useSearchParams().get("productId")?.split("|");
+  let selectedCarts = cartList.filter((item) =>
+    productSkuList?.includes(item.productId),
+  );
 
   useEffect(() => {
-    const selectedProductIds = localStorage.getItem("selectedItems");
-    if (selectedProductIds && !isLoading) {
-      const selectedItems = JSON.parse(selectedProductIds);
-      const items = cartList.filter((item) =>
-        selectedItems.includes(item.productId),
-      );
-      setSelectedCarts(items);
-    }
-  }, [cartList, isLoading]);
-
-  useEffect(() => {
-    // If selectedCarts is empty and loading is done, redirect to cart page
-    const selectedProductIds = localStorage.getItem("selectedItems");
-
-    if (!selectedCarts?.length && !isLoading && !selectedProductIds) {
+    if (!isLoading && selectedCarts.length === 0) {
       push("/user/cart");
     }
-  }, [isLoading, push, selectedCarts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const totalPrice = selectedCarts.reduce(
     (pre, cur) => {
@@ -53,7 +45,6 @@ export default function CheckOutSummary({ userInfo, dictionary }) {
     },
     { actualPrice: 0, discountPrice: 0 },
   );
-
   const handlePlaceOrder = async (data) => {
     try {
       const res = await fetch("/api/user/checkout", {
@@ -67,6 +58,7 @@ export default function CheckOutSummary({ userInfo, dictionary }) {
           totalPrice,
         }),
       });
+
       const responseData = await res.json();
       if (responseData?.success) {
         toast.success("Order placed successfully");
@@ -98,17 +90,17 @@ export default function CheckOutSummary({ userInfo, dictionary }) {
           errors={errors}
           setValue={setValue}
           lang={lang}
-          dictionary={dictionary} 
+          dictionary={dictionary}
         />
         <OrderSummary
           isSubmitting={isSubmitting}
           cartList={selectedCarts}
+          errors={errors}
           totalPrice={{
             actualPrice: totalPrice.actualPrice.toFixed(2),
             discountPrice: totalPrice.discountPrice.toFixed(2),
           }}
           register={register}
-          errors={errors}
           lang={lang}
           dictionary={dictionary}
         />

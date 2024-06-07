@@ -2,6 +2,7 @@ import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
 import { generatePdf } from "@/utils/generatePdf";
 import { OrderStatus } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { createTransport } from "nodemailer";
 const duaDate = 1000 * 60 * 60 * 24 * 7; // 7 days
 export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
@@ -106,7 +107,7 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         { invoice, qr, items: productItems, customer },
         session.user.email,
       );
-
+      revalidatePath("/[lang]/user/invoice",'page');
       return {
         success: true,
         payload: {

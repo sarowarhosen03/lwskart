@@ -9,7 +9,6 @@ export default async function page({ searchParams }) {
       loading: () => <GloblaLoader />,
     },
   );
-
   return (
     <Modal>
       <InvoiceView searchParams={searchParams} />

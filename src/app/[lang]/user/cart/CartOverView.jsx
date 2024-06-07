@@ -2,6 +2,7 @@
 import CartSkeleton from "@/components/product/CartSkeleton";
 import Alert from "@/components/ui/Alert";
 import { useAppContext } from "@/context";
+import { redirectFromServer } from "@/lib/actions/redirect";
 import { addToCart, deleteCartItem } from "@/lib/dbQueries/products";
 import { ADD_CART, DELETE_CART, UPDATE_CART } from "@/reducers/appReducer";
 import { CartItemStatus } from "@prisma/client";
@@ -78,8 +79,7 @@ const CartOverView = ({ cartDict }) => {
 
   const handleContinuePurchase = () => {
     if (selectedItems.length > 0) {
-      localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
-      push("/user/checkout");
+      redirectFromServer("/user/checkout?productId=" + selectedItems.join("|"));
     } else {
       toast.error("Please select at least one item to continue purchase");
     }
@@ -150,8 +150,9 @@ const CartOverView = ({ cartDict }) => {
 
         {cartList.length > 0 && (
           <button
+            disabled={selectedItems.length === 0}
             onClick={handleContinuePurchase}
-            className="mt-4 w-full rounded bg-primary px-4 py-2 text-white"
+            className="mt-4 w-full rounded bg-primary px-4 py-2  text-white disabled:bg-red-300"
           >
             Continue Purchase
           </button>

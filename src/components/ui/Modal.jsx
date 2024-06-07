@@ -53,7 +53,6 @@ export default function Modal({ children }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-5 backdrop-blur-sm"
     >
       <div
-        resi
         ref={wrapper}
         className="relative mx-auto max-h-[90vh] w-fit overflow-auto bg-white p-4 px-3 shadow-lg"
       >

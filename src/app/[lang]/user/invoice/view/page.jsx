@@ -4,7 +4,6 @@ import Link from "next/link";
 export default async function page({ searchParams }) {
   const id = searchParams?.id;
   let data = await getInvoice(id);
-
   return <InvoiceView {...data} />;
 }
 

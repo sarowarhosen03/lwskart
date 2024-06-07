@@ -10,7 +10,6 @@ export default function ContactForm({
   const { name, email, company } = userInfo;
   const { shippingAddress } = userInfo.address || {};
   const labels = dictionary.labels;
-
   return (
     <div className="col-span-8 rounded border border-gray-200 p-4">
       <h3 className="mb-4 text-lg font-medium capitalize">
@@ -64,7 +63,6 @@ export default function ContactForm({
           name="city"
           value={shippingAddress?.city}
           register={register}
-          validation={{ required: true }}
           error={errors.city}
         />
         <InputField
