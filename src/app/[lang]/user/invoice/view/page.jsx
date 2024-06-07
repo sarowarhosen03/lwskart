@@ -2,17 +2,18 @@ import { getInvoice } from "@/lib/dbQueries/userQuery";
 import Link from "next/link";
 
 export default async function page({ searchParams }) {
-  const id = searchParams.get("id");
+  const id = searchParams?.id;
   let data = await getInvoice(id);
+
   return <InvoiceView {...data} />;
 }
 
-export function InvoiceView({ isAthorized, order }) {
-  if (!order || !isAthorized) {
+export function InvoiceView({ isAthorized, order: { id } }) {
+  if (!id || !isAthorized) {
     return (
       <div className="flex min-h-screen w-screen flex-col items-center justify-center gap-3 text-center">
         <div className="text-red-500">
-          {isAthorized && order
+          {isAthorized && id
             ? "Order not found"
             : "Your not Authorized to See Access this data"}
         </div>
@@ -26,7 +27,7 @@ export function InvoiceView({ isAthorized, order }) {
     );
   }
 
-  const url = `/pdf/${order.id}.pdf`;
+  const url = `/pdf/${id}.pdf`;
   return (
     <div className="flex min-h-screen w-screen flex-col items-center gap-3 text-center">
       <Link
