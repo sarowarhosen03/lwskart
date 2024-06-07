@@ -15,8 +15,7 @@ export default function AddToCartBtn({
     availability,
   );
   const { push } = useRouter();
-
-  if (!availability && !isOnCart && stock > 0) {
+  if (!availability && !isOnCart && !stock > 0) {
     return (
       <button
         disabled={true}
