@@ -2,7 +2,9 @@
 
 import Alert from "@/components/ui/Alert";
 import InputField from "@/components/ui/InputField";
+import useAddToCart from "@/hooks/useAddToCart";
 import useShowHidePassword from "@/hooks/useShowHidePassword";
+import useWish from "@/hooks/useWish";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -17,9 +19,16 @@ export default function LoginForm({ infoData }) {
     setError,
     setValue,
   } = useForm();
-
-  const router = useRouter();
   const searchParams = useSearchParams();
+
+  const type = searchParams.get("type");
+  const id = searchParams.get("id");
+  const callback = searchParams.get("callback");
+  const quantity = searchParams.get("quantity");
+
+  const { handleAddToCart } = useAddToCart(id, true, quantity);
+  const [handleToggleWish] = useWish(id, true);
+  const router = useRouter();
   const [showPasswordIcon, showPassword] = useShowHidePassword();
   const email = searchParams.get("email");
   if (email) {
@@ -33,7 +42,13 @@ export default function LoginForm({ infoData }) {
         password: data.password,
         redirect: false,
       });
-      if (!res.error) {
+      if (!res?.error) {
+        if (type === "cart") {
+          await handleAddToCart();
+        } else if (type === "wish") {
+          await handleToggleWish();
+        }
+        router.push(callback || "/");
         router.refresh();
       } else if (res.error === "AccessDenied") {
         return setError("formStatus", {

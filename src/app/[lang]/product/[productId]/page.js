@@ -10,7 +10,12 @@ import ProductDetails from "./ProductDetails";
 import RelatedProducts from "./RelatedProducts";
 
 export async function generateStaticParams() {
-  const products = await prisma.product.findMany({});
+  const products = await prisma.product.findMany({
+    select: {
+      name: true,
+      sku: true,
+    },
+  });
   return products.map((product) => ({
     productId: getSlug({ name: product.name, sku: product.sku }),
   }));

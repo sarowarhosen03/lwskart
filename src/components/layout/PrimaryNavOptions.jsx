@@ -15,10 +15,10 @@ export default function PrimaryNavOptions({ dict }) {
   } = useAppContext();
   const { lang } = useParams();
   let profileImageUrl = session?.user?.image;
-  if (profileImageUrl && profileImageUrl.startsWith("https://")) {
+  if (!profileImageUrl) profileImageUrl = "/user/avatar-svgrepo-com.svg";
+  else if (profileImageUrl && profileImageUrl.startsWith("https://")) {
     profileImageUrl = `/assets/profile/${profileImageUrl}`;
-  }
-  profileImageUrl = `/user/${profileImageUrl}`;
+  } else profileImageUrl = `/user/${profileImageUrl}`;
 
   let firstLatter = session?.user?.name?.charAt(0)?.toUpperCase();
   return (
@@ -62,7 +62,7 @@ export default function PrimaryNavOptions({ dict }) {
               src={profileImageUrl}
               height={54}
               width={54}
-              className=" h-auto w-auto rounded-full object-cover  ring-primary"
+              className=" h-45 w-45 rounded-full object-cover  ring-primary"
               alt="profile image "
               priority
             />

@@ -2,11 +2,13 @@ import { useAppContext } from "@/context";
 import { toggleWishItem } from "@/lib/dbQueries/userQuery";
 import { TOGGLE_WISH_LIST } from "@/reducers/appReducer";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-export default function useWish(productId) {
+import { toast } from "react-toastify";
+export default function useWish(productId, skip = false) {
   const [wishListed, setWishListed] = useState(false);
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   const {
     dispatch,
@@ -29,8 +31,11 @@ export default function useWish(productId) {
       payload: productId,
     });
 
-    try { 
-      const res = await toggleWishItem(productId);
+    try {
+      const res = await toggleWishItem(productId, pathname, skip);
+      if (res?.status === "ok") {
+        toast.success(res?.message);
+      }
       if (res?.redirect) {
         push(res.redirect);
       }

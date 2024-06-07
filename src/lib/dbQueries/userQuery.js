@@ -32,7 +32,7 @@ export const getWishAndCartCount = async (userId) => {
 export const getWishList = async (userId) => {
   return await prisma.wishItem.findMany({});
 };
-export const toggleWishItem = async (productId) => {
+export const toggleWishItem = async (productId, path, skip = false) => {
   const session = await auth();
 
   if (session) {
@@ -45,7 +45,16 @@ export const toggleWishItem = async (productId) => {
         },
       },
     });
+    //if trigger form login page only add no toggle
+    if (skip && existingWishItem) {
+      return {
+        status: "ok ",
+        message: "already in wish list",
+      };
+    }
+    let action = "Added";
     if (existingWishItem) {
+      action = "Removed";
       await prisma.WishItem.delete({
         where: {
           productId_userId: {
@@ -75,10 +84,11 @@ export const toggleWishItem = async (productId) => {
 
     return {
       status: "ok ",
+      message: `wish item ${action} Successfully`,
     };
   } else {
     return {
-      redirect: "/login",
+      redirect: `/login?callback=${path}&type=wish&id=${productId}`,
     };
   }
 };

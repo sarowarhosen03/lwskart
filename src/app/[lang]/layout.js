@@ -23,6 +23,14 @@ const roboto = Roboto({
   weight: ["400", "500", "700"],
 });
 
+export function generateStaticParams() {
+  return locales.map((lang) => {
+    return {
+      lang: lang.code,
+    };
+  });
+}
+
 export async function generateMetadata({ params: { lang } }) {
   const dict = await getDectionary(lang, "home");
   return {
@@ -31,14 +39,6 @@ export async function generateMetadata({ params: { lang } }) {
     image: "public/assets/images/logo.svg",
     metadataBase: process.env.NEXT_PUBLIC_SITE_URL,
   };
-}
-
-export function generateStaticParams() {
-  return locales.map((lang) => {
-    return {
-      lang: lang.code,
-    };
-  });
 }
 
 export default async function Sublayout({ children, params: { lang }, modal }) {

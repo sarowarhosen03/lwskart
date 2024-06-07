@@ -23,6 +23,7 @@ export const getNewArrivalProducts = async () => {
     });
     return product;
   } catch (error) {
+    
     return null;
   }
 };
@@ -174,7 +175,6 @@ export const addToCart = async (productId, quantity = 1, path) => {
             data: productUpdateData,
           }),
         ]);
-        revalidateProducts(path, "page");
         return {
           success: true,
           data: {
@@ -192,7 +192,7 @@ export const addToCart = async (productId, quantity = 1, path) => {
       }
     } else {
       return {
-        redirect: `/login?callback=/product/${getSlug({ name: product.name, sku: product.sku })}`,
+        redirect: `/login?callback=/product/${getSlug({ name: product.name, sku: product.sku })}&type=cart&id=${productId}&quantity=${quantity}`,
       };
     }
   } catch (error) {

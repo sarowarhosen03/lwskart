@@ -32,7 +32,7 @@ export default async function loginController({ email, password, remember }) {
 
       return { error: "accessDenied" };
     }
-    if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
+    if (foundUser && (await bcrypt.compare(password, foundUser?.password))) {
       const { password, emailVerified, ...result } = foundUser;
 
       const payload = { email: result.email, userId: result.id };
