@@ -1,7 +1,6 @@
 "use server";
 import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
-import Log from "@/utils/Log";
 import { getSlug, parsSlug } from "@/utils/slugify";
 import { CartItemStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -197,7 +196,6 @@ export const addToCart = async (productId, quantity = 1, path) => {
       };
     }
   } catch (error) {
-    Log(error);
     return {
       error: true,
       message: "Something went wrong",

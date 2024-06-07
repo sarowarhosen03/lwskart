@@ -3,6 +3,7 @@ export default function layout({
   heroSection,
   categoriAndNewaraival,
   products,
+
 }) {
   return (
     <>

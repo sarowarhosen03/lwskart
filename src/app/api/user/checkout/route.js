@@ -1,4 +1,4 @@
-import { placeOrder } from "@/lib/actions/crateOrder";
+import { placeOrder } from "@/lib/actions/createOrder";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 

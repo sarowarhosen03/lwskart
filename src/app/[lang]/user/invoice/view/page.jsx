@@ -1,30 +1,18 @@
-import notFound from "@/app/not-found";
-import { auth } from "@/auth/auth";
-import prisma from "@/db/db";
+import { getInvoice } from "@/lib/dbQueries/userQuery";
 import Link from "next/link";
 
-export default async function page({ params: { id } }) {
-  let order = null;
-  try {
-    order = await prisma.order.findUnique({
-      where: {
-        id: id,
-      },
-      select: {
-        customerId: true,
-      },
-    });
-  } catch (error) {
-    notFound();
-  }
+export default async function page({ searchParams }) {
+  const id = searchParams.get("id");
+  let data = await getInvoice(id);
+  return <InvoiceView {...data} />;
+}
 
-  const session = await auth();
-  let isAuthrized = order?.customerId === session?.user?.id;
-  if (!order || !isAuthrized) {
+export function InvoiceView({ isAthorized, order }) {
+  if (!order || !isAthorized) {
     return (
       <div className="flex min-h-screen w-screen flex-col items-center justify-center gap-3 text-center">
         <div className="text-red-500">
-          {!isAuthrized
+          {isAthorized && order
             ? "Order not found"
             : "Your not Authorized to See Access this data"}
         </div>
@@ -37,7 +25,8 @@ export default async function page({ params: { id } }) {
       </div>
     );
   }
-  const url = `/pdf/${id}.pdf`;
+
+  const url = `/pdf/${order.id}.pdf`;
   return (
     <div className="flex min-h-screen w-screen flex-col items-center gap-3 text-center">
       <Link
@@ -54,7 +43,10 @@ export default async function page({ params: { id } }) {
         className="h-dvh w-screen px-3"
       >
         <p>
-          Alternative <a href={url}>to the PDF!</a>
+          Alternative{" "}
+          <Link href={url} target="_blank">
+            to the PDF!
+          </Link>
         </p>
       </object>
     </div>

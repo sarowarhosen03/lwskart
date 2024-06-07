@@ -6,13 +6,15 @@ import { usePathname } from "next/navigation";
 export default function LoginOrRegister({ dict }) {
   const { status } = useSession();
   const pathName = usePathname();
-
+  if (status === "loading") {
+    return null;
+  }
   if (pathName.includes("/login") || pathName.includes("/register")) {
     return null;
   }
   return status === "unauthenticated" ? (
     <Link
-      href="/login"
+      href="/en/login"
       className=" px-3 py-2 text-white transition  hover:bg-primary hover:text-white"
     >
       {dict.login}

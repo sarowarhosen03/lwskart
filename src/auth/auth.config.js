@@ -12,8 +12,7 @@ export const authConFig = {
       authorization: {
         params: {
           access_type: "offline",
-          prompt: "select_account",
-          response_type: "code",
+          prompt: "consent",
         },
       },
     }),

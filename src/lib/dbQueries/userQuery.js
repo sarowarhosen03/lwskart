@@ -143,3 +143,23 @@ export const getUserInfo = async () => {
     },
   });
 };
+export const getInvoice = async (orderid) => {
+  try {
+    const userId = headers().get("userId");
+    const order = await prisma.order.findUnique({
+      where: {
+        id: orderid,
+      },
+      select: {
+        id: true,
+        customerId: true,
+      },
+    });
+    return {
+      isAthorized: userId === order.customerId,
+      order: order,
+    };
+  } catch (error) {
+    return {};
+  }
+};

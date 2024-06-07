@@ -51,7 +51,7 @@ export default async function NavBar({ lang }) {
           <div className="flex items-center space-x-6 capitalize">
             <NavLink href="/">{dict.home}</NavLink>
             <NavLink href="/shop">{dict.shop}</NavLink>
-            <NavLink href="/about">{dict.shop}</NavLink>
+            <NavLink href="/about">{dict.about}</NavLink>
             <NavLink href="/contact">{dict.contact}</NavLink>
           </div>
 

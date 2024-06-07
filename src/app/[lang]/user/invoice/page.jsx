@@ -54,7 +54,9 @@ export default async function invoicePage({ params: { lang } }) {
             </p>
             <div className="mt-4 flex justify-around">
               <button className="rounded-md bg-blue-500 px-3 py-1 text-white hover:bg-blue-700">
-                <Link href={`/user/invoice/${invoice.id}`}>{ViewInvoice}</Link>
+                <Link href={`/user/invoice/view?id=${invoice.id}`}>
+                  {ViewInvoice}
+                </Link>
                 {/* Download Button */}
               </button>
             </div>

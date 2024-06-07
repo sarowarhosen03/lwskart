@@ -1,24 +1,26 @@
+import HuhMan from "@/components/ui/HuhMan";
 import Link from "next/link";
-
-export default function notFound() {
+export default function NotFound() {
   return (
-    <section className="flex h-screen items-center bg-gray-50 p-16 dark:bg-gray-700">
-      <div className="container flex flex-col items-center ">
-        <div className="flex max-w-md flex-col gap-6 text-center">
-          <h2 className="text-9xl font-extrabold text-gray-600 dark:text-gray-100">
-            <span className="sr-only">Error</span>404
-          </h2>
-          <p className="text-2xl md:text-3xl dark:text-gray-300">
-            Sorry, we {`couldn't`} find this page.
-          </p>
-          <Link
-            href="/"
-            className="rounded bg-primary px-8 py-4 text-xl font-semibold text-gray-50 hover:text-gray-200"
-          >
-            Back to home
-          </Link>
+    <>
+      <div className="grid h-screen place-content-center bg-white px-4">
+        <div className="text-center">
+          <HuhMan />
+
+          <h1 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Uh-oh!
+          </h1>
+
+          <p className="mt-4 text-gray-500">We {`can't`} find that page.</p>
         </div>
+
+        <Link
+          href="/"
+          className="mt-4 rounded bg-primary px-3 py-2 text-center text-xl font-semibold text-gray-50 hover:text-gray-200"
+        >
+          Back to home
+        </Link>
       </div>
-    </section>
+    </>
   );
 }
