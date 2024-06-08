@@ -9,7 +9,12 @@ export default async function CheckOutPage({ params: { lang } }) {
   return (
     <>
       <Breadcrumb />
-      <CheckOutSummery userInfo={userInfo} lang={lang} dictionary={dictionary} />
+      <CheckOutSummery
+        userInfo={userInfo}
+        lang={lang}
+        dictionary={dictionary}
+      />
     </>
   );
 }
+export const revalidate = 0;

@@ -52,6 +52,7 @@ export default async function Sublayout({ children, params: { lang }, modal }) {
       <AppContextProvider>
         <Header lang={lang} />
         <NavBar lang={lang} />
+        {modal}
         {children}
         <Footer lang={lang} />
         <ToastContainer position="bottom-center" limit={2} />

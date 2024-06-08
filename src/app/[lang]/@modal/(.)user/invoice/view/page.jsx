@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 export default async function page({ searchParams }) {
   const InvoiceView = dynamic(
-    () => import(`@/app/[lang]/(modal)/user/invoice/view/page.jsx`),
+    () => import(`@/app/[lang]/user/invoice/view/page.jsx`),
     {
       loading: () => <GloblaLoader />,
     },

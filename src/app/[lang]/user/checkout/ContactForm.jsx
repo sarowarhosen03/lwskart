@@ -56,7 +56,7 @@ export default function ContactForm({
           register={register}
           validation={{ required: true }}
           error={errors.address}
-          value={shippingAddress.address}
+          value={shippingAddress?.address}
         />
         <InputField
           label={labels.city}

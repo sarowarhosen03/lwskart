@@ -2,10 +2,10 @@ import { authConFig } from "@/auth/auth.config";
 import prisma, { default as prismaInstance } from "@/db/db";
 import { refreshToken } from "@/lib/controler/loginController";
 import { downloadFile } from "@/lib/downloadImage";
-import { uploadFileByPath } from "@/lib/externel/storage";
 import { refreshDiscordToken, refreshGoogleToken } from "@/lib/refreswhTokens";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
+import { uploadFileByPath } from "@/lib/externel/storage";
 
 const sameProviders = ["google", "discord"];
 const isSameProvider = (provider) => sameProviders.includes(provider);
@@ -51,8 +51,11 @@ export const {
           } catch (error) {}
         }
       }
-      //return singin?signup user
       if (trigger === "signIn" || trigger === "signUp") {
+        if (user && user?.user?.provider === "credentials") {
+          return { ...token, ...user };
+        }
+
         //handle google,discore provider
         if (account && isSameProvider(account.provider)) {
           // Save the access token and refresh token in the JWT on the initial login, as well as the user details
@@ -63,14 +66,14 @@ export const {
             user: { ...token, provider: account.provider, id: user.id },
           };
         }
-        return { ...token, ...user };
+        return { ...token, user };
       }
 
       if (token?.user?.provider === "credentials") {
         if (Date.now() < token.expires_at) return token;
         return refreshToken(token);
       }
-      //google
+
       if (isSameProvider(token?.provider)) {
         if (Date.now() < token.expires_at * 1000) {
           // If the access token has not expired yet, return it
@@ -102,17 +105,10 @@ export const {
       return token;
     },
     async session({ token, session }) {
-      if (
-        token?.user?.provider === "credentials" ||
-        isSameProvider(token?.user?.provider)
-      ) {
-        session.user = token.user;
-        if (!session.user.image) {
-          session.user.image = session.user.picture;
-        }
-        return session;
+      session.user = token.user;
+      if (!session.user.image) {
+        session.user.image = session.user.picture;
       }
-      session.user.id = token.id;
       return session;
     },
     async signIn({ user }) {

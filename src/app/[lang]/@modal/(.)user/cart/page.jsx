@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 export default async function page({ params: { lang } }) {
   const cartDict = await getDectionary(lang, "cart");
   const CartOverView = dynamic(
-    () => import(`@/app/[lang]/(modal)/user/cart/CartOverView`),
+    () => import(`@/app/[lang]/user/cart/CartOverView`),
     {
       loading: () => <GloblaLoader />,
     },

@@ -62,6 +62,7 @@ async function handleRouteMiddleware(req) {
     if (session && session?.user?.id) {
       const requestHeaders = new Headers(req.headers);
       requestHeaders.set("userId", session?.user?.id);
+
       return NextResponse.next({
         request: {
           // Apply new request headers

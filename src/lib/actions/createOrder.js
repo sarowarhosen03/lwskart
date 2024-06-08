@@ -2,6 +2,7 @@ import { auth } from "@/auth/auth";
 import prisma from "@/db/db";
 import { generatePdf } from "@/utils/generatePdf";
 import { OrderStatus } from "@prisma/client";
+import fs from "fs";
 import { revalidatePath } from "next/cache";
 import { createTransport } from "nodemailer";
 import path from "path";
@@ -86,7 +87,6 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         data: `${process.env.NEXT_PUBLIC_SITE_URL}/user/invoice/view?id=${newOrder.id}`,
         width: 100, // Default is 50.
       };
-      console.log(qr);
 
       const productItems = items.map((productCart) => {
         return {
@@ -135,6 +135,7 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
       error: "accessDenied",
     };
   } catch (error) {
+    // console.log(error);
     return {
       error: true,
       message: error.message,

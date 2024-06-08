@@ -26,12 +26,9 @@ export default async function wishPage({ params: { lang } }) {
   });
   const dictionary = await getDectionary(lang, "product");
   const { empty } = await getDectionary(lang, "wishlist");
-  const WishList = dynamic(
-    () => import(`@/app/[lang]/(modal)/user/wish/page.js`),
-    {
-      loading: () => <GloblaLoader />,
-    },
-  );
+  const WishList = dynamic(() => import(`@/app/[lang]/user/wish/page.js`), {
+    loading: () => <GloblaLoader />,
+  });
 
   return (
     <Modal>
