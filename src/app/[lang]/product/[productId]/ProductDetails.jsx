@@ -1,4 +1,4 @@
-import ImageGalary from "@/app/[lang]/(modal)/product/[productId]/ImageGalary";
+import ImageGalary from "@/app/[lang]/product/[productId]/ImageGalary";
 import RatingStart from "@/components/ui/RatingStart";
 import { getSlug } from "@/utils/slugify";
 import Link from "next/link";

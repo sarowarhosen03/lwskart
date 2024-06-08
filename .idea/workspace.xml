@@ -5,64 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e78ac6c0-cbb5-4b86-9328-68dfa2074086" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(auth)/login/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/login/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(auth)/register/RegisterFrom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/RegisterFrom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(auth)/register/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/register/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(auth)/verify/Verify.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/verify/Verify.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(auth)/verify/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(auth)/verify/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/@categoriAndNewaraival/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/@categoriAndNewaraival/default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/@categoriAndNewaraival/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/@categoriAndNewaraival/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/@heroSection/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/@heroSection/default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/@heroSection/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/@heroSection/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/@products/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/@products/default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/@products/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/@products/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/(home)/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/(home)/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/@modal/(.)login/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/@modal/(.)login/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/@modal/(.)user/cart/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/@modal/(.)user/cart/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/@modal/(.)user/invoice/view/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/@modal/(.)user/invoice/view/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/@modal/(.)user/wish/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/@modal/(.)user/wish/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/@modal/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/@modal/default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/@modal/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/@modal/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/@modal/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/@modal/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/about/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/about/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/contact/SendMessage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/contact/SendMessage.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/contact/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/contact/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/layout.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/[productId]/ImageGalary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ImageGalary.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/[productId]/ProductAction.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ProductAction.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/[productId]/ProductDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ProductDetails.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/[productId]/RelatedProducts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/RelatedProducts.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/[productId]/ShareProduct.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ShareProduct.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/[productId]/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/not-found.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/not-found.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/product/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/shop/CategorySelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/shop/CategorySelector.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/shop/PriceSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/shop/PriceSelector.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/shop/SideBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/shop/SideBar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/shop/SizeSidebar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/shop/SizeSidebar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/shop/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/shop/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/cart/CartItems.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/cart/CartItems.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/cart/CartOverView.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/cart/CartOverView.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/cart/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/cart/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/checkout/CheckOutSummery.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/checkout/CheckOutSummery.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/checkout/ContactForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/checkout/ContactForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/checkout/OrderSummary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/checkout/OrderSummary.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/checkout/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/checkout/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/invoice/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/invoice/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/invoice/view/page.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/invoice/view/page.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/profile/EditUser.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/profile/EditUser.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/profile/FormSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/profile/FormSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/profile/ImageUpload.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/profile/ImageUpload.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/profile/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/profile/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/user/wish/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/user/wish/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/(modal)/wishlist/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/wishlist/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/[lang]/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ProductDetails.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/[lang]/product/[productId]/ProductDetails.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,6 +131,7 @@
       <workItem from="1717856120528" duration="28000" />
       <workItem from="1717856158552" duration="349000" />
       <workItem from="1717857181489" duration="2314000" />
+      <workItem from="1717860724552" duration="23000" />
     </task>
     <servers />
   </component>
