@@ -70,13 +70,17 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         ...dleteCartsitems,
         ...updateProduct,
       ]);
+      const dirPath = path.resolve(process.cwd(), "tmp");
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath);
+      }
       const invoice = {
         number: newOrder.id, // String
         date: new Date(), // Date
         dueDate: new Date(Date.now() + duaDate),
         status: "Cash on delivery",
         currency: "$",
-        path: `${path.resolve(process.cwd(), `tmp/${newOrder.id}.pdf`)}`,
+        path: `${path.resolve(dirPath, `${newOrder.id}.pdf`)}`,
       };
       const qr = {
         data: `${process.env.NEXT_PUBLIC_SITE_URL}/user/invoice/view?id=${newOrder.id}`,

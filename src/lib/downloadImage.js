@@ -18,7 +18,7 @@ export function downloadFile(fileUrl, id) {
     // Path where you want to save the downloaded file
     const outputFileName = getFileNameFromUrl(fileUrl);
     const filename = id + "-" + outputFileName;
-    const dest = path.resolve(process.cwd(), "tmp/", filename);
+    const dest = path.resolve("tmp/", filename);
     const file = fs.createWriteStream(dest);
 
     protocol
