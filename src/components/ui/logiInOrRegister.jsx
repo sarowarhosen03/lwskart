@@ -28,7 +28,9 @@ export default function LoginOrRegister({ dict }) {
         {dict.orders}
       </Link>
       <button
-        onClick={() => signOut({ callbackUrl: "/login" })}
+        onClick={async () => {
+          await signOut();
+        }}
         className="px-3 py-1 text-gray-200 transition hover:bg-primary  hover:text-white"
       >
         {dict.logout}

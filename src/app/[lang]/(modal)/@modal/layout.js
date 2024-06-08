@@ -7,7 +7,7 @@ import { pathToRegexp } from "path-to-regexp";
 const inteceptdRoute = [
   pathToRegexp("/:lang/user/cart"),
   pathToRegexp("/:lang/user/wish"),
-  pathToRegexp("/:lang/userlogin"),
+  pathToRegexp("/:lang/login"),
   pathToRegexp("/:lang/user/invoice/view"),
 ];
 export default function Layout({ children }) {

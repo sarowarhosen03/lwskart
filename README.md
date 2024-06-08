@@ -22,3 +22,7 @@ Addition task done
 - [x]  Intercepting route for improved user experience
 - [x]  discord support added
 - [x]  loading error handling custom not found page
+
+Challenges i've been working
+- mange modal openign closing while navigator from interceped route
+- storage for storgae i use my custom server becuas on production nectjs wornt take dyamic file as static content though i store them into my public directory

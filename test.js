@@ -8,10 +8,7 @@ const { PrismaClient } = require("@prisma/client");
     await prisma.product.update({
       where: { id: product.id },
       data: {
-        sizes: sizes.slice(
-          Math.floor(Math.random() * 7),
-          Math.floor(Math.random() * 7),
-        ),
+        stock: { increment: Math.floor(Math.random() * 100) },
       },
     });
   });
