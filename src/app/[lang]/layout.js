@@ -34,9 +34,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params: { lang } }) {
   const dict = await getDectionary(lang, "home");
   return {
-    title: dict.hero.title,
+    title: "Lwskart",
     description: dict.hero.subTitle,
-    image: "public/assets/images/logo.svg",
+    openGraph: {
+      images: ["/assets/images/logo.svg"],
+    },
+
     metadataBase: process.env.NEXT_PUBLIC_SITE_URL,
   };
 }

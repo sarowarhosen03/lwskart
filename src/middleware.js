@@ -59,20 +59,21 @@ async function handleRouteMiddleware(req) {
       options.secureCookie = true;
     }
     const session = await getToken(options);
-    if (!session && !pathname?.includes("login")) {
-      return NextResponse.redirect(
-        new URL(`/login?callback=${req?.url}`, req.url),
-      );
-    } else {
+    if (session && session?.user?.id) {
       const requestHeaders = new Headers(req.headers);
-      requestHeaders.set("userId", session.user.id);
+      requestHeaders.set("userId", session?.user?.id);
       return NextResponse.next({
         request: {
           // Apply new request headers
           headers: requestHeaders,
         },
       });
+    } else if (!pathname?.includes("login")) {
+      return NextResponse.redirect(
+        new URL(`/login?callback=${req?.url}`, req.url),
+      );
     }
+    return NextResponse.redirect(new URL("/login", req.url));
   }
   return NextResponse.next();
 }

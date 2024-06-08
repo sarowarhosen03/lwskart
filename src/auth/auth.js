@@ -1,6 +1,8 @@
 import { authConFig } from "@/auth/auth.config";
-import { default as prismaInstance } from "@/db/db";
+import prisma, { default as prismaInstance } from "@/db/db";
 import { refreshToken } from "@/lib/controler/loginController";
+import { downloadFile } from "@/lib/downloadImage";
+import { uploadFileByPath } from "@/lib/externel/storage";
 import { refreshDiscordToken, refreshGoogleToken } from "@/lib/refreswhTokens";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
@@ -26,15 +28,31 @@ export const {
   callbacks: {
     async jwt(...arg) {
       const [{ token, user, account, trigger, session }] = arg;
+      //update user profile
       if (trigger === "update") {
         return { ...token, user: { ...token.user, ...session } };
       }
-
-      if (trigger === "signIn") {
-        if (user && user?.user?.provider === "credentials") {
-          return { ...token, ...user };
+      //if image exist download on signup
+      if (trigger === "signUp") {
+        //download the profile image into our server
+        if (user?.image && user.image?.startsWith("https://")) {
+          try {
+            const filePath = await downloadFile(user.image, user.id);
+            const fileUrl = await uploadFileByPath(filePath);
+            await prisma.user.update({
+              where: {
+                id: user.id,
+              },
+              data: {
+                image: fileUrl,
+              },
+            });
+            token.image = fileUrl;
+          } catch (error) {}
         }
-
+      }
+      //return singin?signup user
+      if (trigger === "signIn" || trigger === "signUp") {
         //handle google,discore provider
         if (account && isSameProvider(account.provider)) {
           // Save the access token and refresh token in the JWT on the initial login, as well as the user details
@@ -45,12 +63,14 @@ export const {
             user: { ...token, provider: account.provider, id: user.id },
           };
         }
+        return { ...token, ...user };
       }
+
       if (token?.user?.provider === "credentials") {
         if (Date.now() < token.expires_at) return token;
         return refreshToken(token);
       }
-
+      //google
       if (isSameProvider(token?.provider)) {
         if (Date.now() < token.expires_at * 1000) {
           // If the access token has not expired yet, return it
@@ -92,7 +112,7 @@ export const {
         }
         return session;
       }
-
+      session.user.id = token.id;
       return session;
     },
     async signIn({ user }) {

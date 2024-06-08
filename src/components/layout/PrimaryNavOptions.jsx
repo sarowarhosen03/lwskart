@@ -56,6 +56,8 @@ export default function PrimaryNavOptions({ dict }) {
         <div className="peer text-2xl">
           {profileImageUrl && session ? (
             <Image
+              placeholder="blur"
+              blurDataURL="/user/avatar-svgrepo-com.svg"
               src={profileImageUrl}
               height={54}
               width={54}

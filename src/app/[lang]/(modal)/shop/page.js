@@ -3,6 +3,15 @@ import ShopProductList from "@/components/shop/ShopProductList";
 import ProductScaffolding from "@/components/ui/loader/ProductScaffolding";
 import { Suspense } from "react";
 import SideBar from "./SideBar";
+export async function generateMetadata({ params: { lang } }, parent) {
+  const {
+    title: { absolute },
+  } = await parent;
+  return {
+    ...(await parent),
+    title: `Shop | ${absolute}`,
+  };
+}
 
 export default async function shopPage({ searchParams, params: { lang } }) {
   return (
