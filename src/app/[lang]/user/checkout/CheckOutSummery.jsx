@@ -30,7 +30,7 @@ export default function CheckOutSummary({ userInfo, dictionary }) {
 
   useEffect(() => {
     if (!isLoading && selectedCarts.length === 0) {
-      push("/user/cart");
+    push("/user/cart");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

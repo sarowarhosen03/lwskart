@@ -163,6 +163,7 @@ export const getInvoice = async (orderid) => {
       select: {
         id: true,
         customerId: true,
+        invoice: true,
       },
     });
     return {

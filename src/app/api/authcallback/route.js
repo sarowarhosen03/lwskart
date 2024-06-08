@@ -7,10 +7,13 @@ export async function GET(req) {
   const searchPerams = req.nextUrl.searchParams;
 
   const { callback, type, id, quantity } = Object.fromEntries(searchPerams);
+  if (!type) {
+    redirect("/");
+  }
   let destination = "/en";
   const session = await auth();
   if (!session?.user) {
-    return redirect("/login?error=credentialError");
+    redirect("/login?error=credentialError");
   }
 
   try {
@@ -24,7 +27,7 @@ export async function GET(req) {
       destination = encodeURIComponent(callback);
     } else if (type === "wish") {
       if (!id || !callback) {
-        return redirect("/");
+        redirect("/");
       }
       await toggleWishItem(id, "", true);
       destination = callback;
@@ -32,9 +35,8 @@ export async function GET(req) {
       destination = callback ? callback : "/en";
     }
   } catch (error) {
-    return redirect(
-      process.env.NEXT_PUBLIC_SITE_URL + "/login?error=credentialError",
-    );
+    redirect(process.env.NEXT_PUBLIC_SITE_URL + "/login?error=credentialError");
   }
-  return redirect(process.env.NEXT_PUBLIC_SITE_URL + callback);
+
+  redirect(process.env.NEXT_PUBLIC_SITE_URL + callback);
 }

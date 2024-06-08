@@ -16,9 +16,6 @@ export default function PrimaryNavOptions({ dict }) {
   const { lang } = useParams();
   let profileImageUrl = session?.user?.image;
   if (!profileImageUrl) profileImageUrl = "/user/avatar-svgrepo-com.svg";
-  else if (profileImageUrl && profileImageUrl.startsWith("https://")) {
-    profileImageUrl = `/assets/profile/${profileImageUrl}`;
-  } else profileImageUrl = `/user/${profileImageUrl}`;
 
   let firstLatter = session?.user?.name?.charAt(0)?.toUpperCase();
   return (

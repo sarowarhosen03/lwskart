@@ -35,22 +35,22 @@ export default async function invoicePage({ params: { lang } }) {
         >
           <div className="px-4 py-5 sm:px-6">
             <h2 className="text-lg font-medium leading-6 text-gray-900 hover:underline">
-              {invoiceId} : {invoice.id}
+              {invoiceId} : {invoice?.id}
               <br />
               {invoiceId?.orderDate}
             </h2>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              {PaymentMethod}: {invoice.invoice.payment}
+              {PaymentMethod}: {invoice?.invoice?.payment}
             </p>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
-              {paymentStatus}: {invoice.invoice.paymentStatus}
+              {paymentStatus}: {invoice?.invoice?.paymentStatus}
             </p>
             <p className="mt-1 max-w-2xl text-sm font-bold text-gray-500">
-              {Total}: {invoice.invoice.total.discountPrice}
+              {Total}: {invoice.invoice?.total?.discountPrice}
             </p>
             <p className="mt-1 max-w-2xl text-sm text-gray-500">
               {DueDate}:{" "}
-              {new Date(invoice.invoice.dueDate).toLocaleDateString()}
+              {new Date(invoice?.invoice?.dueDate).toLocaleDateString()}
             </p>
             <div className="mt-4 flex justify-around">
               <button className="rounded-md bg-blue-500 px-3 py-1 text-white hover:bg-blue-700">

@@ -4,6 +4,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "files.reemit.net",
+      },
+      {
+        protocol: "https",
         hostname: "cdn.discordapp.com",
       },
     ],

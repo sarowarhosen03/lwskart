@@ -20,7 +20,7 @@ export function downloadFile(fileUrl, id) {
         // Path where you want to save the downloaded file
         const outputFileName = getFileNameFromUrl(fileUrl);
         const filename = id + "-" + outputFileName;
-        const dest = path.resolve('public/user/', filename);
+        const dest = path.resolve('tmp/', filename);
         const file = fs.createWriteStream(dest);
 
         protocol.get(fileUrl, (response) => {
@@ -35,7 +35,7 @@ export function downloadFile(fileUrl, id) {
 
             // Close the file stream on completion
             file.on('finish', () => {
-                file.close(() => resolve(filename));  // Resolve with the file path
+                file.close(() => resolve(dest));  // Resolve with the file path
             });
         }).on('error', (err) => {
             // Handle errors

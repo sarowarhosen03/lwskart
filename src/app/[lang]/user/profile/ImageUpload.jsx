@@ -20,11 +20,11 @@ const ImageUpload = ({
             className="w-full rounded border px-2 py-1"
           />
           <Image
-            height={50}
-            width={50}
+            height={128}
+            width={1431}
             alt="profile image"
             src={profile.imageUrl}
-            className="mt-2 h-20 w-20 rounded-full object-cover p-2 ring-1 ring-primary"
+            className="mt-2 h-auto w-auto rounded-full object-cover p-2 ring-1 ring-primary"
             loading="lazy"
           />
           <button

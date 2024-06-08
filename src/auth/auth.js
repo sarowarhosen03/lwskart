@@ -1,7 +1,6 @@
 import { authConFig } from "@/auth/auth.config";
-import prisma, { default as prismaInstance } from "@/db/db";
+import { default as prismaInstance } from "@/db/db";
 import { refreshToken } from "@/lib/controler/loginController";
-import { downloadFile } from "@/lib/downloadImage";
 import { refreshDiscordToken, refreshGoogleToken } from "@/lib/refreswhTokens";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
@@ -30,23 +29,7 @@ export const {
       if (trigger === "update") {
         return { ...token, user: { ...token.user, ...session } };
       }
-      if (trigger === "signUp") {
-        if (user?.image && user.image.startsWith("https://")) {
-          try {
-            const filename = await downloadFile(user.image, user.id);
-            await prisma.user.update({
-              where: {
-                id: user.id,
-              },
-              data: {
-                image: filename,
-              },
-            });
 
-            token.image = filename;
-          } catch (error) {}
-        }
-      }
       if (trigger === "signIn") {
         if (user && user?.user?.provider === "credentials") {
           return { ...token, ...user };

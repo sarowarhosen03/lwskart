@@ -1,6 +1,7 @@
 "use client";
 
 import useAddToCart from "@/hooks/useAddToCart";
+import { redirectFromServer } from "@/lib/actions/redirect";
 import { useRouter } from "next/navigation";
 
 export default function AddToCartBtn({
@@ -29,7 +30,7 @@ export default function AddToCartBtn({
     return (
       <button
         disabled={isLoading}
-        onClick={() => push(`/user/cart`)}
+        onClick={async () => await redirectFromServer("/user/cart")}
         className="block w-full cursor-pointer rounded-b border border-primary bg-orange-400 py-1 text-center text-white disabled:bg-red-400"
       >
         {showCart}

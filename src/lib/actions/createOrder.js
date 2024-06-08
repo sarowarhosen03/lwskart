@@ -4,6 +4,8 @@ import { generatePdf } from "@/utils/generatePdf";
 import { OrderStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { createTransport } from "nodemailer";
+import path from "path";
+import { uploadFileByPath } from "../externel/storage";
 const duaDate = 1000 * 60 * 60 * 24 * 7; // 7 days
 export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
   try {
@@ -63,26 +65,18 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
                 price: prductCart.product.discount_price,
               })),
             },
-            invoice: {
-              payment: "CASH",
-              paymentStatus: "Pending",
-              total: totalPrice,
-              dueDate: new Date(Date.now() + duaDate),
-              orderDate: new Date(),
-            },
           },
         }),
         ...dleteCartsitems,
         ...updateProduct,
       ]);
-
       const invoice = {
         number: newOrder.id, // String
         date: new Date(), // Date
         dueDate: new Date(Date.now() + duaDate),
         status: "Cash on delivery",
         currency: "$",
-        path: `./public/pdf/${newOrder.id}.pdf`, // Required. Path where you would like to generate the PDF file.
+        path: `${path.resolve(process.cwd(), `tmp/${newOrder.id}.pdf`)}`,
       };
       const qr = {
         data: `${process.env.NEXT_PUBLIC_SITE_URL}/user/invoice/view?id=${newOrder.id}`,
@@ -103,11 +97,27 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         phone,
         email,
       };
-      await sendInvoiceEmail(
+      const pdfPath = await sendInvoiceEmail(
         { invoice, qr, items: productItems, customer },
         session.user.email,
       );
-      revalidatePath("/[lang]/user/invoice",'page');
+      await prisma.order.update({
+        where: {
+          id: newOrder.id,
+        },
+        data: {
+          invoice: {
+            payment: "CASH",
+            paymentStatus: "Pending",
+            total: totalPrice,
+            pdfPath: pdfPath,
+            dueDate: new Date(Date.now() + duaDate),
+            orderDate: new Date(),
+          },
+        },
+      });
+
+      revalidatePath("/[lang]/user/invoice", "page");
       return {
         success: true,
         payload: {
@@ -152,7 +162,8 @@ async function sendInvoiceEmail({ invoice, qr, items, customer }, email) {
       },
     ],
   });
-  return result;
+  const filePath = await uploadFileByPath(pdf);
+  return filePath;
 }
 
 function generateEmailTemplae({ name, url }) {

@@ -3,12 +3,12 @@ import Link from "next/link";
 
 export default async function page({ searchParams }) {
   const id = searchParams?.id;
-  let data = await getInvoice(id);
-  return <InvoiceView {...data} />;
-}
+  let { isAthorized, order } = await getInvoice(id);
+  const {
+    invoice: { pdfPath },
+  } = order;
 
-export function InvoiceView({ isAthorized, order: { id } }) {
-  if (!id || !isAthorized) {
+  if (!order || !isAthorized) {
     return (
       <div className="flex min-h-screen w-screen flex-col items-center justify-center gap-3 text-center">
         <div className="text-red-500">
@@ -26,7 +26,6 @@ export function InvoiceView({ isAthorized, order: { id } }) {
     );
   }
 
-  const url = `/pdf/${id}.pdf`;
   return (
     <div className="flex min-h-screen w-screen flex-col items-center gap-3 text-center">
       <Link
@@ -36,7 +35,7 @@ export function InvoiceView({ isAthorized, order: { id } }) {
         Go Back
       </Link>
       <object
-        data={url}
+        data={pdfPath}
         type="application/pdf"
         width="100%"
         height="100%"
@@ -44,7 +43,7 @@ export function InvoiceView({ isAthorized, order: { id } }) {
       >
         <p>
           Alternative{" "}
-          <Link href={url} target="_blank">
+          <Link href={pdfPath} target="_blank">
             to the PDF!
           </Link>
         </p>

@@ -27,7 +27,7 @@ export default function EditUser({
       email,
       phone,
       company,
-      imageUrl: image ? `/user/${image}` : "/user/avatar-svgrepo-com.svg",
+      imageUrl: !image ? "/user/avatar-svgrepo-com.svg" : image,
       shippingAddress: {
         name: shippingAddress?.name || name,
         address: shippingAddress?.address,

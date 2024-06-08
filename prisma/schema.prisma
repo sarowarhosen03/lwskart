@@ -112,7 +112,7 @@ model Order {
   updatedAt       DateTime     @updatedAt
   orderItems      OrderItem[]
   createdAt       DateTime     @default(now())
-  invoice         Json
+  invoice         Json?      @default("{}")
   
 
 }

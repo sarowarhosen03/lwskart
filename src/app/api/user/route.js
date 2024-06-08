@@ -1,12 +1,10 @@
 // Import necessary modules
 import { auth } from "@/auth/auth";
 import { updateProfile } from "@/lib/dbQueries/userQuery";
-import fs from "fs";
-import { writeFile } from "fs/promises";
+import { uploadFile } from "@/lib/externel/storage";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import path from "path";
 // Define the POST handler for the file upload
 export const POST = async (req) => {
   try {
@@ -17,17 +15,9 @@ export const POST = async (req) => {
     const body = JSON.parse(formData.get("profile"));
     const session = await auth();
     let filename = "";
+
     if (file) {
-      // Convert the file data to a Buffer
-      const buffer = Buffer.from(await file.arrayBuffer());
-      // Replace spaces in the file name with underscores
-      filename = session?.user?.id + "-profile" + path.extname(file.name);
-      const filePath = path.join(process.cwd(), "/public/user/" + filename);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-      // Write the file to the specified directory (public/assets) with the modified filename
-      await writeFile(filePath, buffer);
+      filename = await uploadFile(formData);
     }
     const newData = {
       ...body,
