@@ -27,7 +27,7 @@ export const POST = async (req) => {
     const headerList = headers();
     const { pathname } = new URL(headerList.get("referer"));
     revalidatePath(pathname);
-    revalidatePath(`/[lang]/user/checkout`);
+    revalidatePath(`/[lang]/user/checkout`, "page");
     return NextResponse.json({
       Message: "Success",
       status: 201,
