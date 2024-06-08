@@ -86,6 +86,7 @@ export const placeOrder = async ({ customerInfo, items, totalPrice }) => {
         data: `${process.env.NEXT_PUBLIC_SITE_URL}/user/invoice/view?id=${newOrder.id}`,
         width: 100, // Default is 50.
       };
+      console.log(qr);
 
       const productItems = items.map((productCart) => {
         return {
