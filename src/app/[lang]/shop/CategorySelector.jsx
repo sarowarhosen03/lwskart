@@ -22,17 +22,17 @@ export default function CategorySelector({ name }) {
 
   useEffect(() => {
     const category = searchParams.get("category");
-
     if (category) {
       const decodedCategory = decodeURIComponent(category);
       const queryInCategory = decodedCategory.split("|");
       setQuery(queryInCategory);
+    } else {
+      setQuery([]); // Reset query when there's no category in the URL
     }
   }, [searchParams]);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
-
     if (query.length > 0) {
       params.set("category", encodeURIComponent(query.join("|")));
     } else {
@@ -52,6 +52,7 @@ export default function CategorySelector({ name }) {
     />
   );
 }
+
 export function AllCategoryBtn() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -61,15 +62,15 @@ export function AllCategoryBtn() {
   if (!category) isACtive = "text-primary";
   function handleAllCategory() {
     const params = new URLSearchParams(searchParams.toString());
-    if (params) params.delete("category");
+    params.delete("category");
     replace(`${pathname}?${params.toString()}`);
   }
   return (
     <button
-      className={`cusror-pointer ml-3  ${isACtive}`}
+      className={`ml-3 cursor-pointer ${isACtive}`}
       onClick={handleAllCategory}
     >
-      All{" "}
+      All
     </button>
   );
 }
